@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ $lang }}" dir="{{ $dir }}">
+<html lang="en">
 	<head>
 		<!-- Meta, title, CSS, favicons, etc. -->
 		<meta charset="utf-8">
@@ -14,7 +14,7 @@
 				&middot;
 			@endif
 
-			{{ trans('main.site_name') }}
+			{{ trans('common.site_name') }}
 		</title>
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,25 +24,21 @@
 		<![endif]-->
 
 		<link rel="stylesheet" href="{{ url('css/jquery-ui.css') }}" />
-		<link rel="stylesheet" href="{{ url('css/bootstrap.css') }}" />
+		<link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/style.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/summernote.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/font-awesome.css') }}" />
-
-		@if($dir == 'rtl')
-			<link rel="stylesheet" href="{{ url('css/bootstrap-rtl.css') }}" />
-			<link rel="stylesheet" href="{{ url('css/style.rtl.css') }}" />
-		@endif
-
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png"> <!-- 180 -->
 		<link rel="icon" href="/favicon.ico"> <!-- 32 -->
 	</head>
 	<body>
-		@include('navbar')
 
-		<div class="container content-container">
+
+		<div class="container">
+			@include('navbar')
+
 			@section('content')
 			@show
 		</div>
@@ -51,7 +47,7 @@
 
 		<script src="{{ url('js/jquery.js') }}"></script>
 		<script src="{{ url('js/jquery-ui.js') }}"></script>
-		<script src="{{ url('js/bootstrap.js') }}"></script>
+		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		<script src="{{ url('js/script.js') }}"></script>
 		<script src="{{ url('js/summernote.js') }}"></script>
 	</body>

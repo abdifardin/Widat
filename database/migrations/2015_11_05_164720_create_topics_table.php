@@ -19,6 +19,16 @@ class CreateTopicsTable extends Migration
 			$table->integer('user_id')->nullable();
 			$table->boolean('got_updated')->default(0);
 		});
+
+		DB::getPdo()->exec('
+			CREATE TRIGGER `topics_AUPD` BEFORE UPDATE ON `topics` FOR EACH ROW
+			BEGIN
+				IF (NEW.abstract <> OLD.abstract)
+				THEN
+					SET NEW.got_updated = 1;
+				END IF;
+			END
+		');
     }
 
     /**
