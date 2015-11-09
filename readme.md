@@ -1,3 +1,11 @@
+##WIDAT: Wikipedia Introductions(abstracts) Downloader And Translator 
+1. This application imports all topics' introductions(aka abstracts) from Wikipedia xml dumps and saves it to a database(MySQL database) 
+2. The translator can see the list of all topics 
+3. He can search and choose the topics in our database 
+4. When he chooses a topic, he can save a translation for that topic in another database(table) specific to the destination language(KU)
+ 
+** Notice: Job #1 is now done using project WIDAT.CPP **
+ 
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
