@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateTopicsTrigger extends Migration
 {
@@ -11,7 +12,7 @@ class CreateTopicsTrigger extends Migration
      */
     public function up()
     {
-		DB::unprepared('
+		DB::getPdo()->exec('
 			USE `widatdb`;
 			DELIMITER $$
 			CREATE TRIGGER `topics_AUPD` BEFORE UPDATE ON `topics` FOR EACH ROW
