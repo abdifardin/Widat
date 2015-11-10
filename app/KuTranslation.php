@@ -12,7 +12,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class KuTranslation extends Model
 {
-	private $primaryKey = 'topic_id';
+	protected $primaryKey = 'topic_id';
 
     /**
      * The database table used by the model.
