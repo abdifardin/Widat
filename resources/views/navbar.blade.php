@@ -23,7 +23,7 @@
 				</li>
 				@if(\Illuminate\Support\Facades\Auth::check())
 					<li>
-						<a href="#">
+						<a href="{{ route('auth.logout') }}">
 							<span class="fa fa-sign-out fa-2x"></span>
 							<span class="label">{{ trans('common.logout') }}</span>
 						</a>

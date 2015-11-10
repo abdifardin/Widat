@@ -26,12 +26,12 @@ class AdminController extends Controller
 	public function home()
 	{
 		$admins_count = User::where('user_type', 'admin')->count();
-		$users_count = User::where('user_type', 'translator')->count();
+		$translators_count = User::where('user_type', 'translator')->count();
 		$topics_count = Topic::count();
 		$ku_translations_count = KuTranslation::count();
 		return view('admin.home', [
 			'admins_count' => $admins_count,
-			'users_count' => $users_count,
+			'translators_count' => $translators_count,
 			'topics_count' => $topics_count,
 			'ku_translations_count' => $ku_translations_count,
 		]);
