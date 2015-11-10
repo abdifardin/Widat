@@ -31,3 +31,11 @@ Route::get('admin', [
 	'as' => 'admin.home',
 	'uses' => 'AdminController@home',
 ]);
+Route::any('admin/admins', [
+	'as' => 'admin.admins',
+	'uses' => 'AdminController@admins',
+]);
+Route::get('admin/translators', [
+	'as' => 'admin.translators',
+	'uses' => 'AdminController@translators',
+]);

@@ -1,8 +1,14 @@
 body {
+    background: #454545;
     padding-top: 20px;
 }
+.ambient-key-shadows {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25), 0 3px 5px 1px rgba(0, 0, 0, 0.15);
+}
+
 .navbar {
     border: 1px solid #aaa;
+    border-radius: 2px;
 }
 .navbar-brand {
     font-weight: 900;
@@ -13,6 +19,9 @@ body {
 }
 .navbar a {
     color: #aaa !important;
+}
+.navbar a.text-danger {
+    color: #900 !important;
 }
 .navbar a:hover {
     color: #666 !important;
@@ -31,9 +40,29 @@ body {
 .content-wrapper {
     background: #f8f8f8;
     border: 1px solid #aaa;
-    border-radius: 3px;
+    border-radius: 2px;
+    padding: 0 20px 20px;
+    margin-bottom: 20px;
 }
 
 p.count {
     font-size: 32px;
+}
+
+.toggle-password:hover {
+    background-color: #666;
+    color: #fff;
+    cursor: pointer;
+}
+.action-result {
+    color: #fff;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.action-error {
+    background: #a00;
+}
+.action-success {
+    background: #4c9335;
 }

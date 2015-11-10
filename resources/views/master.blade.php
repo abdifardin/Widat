@@ -39,10 +39,8 @@
 		<div class="container">
 			@include('navbar')
 
-			<div class="content-wrapper">
-				@section('content')
-				@show
-			</div>
+			@section('content')
+			@show
 		</div>
 
 		@include('footer')

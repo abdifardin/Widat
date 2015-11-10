@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\KuTranslation;
 use App\Topic;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -20,6 +21,12 @@ class AdminController extends Controller
 	{
 		if(!Auth::check() || Auth::user()->user_type != "admin") {
 			abort(401, "Unauthorized!");
+		}
+
+		if(Auth::check()) {
+			$user = Auth::user();
+			$user->last_activity = date('Y-m-d H:i:s');
+			$user->save();
 		}
 	}
 
@@ -35,5 +42,53 @@ class AdminController extends Controller
 			'topics_count' => $topics_count,
 			'ku_translations_count' => $ku_translations_count,
 		]);
+	}
+
+	public function admins(Request $request)
+	{
+		$action_error = false;
+		$action_result = null;
+
+		if($request->has('delete')) {
+			$user_id = $request->get('user_id');
+			if($user_id <= 1) {
+				$action_error = true;
+				$action_result = trans('common.cannot_delete_user');
+			}
+			else {
+				User::where('id', $user_id)->delete();
+				$action_result = trans('common.user_deleted');
+			}
+		}
+		else if($request->has('create')) {
+			$current_email = User::where('email', $request->get('email'))->first();
+			if($current_email) {
+				$action_error = true;
+				$action_result = trans('common.email_exists');
+			}
+			else {
+				$new_admin = new User;
+				$new_admin->email = $request->get('email');
+				$new_admin->name = $request->get('name');
+				$new_admin->surname = $request->get('surname');
+				$new_admin->password = bcrypt($request->get('password'));
+				$new_admin->user_type = 'admin';
+				$new_admin->save();
+				$action_result = trans('common.user_created');
+			}
+		}
+
+		$admins = User::where('user_type', 'admin')->get();
+
+		return view('admin.admins', [
+			'admins' => $admins,
+			'action_error' => $action_error,
+			'action_result' => $action_result,
+		]);
+	}
+
+	public function translators()
+	{
+
 	}
 }
