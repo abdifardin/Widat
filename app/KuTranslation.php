@@ -10,35 +10,26 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+class KuTranslation extends Model
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+	private $primaryKey = 'topic_id';
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'ku_translations';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'surname', 'email', 'user_type', 'password'];
+    protected $fillable = ['topic_id', 'topic', 'abstract'];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
-
-	public function topics()
+	public function topic()
 	{
-		return $this->hasMany(Topic::class);
+		return $this->belongsTo(Topic::class);
 	}
 }

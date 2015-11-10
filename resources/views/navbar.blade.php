@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
@@ -15,8 +15,20 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">Link</a></li>
+				<li>
+					<a href="#">
+						<span class="fa fa-users fa-2x"></span>
+						<span class="label">{{ trans('common.users') }}</span>
+					</a>
+				</li>
+				@if(\Illuminate\Support\Facades\Auth::check())
+					<li>
+						<a href="#">
+							<span class="fa fa-sign-out fa-2x"></span>
+							<span class="label">{{ trans('common.logout') }}</span>
+						</a>
+					</li>
+				@endif
 			</ul>
 			<form class="navbar-form navbar-right" role="search">
 				<div class="form-group">

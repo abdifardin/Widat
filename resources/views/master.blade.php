@@ -25,9 +25,9 @@
 
 		<link rel="stylesheet" href="{{ url('css/jquery-ui.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}" />
-		<link rel="stylesheet" href="{{ url('css/style.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/summernote.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/font-awesome.css') }}" />
+		<link rel="stylesheet" href="{{ url('css/style.css') }}" />
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png"> <!-- 180 -->
@@ -39,8 +39,10 @@
 		<div class="container">
 			@include('navbar')
 
-			@section('content')
-			@show
+			<div class="content-wrapper">
+				@section('content')
+				@show
+			</div>
 		</div>
 
 		@include('footer')

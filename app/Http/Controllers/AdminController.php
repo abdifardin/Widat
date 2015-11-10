@@ -9,10 +9,20 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Support\Facades\Auth;
+
 class AdminController extends Controller
 {
+	public function __construct()
+	{
+		if(!Auth::check() || Auth::user()->user_type != "admin") {
+			abort(403, "Access Denied!");
+		}
+	}
+
 	public function home()
 	{
+
 		return view('admin.home');
 	}
 }

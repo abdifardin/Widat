@@ -27,7 +27,6 @@ Route::get('auth/logout', [
 	'uses' => 'Auth\AuthController@getLogout',
 ]);
 
-
 Route::get('admin', [
 	'as' => 'admin.home',
 	'uses' => 'AdminController@home',

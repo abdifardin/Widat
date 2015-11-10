@@ -1,6 +1,35 @@
 body {
     padding-top: 20px;
 }
+.navbar {
+    border: 1px solid #aaa;
+}
 .navbar-brand {
     font-weight: 900;
+    padding: 0 20px;
+    line-height: 60px;
+    letter-spacing: 10px;
+    font-size: 32px;
+}
+.navbar a {
+    color: #aaa !important;
+}
+.navbar a:hover {
+    color: #666 !important;
+}
+.navbar-nav>li>a>span.label {
+    font-size: 0;
+    color: #666;
+    transition: font-size 100ms ease-in-out;
+}
+.navbar-nav>li>a:hover>span.label {
+    font-size: 20px;
+}
+
+.navbar-form { margin: 12px 0 0 !important; padding: 0 !important; }
+
+.content-wrapper {
+    background: #f8f8f8;
+    border: 1px solid #aaa;
+    border-radius: 3px;
 }

@@ -6,4 +6,6 @@ return [
 	'email' => 'Email',
 	'password' => 'Password',
 	'remember_me' => 'Remember Me',
+	'logout' => 'Logout',
+	'users' =>  'Users',
 ];
