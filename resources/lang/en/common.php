@@ -32,4 +32,6 @@ return [
 	'save_changes' => 'Save Changes',
 	'account_info_saved' => 'Account information updated!',
 	'password_too_short' => 'Password is too short. It must be at least 8 characters long.',
+	'nocandos' => 'No Can Do',
+	'translated' => 'Translated'
 ];

@@ -32,6 +32,17 @@ class TranslatorController extends Controller
 
 	public function home()
 	{
+		$translator = Auth::user();
+
+		return view('translator.home', [
+			'score' => $translator->score,
+			'nocandos' => 0,
+			'translated' => 0,
+		]);
+	}
+
+	public function stats($user_id)
+	{
 
 	}
 }
