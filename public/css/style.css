@@ -1,5 +1,5 @@
 body {
-    background: #454545;
+    background: #f0f0f0;
     padding-top: 20px;
 }
 .ambient-key-shadows {
@@ -7,6 +7,7 @@ body {
 }
 
 .navbar {
+    background: #fff !important;
     border: 1px solid #aaa;
     border-radius: 2px;
 }
@@ -18,27 +19,36 @@ body {
     font-size: 32px;
 }
 .navbar a {
-    color: #aaa !important;
+    color: #666 !important;
 }
 .navbar a.text-danger {
     color: #900 !important;
 }
 .navbar a:hover {
-    color: #666 !important;
+    color: #222 !important;
+}
+.navbar a.text-danger:hover {
+    color: #c00 !important;
 }
 .navbar-nav>li>a>span.label {
     font-size: 0;
-    color: #666;
+    color: #222;
     transition: font-size 100ms ease-in-out;
 }
 .navbar-nav>li>a:hover>span.label {
     font-size: 20px;
 }
+.navbar-nav>li>a.text-danger:hover>span.label {
+    color: #c00;
+}
 
 .navbar-form { margin: 12px 0 0 !important; padding: 0 !important; }
-
+.navbar-form input:focus {
+    border-color: #999;
+    box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.5);
+}
 .content-wrapper {
-    background: #f8f8f8;
+    background: #fff;
     border: 1px solid #aaa;
     border-radius: 2px;
     padding: 0 20px 20px;

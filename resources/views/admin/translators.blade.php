@@ -3,11 +3,12 @@
 @section('content')
 	@if(isset($action_result) && $action_result)
 		@if($action_error)
-			<div class="content-wrapper ambient-key-shadows action-result action-error">
-		@else
-			<div class="content-wrapper ambient-key-shadows action-result action-success">
-		@endif
+		<div class="content-wrapper ambient-key-shadows action-result action-error">
 			<span class="fa fa-times-circle fa-2x"></span>
+		@else
+		<div class="content-wrapper ambient-key-shadows action-result action-success">
+			<span class="fa fa-bell fa-2x"></span>
+		@endif
 			{{ $action_result }}
 		</div>
 	@endif
@@ -18,7 +19,7 @@
 				<h2 class="text-center">
 					<a href="javascript:;" class="toggle-down-sibling">
 						<span class="fa fa-plus"></span>
-						{{ trans('common.add_admin') }}
+						{{ trans('common.add_translator') }}
 					</a>
 				</h2>
 				<form action="" method="post" class="hidden">
@@ -75,7 +76,7 @@
 							<button name="create" value="1" class="btn btn-success btn-block">
 								<span class="fa fa-plus"></span>
 								<span class="text-uppercase">
-									{{ trans('common.add_admin') }}
+									{{ trans('common.add_translator') }}
 								</span>
 							</button>
 						</div>
@@ -90,8 +91,8 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h2 class="text-center">
-					<span class="fa fa-certificate"></span>
-					{{ trans('common.admins') }}
+					<span class="fa fa-users"></span>
+					{{ trans('common.translators') }}
 				</h2>
 				<div class="table-responsive">
 					<table class="table table-striped">
@@ -99,30 +100,48 @@
 							<th>{{ trans('common.id') }}</th>
 							<th>{{ trans('common.email') }}</th>
 							<th>{{ trans('common.name') }}</th>
+							<th>{{ trans('common.score') }}</th>
 							<th>{{ trans('common.last_activity') }}</th>
 							<th></th>
 						</thead>
 						<tbody>
-						@foreach($admins as $admin)
+						@foreach($translators as $translator)
 							<tr>
-								<td>{{ $admin->id }}</td>
-								<td>{{ $admin->email }}</td>
-								<td>{{ $admin->name . ' ' . $admin->surname }}</td>
+								<td>{{ $translator->id }}</td>
 								<td>
-									@if(strtotime($admin->last_activity) < 0)
+									<a href="">
+										<span class="fa fa-envelope"></span>
+										{{ $translator->email }}
+									</a>
+								</td>
+								<td>{{ $translator->name . ' ' . $translator->surname }}</td>
+								<td>
+									<span class="fa fa-star"></span>
+									{{ number_format($translator->score) }}
+								</td>
+								<td>
+									<span class="fa fa-clock-o"></span>
+									@if(strtotime($translator->last_activity) < 0)
 										NEVER
 									@else
-										{{date('Y-m-d H:i:s e', strtotime($admin->last_activity))}}
+										{{date('Y-m-d H:i:s e', strtotime($translator->last_activity))}}
 									@endif
 								</td>
 								<td class="text-right">
 									<a href="javascript:;" class="btn btn-danger delete-user">
 										<span class="fa fa-trash"></span>
 										{{ trans('common.delete') }}
-										<input type="hidden" name="user_id" value="{{ $admin->id }}" />
+										<input type="hidden" name="user_id" value="{{ $translator->id }}" />
 									</a>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="{{ route('main.edit_account', ['user_id'=>$admin->id]) }}"
+									<a href="{{ route('translator.stats', ['user_id' => $translator->id]) }}"
+									   class="btn btn-primary">
+										<span class="fa fa-bar-chart"></span>
+										{{ trans('common.stats') }}
+										<input type="hidden" name="user_id" value="{{ $translator->id }}" />
+									</a>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="{{ route('main.edit_account', ['user_id'=>$translator->id]) }}"
 									   class="btn btn-default">
 										<span class="fa fa-pencil"></span>
 										{{ trans('common.edit_account') }}
@@ -132,6 +151,12 @@
 						@endforeach
 						</tbody>
 					</table>
+
+					@if(!count($translators))
+						<h4 class="text-center text-danger text-capitalize">
+							No Translators
+						</h4>
+					@endif
 				</div>
 			</div>
 		</div>

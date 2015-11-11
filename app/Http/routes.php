@@ -15,6 +15,10 @@ Route::get('/', [
 	'as' => 'main.root',
 	'uses' => 'MainController@index',
 ]);
+Route::any('/account/{user_id}/edit', [
+	'as' => 'main.edit_account',
+	'uses' => 'MainController@editAccount',
+]);
 
 // Authentication routes...
 Route::get('auth/login', [
@@ -27,6 +31,7 @@ Route::get('auth/logout', [
 	'uses' => 'Auth\AuthController@getLogout',
 ]);
 
+// Admin routes
 Route::get('admin', [
 	'as' => 'admin.home',
 	'uses' => 'AdminController@home',
@@ -35,7 +40,19 @@ Route::any('admin/admins', [
 	'as' => 'admin.admins',
 	'uses' => 'AdminController@admins',
 ]);
-Route::get('admin/translators', [
+Route::any('admin/translators', [
 	'as' => 'admin.translators',
 	'uses' => 'AdminController@translators',
+]);
+
+
+// Translator routes
+
+Route::get('translator', [
+	'as' => 'translator.home',
+	'uses' => 'TranslatorController@home',
+]);
+Route::get('translators/{user_id}/stats', [
+	'as' => 'translator.stats',
+	'uses' => 'TranslatorController@stats',
 ]);

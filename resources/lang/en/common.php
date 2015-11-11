@@ -2,6 +2,7 @@
 return [
 	'site_name' => 'WIDAT',
 	'site_description' => 'Wikipedia Introductions Downloader And Translator',
+	/*-----------------------*/
 	'login' => 'Login',
 	'email' => 'Email',
 	'password' => 'Password',
@@ -20,8 +21,15 @@ return [
 	'last_activity' => 'Last Activity',
 	'delete' => 'Delete',
 	'add_admin' => 'Add New Admin',
+	'add_translator' => 'Add New Translator',
 	'surname' => 'Surname',
 	'email_exists' => 'The email that you have entered already exists in our database.',
 	'confirm_deletion' => 'Are you sure you want to delete this user?',
 	'cancel' => 'Cancel',
+	'score' => 'Score',
+	'stats' => 'Statistics',
+	'edit_account' => 'Edit Account',
+	'save_changes' => 'Save Changes',
+	'account_info_saved' => 'Account information updated!',
+	'password_too_short' => 'Password is too short. It must be at least 8 characters long.',
 ];

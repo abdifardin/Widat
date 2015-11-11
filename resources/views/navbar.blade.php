@@ -27,7 +27,15 @@
 					<li>
 						<a href="{{ route('admin.translators') }}">
 							<span class="fa fa-users fa-2x"></span>
-							<span class="label">{{ trans('common.users') }}</span>
+							<span class="label">{{ trans('common.translators') }}</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{ route('main.edit_account', [
+							'user_ud' => \Illuminate\Support\Facades\Auth::user()->id
+						]) }}">
+							<span class="fa fa-pencil fa-2x"></span>
+							<span class="label">{{ trans('common.edit_account') }}</span>
 						</a>
 					</li>
 				@endif
@@ -42,7 +50,7 @@
 			</ul>
 			<form class="navbar-form navbar-right" role="search">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Search">
+					<input type="text" class="form-control" placeholder="Search Topics">
 				</div>
 			</form>
 		</div><!-- /.navbar-collapse -->

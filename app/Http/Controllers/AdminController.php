@@ -87,8 +87,46 @@ class AdminController extends Controller
 		]);
 	}
 
-	public function translators()
+	public function translators(Request $request)
 	{
+		$action_error = false;
+		$action_result = null;
 
+		if($request->has('delete')) {
+			$user_id = $request->get('user_id');
+			if($user_id <= 1) {
+				$action_error = true;
+				$action_result = trans('common.cannot_delete_user');
+			}
+			else {
+				User::where('id', $user_id)->delete();
+				$action_result = trans('common.user_deleted');
+			}
+		}
+		else if($request->has('create')) {
+			$current_email = User::where('email', $request->get('email'))->first();
+			if($current_email) {
+				$action_error = true;
+				$action_result = trans('common.email_exists');
+			}
+			else {
+				$new_admin = new User;
+				$new_admin->email = $request->get('email');
+				$new_admin->name = $request->get('name');
+				$new_admin->surname = $request->get('surname');
+				$new_admin->password = bcrypt($request->get('password'));
+				$new_admin->user_type = 'translator';
+				$new_admin->save();
+				$action_result = trans('common.user_created');
+			}
+		}
+
+		$translators = User::where('user_type', 'translator')->get();
+
+		return view('admin.translators', [
+			'translators' => $translators,
+			'action_error' => $action_error,
+			'action_result' => $action_result,
+		]);
 	}
 }

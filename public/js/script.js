@@ -4,27 +4,10 @@ $(function() {
         $sibling.toggleClass('hidden');
     });
 
-    $('.toggle-password').mousedown(function() {
-        $(this).children('span.fa').removeClass('fa-eye-slash').addClass('fa-eye');
-        var $input = $(this).siblings('input');
-        var rep = $("<input type='text' />")
-            .attr("id", $input.attr("id"))
-            .attr("name", $input.attr("name"))
-            .attr('class', $input.attr('class'))
-            .val($input.val())
-            .insertBefore($input);
-        $input.remove();
-    }).mouseup(function() {
-        $(this).children('span.fa').removeClass('fa-eye').addClass('fa-eye-slash');
-        var $input = $(this).siblings('input');
-        var rep = $("<input type='password' />")
-            .attr("id", $input.attr("id"))
-            .attr("name", $input.attr("name"))
-            .attr('class', $input.attr('class'))
-            .val($input.val())
-            .insertBefore($input);
-        $input.remove();
-    });
+    $('.toggle-password')
+        .mousedown(showPassword)
+        .mouseup(hidePassword)
+        .mouseleave(hidePassword);
 
     $('a.delete-user').click(function() {
         $('.delete-user-modal').modal('show');
@@ -36,3 +19,29 @@ $(function() {
         $('.action-result').fadeOut(1000);
     }, 5000);
 });
+
+function showPassword()
+{
+    $(this).children('span.fa').removeClass('fa-eye-slash').addClass('fa-eye');
+    var $input = $(this).siblings('input');
+    var rep = $("<input type='text' />")
+        .attr("id", $input.attr("id"))
+        .attr("name", $input.attr("name"))
+        .attr('class', $input.attr('class'))
+        .val($input.val())
+        .insertBefore($input);
+    $input.remove();
+}
+
+function hidePassword()
+{
+    $(this).children('span.fa').removeClass('fa-eye').addClass('fa-eye-slash');
+    var $input = $(this).siblings('input');
+    var rep = $("<input type='password' />")
+        .attr("id", $input.attr("id"))
+        .attr("name", $input.attr("name"))
+        .attr('class', $input.attr('class'))
+        .val($input.val())
+        .insertBefore($input);
+    $input.remove();
+}
