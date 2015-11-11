@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 
 class TranslatorController extends Controller
 {
+	private $topics_per_page = 24;
+
 	public function __construct()
 	{
 		if(!Auth::check()) {
@@ -88,6 +90,28 @@ class TranslatorController extends Controller
 
 		return view('translator.score-history', [
 			'score_history' => $score_history,
+		]);
+	}
+
+	public function topics()
+	{
+		$topics = Topic::where('topics.user_id', null)
+			->leftJoin('nocandos', 'nocandos.topic_id', '=', 'topics.id')
+			->where('reason', null)
+			->paginate($this->topics_per_page);
+
+		return view('translator.topics', [
+			'topics' => $topics,
+		]);
+	}
+
+	public function translate($topic_id)
+	{
+		$topic = Topic::where('id', $topic_id)
+			->firstOrFail();
+
+		return view('translator.translate', [
+			'topic' => $topic,
 		]);
 	}
 }

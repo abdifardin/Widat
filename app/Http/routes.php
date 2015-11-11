@@ -15,7 +15,7 @@ Route::get('/', [
 	'as' => 'main.root',
 	'uses' => 'MainController@index',
 ]);
-Route::any('/account/{user_id}/edit', [
+Route::any('account/{user_id}/edit', [
 	'as' => 'main.edit_account',
 	'uses' => 'MainController@editAccount',
 ]);
@@ -60,3 +60,12 @@ Route::get('translator/{user_id}/score-history', [
 	'as' => 'translator.score_history',
 	'uses' => 'TranslatorController@scoreHistory',
 ]);
+Route::any('topics', [
+	'as' => 'translator.topics',
+	'uses' => 'TranslatorController@topics',
+]);
+Route::any('translate/{topic_id}', [
+	'as' => 'translator.translate',
+	'uses' => 'TranslatorController@translate',
+]);
+

@@ -39,4 +39,9 @@ return [
 	'overview' => 'Overview',
 	'this_month' => 'This Month',
 	'score_history' => 'Score History',
+	'translate' => 'Translate',
+	'english' => 'English',
+	'kurdish' => 'Kurdish',
+	'reserve_topic' => 'Reserve Topic',
+	'use_rich_format' => 'Use Formatted Text',
 ];
