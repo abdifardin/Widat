@@ -41,4 +41,9 @@ class User extends Model implements AuthenticatableContract,
 	{
 		return $this->hasMany(Topic::class);
 	}
+
+	public function nocandos()
+	{
+		return $this->hasMany(Nocando::class);
+	}
 }

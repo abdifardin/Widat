@@ -52,7 +52,11 @@ Route::get('translator', [
 	'as' => 'translator.home',
 	'uses' => 'TranslatorController@home',
 ]);
-Route::get('translators/{user_id}/stats', [
+Route::get('translator/{user_id}/stats', [
 	'as' => 'translator.stats',
 	'uses' => 'TranslatorController@stats',
+]);
+Route::get('translator/{user_id}/score-history', [
+	'as' => 'translator.score_history',
+	'uses' => 'TranslatorController@scoreHistory',
 ]);

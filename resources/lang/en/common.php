@@ -33,5 +33,10 @@ return [
 	'account_info_saved' => 'Account information updated!',
 	'password_too_short' => 'Password is too short. It must be at least 8 characters long.',
 	'nocandos' => 'No Can Do',
-	'translated' => 'Translated'
+	'translated' => 'Translated',
+	'view_full_stats' => 'View Full Statistics',
+	'view_history' => 'View History',
+	'overview' => 'Overview',
+	'this_month' => 'This Month',
+	'score_history' => 'Score History',
 ];
