@@ -123,3 +123,4 @@ body {
 .abstract-trans {
     height: 400px !important;
 }
+.rtl-text { direction: rtl; text-align: right; }

@@ -48,4 +48,8 @@ return [
 	'prev_sent' => 'Previous Sentence',
 	'beg_sent' => 'Back to the Beginning',
 	'nocando' => 'No Can Do',
+	'all' => 'All',
+	'untranslated' => 'Untranslated',
+	'untranslated_changed' => 'Untranslated or Changed',
+	'changed' => 'Changed',
 ];

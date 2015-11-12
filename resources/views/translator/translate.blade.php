@@ -44,18 +44,6 @@
 						{!! csrf_field() !!}
 
 						<div class="form-toolbar float-right">
-							<label for="use-rich-format" class="btn btn-default">
-								<input type="checkbox" name="use-rich-format" id="use-rich-format" />
-								<span class="float-right">{{ trans('common.use_rich_format') }}</span>
-							</label>
-
-							<a class="btn btn-danger nocando-topic" href="{{ route('translator.nocando',
-							['topic_id' => $topic->id]) }}">
-								<span class="fa fa-life-ring"></span>
-								{{ trans('common.nocando') }}
-								<span class="badge">-5</span>
-							</a>
-
 							@if($is_owner)
 							<button type="submit" name="save" value="1" class="btn btn-success">
 								<span class="fa fa-floppy-o"></span>
@@ -64,6 +52,12 @@
 								<span class="fa fa-circle-o-notch fa-spin hidden"></span>
 							</button>
 							@else
+							<a class="btn btn-danger nocando-topic" href="{{ route('translator.nocando',
+								['topic_id' => $topic->id]) }}">
+								<span class="fa fa-life-ring"></span>
+								{{ trans('common.nocando') }}
+								<span class="badge">-5</span>
+							</a>
 							<button type="submit" name="reserve" value="1" class="btn btn-primary reserve-topic">
 								<span class="fa fa-flag"></span>
 								{{ trans('common.reserve_topic') }}
@@ -76,12 +70,13 @@
 
 
 						<div class="form-group">
-							<input type="text" name="ku_trans_title" class="form-control" value="{{ $ku_translation_title }}" />
+							<input type="text" name="ku_trans_title" class="form-control rtl-text" value="{{
+							$ku_translation_title }}" />
 						</div>
 						<div class="form-group">
-							<textarea class="form-control abstract-trans" id="ku_trans_abstract"
+							<textarea class="form-control abstract-trans rtl-text" id="ku_trans_abstract"
 									  name="ku_trans_abstract">{{ $ku_translation_abstract }}</textarea>
-							<div id="summernote"></div>
+							<input type="hidden" id="current_score" value="{{ $current_score }}" />
 						</div>
 					</form>
 				</div>

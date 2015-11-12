@@ -25,7 +25,6 @@
 
 		<link rel="stylesheet" href="{{ url('css/jquery-ui.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}" />
-		<link rel="stylesheet" href="{{ url('css/summernote.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/font-awesome.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/style.css') }}" />
 
@@ -49,6 +48,5 @@
 		<script src="{{ url('js/jquery-ui.js') }}"></script>
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		<script src="{{ url('js/script.js') }}"></script>
-		<script src="{{ url('js/summernote.js') }}"></script>
 	</body>
 </html>

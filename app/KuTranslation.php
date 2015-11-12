@@ -20,7 +20,7 @@ class KuTranslation extends Model
      * @var string
      */
     protected $table = 'ku_translations';
-
+	public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +28,7 @@ class KuTranslation extends Model
      */
     protected $fillable = ['topic_id', 'topic', 'abstract'];
 
-	public function topic()
+	public function entopic()
 	{
 		return $this->belongsTo(Topic::class);
 	}

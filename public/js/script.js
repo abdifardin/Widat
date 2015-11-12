@@ -17,28 +17,8 @@ $(function() {
         $('.delete-user-modal input[name=user_id]').val(user_id);
     });
 
-    $("#use-rich-format").change(function() {
-        var summernote = $("#summernote");
-        var ku_trans_abstract = $("textarea#ku_trans_abstract");
-        if($(this).prop("checked")) {
-            summernote.show();
-            summernote.summernote({
-                height: ku_trans_abstract.outerHeight() - 50,
-                focus: true,
-                onChange: function() {
-                    ku_trans_abstract.val(summernote.code());
-                }
-            }).code(ku_trans_abstract.val());
-            ku_trans_abstract.hide();
-        }
-        else {
-            summernote.destroy();
-            ku_trans_abstract.show();
-            summernote.hide();
-        }
-    });
-
     $("textarea#ku_trans_abstract").change(updateTranslationScore).keyup(updateTranslationScore);
+    updateTranslationScore();
 
     setTimeout(function() {
         $('.action-result').fadeOut(1000);
@@ -124,7 +104,17 @@ function highlightEnAbstract()
 
 function updateTranslationScore()
 {
-    var plaintext = $('textarea#ku_trans_abstract').val().replace(/<\/?[^>]+(>|$)/g, "");
-    var wordcount = plaintext.split(" ").length;
-    $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : "0");
+    var plaintext = $('textarea#ku_trans_abstract').val().trim();
+    var words = plaintext.split(" ");
+    var wordcount = 0;
+    for(var i = 0; i < words.length; i++) {
+        if(words[i].trim().length > 1) {
+            wordcount++;
+        }
+    }
+
+    var current_score = $('#current_score').val();
+    wordcount -= current_score;
+
+    $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
 }
