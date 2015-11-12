@@ -44,7 +44,10 @@ Route::any('admin/translators', [
 	'as' => 'admin.translators',
 	'uses' => 'AdminController@translators',
 ]);
-
+Route::any('admin/inspection/{user_id?}', [
+	'as' => 'admin.inspection',
+	'uses' => 'AdminController@inspection',
+]);
 
 // Translator routes
 

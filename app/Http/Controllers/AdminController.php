@@ -129,4 +129,28 @@ class AdminController extends Controller
 			'action_result' => $action_result,
 		]);
 	}
+
+	public function inspection(Request $request, $user_id = null)
+	{
+		if(!$user_id) {
+			return view('admin.inspection', [
+				'translators' => User::where('user_type', 'translator')->get(),
+			]);
+		}
+
+		$topics = Topic::where('user_id', $user_id)->get();
+		$topic_ids = array();
+		foreach($topics as $t) {
+			$topic_ids[] = $t->id;
+		}
+
+		$topic = Topic::where('id', $topic_ids[array_rand($topic_ids)])->first();
+		$ku_trans = KuTranslation::where('topic_id', $topic->id)->first();
+
+		return view('admin.inspection', [
+			'topic' => $topic,
+			'ku_trans_title' => $ku_trans && $ku_trans->topic ? $ku_trans->topic : '',
+			'ku_trans_abstract' => $ku_trans && $ku_trans->abstract ? $ku_trans->abstract : '',
+		]);
+	}
 }

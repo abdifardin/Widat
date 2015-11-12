@@ -52,4 +52,5 @@ return [
 	'untranslated' => 'Untranslated',
 	'untranslated_changed' => 'Untranslated or Changed',
 	'changed' => 'Changed',
+	'inspection' => 'Inspection',
 ];

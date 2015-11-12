@@ -33,6 +33,12 @@
 						</a>
 					</li>
 					<li>
+						<a href="{{ route('admin.inspection') }}">
+							<span class="fa fa-user-secret fa-2x"></span>
+							<span class="label">{{ trans('common.inspection') }}</span>
+						</a>
+					</li>
+					<li>
 						<a href="{{ route('main.edit_account', [
 							'user_ud' => \Illuminate\Support\Facades\Auth::user()->id
 						]) }}">
