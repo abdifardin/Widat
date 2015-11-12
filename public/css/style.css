@@ -95,7 +95,7 @@ body {
     text-shadow: 0 -1px 1px rgba(255, 255, 255, 0.5), 0 1px 1px rgba(0, 0, 0, 0.5);
     font-weight: bold;
 }
-.translation-group>h3.title, .translation-group>p, .translation-group input[type=text] {
+.translation-group>h3.title, .translation-group>div, .translation-group input[type=text] {
     background: #fff;
     border: 1px solid #ccc;
     margin: 10px;
@@ -120,4 +120,6 @@ body {
 .float-right {
     float: right;
 }
-
+.abstract-trans {
+    height: 400px !important;
+}

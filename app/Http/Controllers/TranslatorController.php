@@ -10,11 +10,13 @@ namespace App\Http\Controllers;
 
 
 use App\KuTranslation;
+use App\Nocando;
 use App\ScoreHistory;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class TranslatorController extends Controller
 {
@@ -105,13 +107,59 @@ class TranslatorController extends Controller
 		]);
 	}
 
-	public function translate($topic_id)
+	public function translate(Request $request, $topic_id)
 	{
 		$topic = Topic::where('id', $topic_id)
 			->firstOrFail();
 
+		$user = Auth::user();
+
+		if($topic->user_id != null && $topic->user_id != $user->id) {
+			abort(403, 'This translation has been reserved by ' . $topic->user->name . ' ' . $topic->user->surname .
+				'.');
+		}
+
+		if($request->has('reserve') && !$topic->user_id) {
+			$topic->user_id = $user->id;
+			$topic->save();
+
+			$user->score = $user->score + Config::get('custom.reservation_score');
+			$user->save();
+		}
+
+		$is_owner = $topic->user_id == Auth::user()->id;
+
+		$ku_translation = KuTranslation::where('topic_id', $topic_id)->first();
+
 		return view('translator.translate', [
 			'topic' => $topic,
+			'is_owner' => $is_owner,
+			'ku_translation_title' => ($ku_translation && $ku_translation->topic) ? $ku_translation->topic : '',
+			'ku_translation_abstract' => ($ku_translation && $ku_translation->abstract) ? $ku_translation->abstract : '',
 		]);
+	}
+
+	public function nocando($topic_id) {
+		if(!Auth::check()) {
+			abort(401, 'Unauthorized');
+		}
+
+		$topic = Topic::where('id', $topic_id)->first();
+
+		$user = Auth::user();
+
+		if($topic->user_id != null) {
+			return redirect()->route('translator.topics');
+		}
+
+		$nocando = new Nocando;
+		$nocando->user_id = $user->id;
+		$nocando->topic_id = $topic_id;
+		$nocando->reason = '';
+		$nocando->save();
+
+		$user->score = $user->score + (int)Config::get('custom.nocando_score');
+		$user->save();
+		return redirect()->route('translator.topics');
 	}
 }

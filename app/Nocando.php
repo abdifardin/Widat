@@ -12,7 +12,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class Nocando extends Model
 {
-	protected $primaryKey = ['user_id', 'topic_id'];
+	protected $primaryKey = 'topic_id';
 
     /**
      * The database table used by the model.
@@ -20,7 +20,7 @@ class Nocando extends Model
      * @var string
      */
     protected $table = 'nocandos';
-
+	public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *

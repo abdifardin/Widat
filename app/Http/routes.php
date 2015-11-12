@@ -68,4 +68,8 @@ Route::any('translate/{topic_id}', [
 	'as' => 'translator.translate',
 	'uses' => 'TranslatorController@translate',
 ]);
+Route::get('nocando/{topic_id}', [
+	'as' => 'translator.nocando',
+	'uses' => 'TranslatorController@nocando',
+]);
 

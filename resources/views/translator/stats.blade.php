@@ -4,7 +4,8 @@
 	<div class="content-wrapper ambient-key-shadows">
 		<div class="row">
 			<div class="col-sm-12">
-				<h3 class="text-center">{{ trans('common.score_history') }}</h3>
+				<h3 class="text-center">{{ trans('common.stats') }}
+					<small>{{ $translator->name . ' ' . $translator->surname }}</small></h3>
 				<div class="row">
 					<div class="col-sm-12 col-md-3">
 						<div class="stat-item">

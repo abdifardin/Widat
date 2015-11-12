@@ -18,7 +18,7 @@ class Topic extends Model
      * @var string
      */
     protected $table = 'topics';
-
+	public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *

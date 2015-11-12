@@ -1,3 +1,5 @@
+var sentencePos = 0;
+
 $(function() {
     $('.toggle-down-sibling').click(function() {
         var $sibling = $(this).parent().siblings();
@@ -16,26 +18,46 @@ $(function() {
     });
 
     $("#use-rich-format").change(function() {
+        var summernote = $("#summernote");
+        var ku_trans_abstract = $("textarea#ku_trans_abstract");
         if($(this).prop("checked")) {
-            var ku_trans_abstract = $("textarea#ku_trans_abstract");
-            $("#summernote").summernote({
+            summernote.show();
+            summernote.summernote({
                 height: ku_trans_abstract.outerHeight() - 50,
                 focus: true,
-                onKeyUp: function() {
-                    ku_trans_abstract.html($('#summernote').code());
+                onChange: function() {
+                    ku_trans_abstract.val(summernote.code());
                 }
-            }).code(ku_trans_abstract.text());
+            }).code(ku_trans_abstract.val());
             ku_trans_abstract.hide();
         }
         else {
-            $("#summernote").destroy();
-            $("#ku_trans_abstract").show();
+            summernote.destroy();
+            ku_trans_abstract.show();
+            summernote.hide();
         }
     });
+
+    $("textarea#ku_trans_abstract").change(updateTranslationScore).keyup(updateTranslationScore);
 
     setTimeout(function() {
         $('.action-result').fadeOut(1000);
     }, 5000);
+
+
+    $('.beg-sentence').click(function() {
+        sentencePos = 0;
+        highlightEnAbstract();
+    });
+    $('.rewind-sentence').click(function() {
+        sentencePos = (sentencePos > 0) ? sentencePos - 1 : sentencePos;
+        highlightEnAbstract();
+    });
+    $('.forward-sentence').click(function() {
+        sentencePos++;
+        highlightEnAbstract();
+    });
+    highlightEnAbstract();
 });
 
 function showPassword()
@@ -62,4 +84,47 @@ function hidePassword()
         .val($input.val())
         .insertBefore($input);
     $input.remove();
+}
+
+function highlightEnAbstract()
+{
+    var abstract = $("#hidden-en-abstract").val().trim().replace(/\.(?!\d)/g,'.|').split("|");
+    if(sentencePos >= abstract.length) {
+        sentencePos = abstract.length;
+    }
+    var done = "";
+    var current = "";
+    var next = "";
+
+
+    for(var i = 0; i < sentencePos; i++) {
+        if(abstract[i])
+            done += abstract[i];
+    }
+    if(done.length) {
+        done = "<span class='text-success'>" + done + "</span>";
+    }
+
+    if(abstract[sentencePos])
+        current += abstract[sentencePos];
+    if(current.length) {
+        current = "<span class='text-primary'>" + current + "</span>";
+    }
+
+    for(var i = sentencePos + 1; i < abstract.length; i++) {
+        if(abstract[i])
+            next += abstract[i];
+    }
+    if(next.length) {
+        next = "<span class='next-sentences'>" + next + "</span>";
+    }
+
+    $("p#en-abstract").html(done + current + next);
+}
+
+function updateTranslationScore()
+{
+    var plaintext = $('textarea#ku_trans_abstract').val().replace(/<\/?[^>]+(>|$)/g, "");
+    var wordcount = plaintext.split(" ").length;
+    $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : "0");
 }

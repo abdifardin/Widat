@@ -44,4 +44,8 @@ return [
 	'kurdish' => 'Kurdish',
 	'reserve_topic' => 'Reserve Topic',
 	'use_rich_format' => 'Use Formatted Text',
+	'next_sent' => 'Next Sentence',
+	'prev_sent' => 'Previous Sentence',
+	'beg_sent' => 'Back to the Beginning',
+	'nocando' => 'No Can Do',
 ];
