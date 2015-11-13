@@ -109,7 +109,7 @@
 							<tr>
 								<td>{{ $translator->id }}</td>
 								<td>
-									<a href="">
+									<a href="{{ route('translator.stats', ['user_id' => $translator->id]) }}">
 										<span class="fa fa-envelope"></span>
 										{{ $translator->email }}
 									</a>

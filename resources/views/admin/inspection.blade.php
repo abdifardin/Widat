@@ -12,6 +12,8 @@
 							{{ $translator->name . ' ' . $translator->surname }}
 						</a>
 					@endforeach
+				@elseif($topic == null)
+					<h3 class="text-center text-danger">No topics have been translated by this user.</h3>
 				@else
 					<div class="translation-group">
 						<h3 class="lang-name navbar-left">{{ trans('common.english') }}</h3>
@@ -30,7 +32,6 @@
 
 						<h3 class="title rtl-text">
 							{{ str_replace('_', ' ', $ku_trans_title) }}
-							<div class="clearfix"></div>
 						</h3>
 						<div>
 							<p id="en-abstract" class="rtl-text">

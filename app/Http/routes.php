@@ -19,6 +19,10 @@ Route::any('account/{user_id}/edit', [
 	'as' => 'main.edit_account',
 	'uses' => 'MainController@editAccount',
 ]);
+Route::any('peek', [
+	'as' => 'main.peek',
+	'uses' => 'MainController@peek',
+]);
 
 // Authentication routes...
 Route::get('auth/login', [

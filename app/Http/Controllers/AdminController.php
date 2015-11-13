@@ -144,6 +144,12 @@ class AdminController extends Controller
 			$topic_ids[] = $t->id;
 		}
 
+		if(!count($topic_ids)) {
+			return view('admin.inspection',[
+				'topic' => null,
+			]);
+		}
+
 		$topic = Topic::where('id', $topic_ids[array_rand($topic_ids)])->first();
 		$ku_trans = KuTranslation::where('topic_id', $topic->id)->first();
 

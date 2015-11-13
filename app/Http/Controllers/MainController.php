@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 
 
+use App\KuTranslation;
+use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +42,6 @@ class MainController extends Controller
 			return redirect()->route('auth.login');
 		}
 	}
-
 
 	public function editAccount(Request $request, $user_id)
 	{
@@ -99,6 +100,40 @@ class MainController extends Controller
 			'user' 			=> $user,
 			'action_result' => $action_result,
 			'action_error' 	=> $action_error,
+		]);
+	}
+
+	public function peek(Request $request)
+	{
+		if(!Auth::check()) {
+			abort(401, 'You must be logged in to access this area.');
+			return null;
+		}
+
+		$topic = str_replace(' ', '_', trim($request->get('topic', '')));
+		if(!strlen($topic))
+			$topic = null;
+		$topic = Topic::where('topic', $topic)->first();
+		if(!$topic) {
+			return response()->json([
+				'error' => true,
+			]);
+		}
+
+		$ku_trans = KuTranslation::where('topic_id', $topic->id)->first();
+		$ku_title = null;
+		$ku_abstract = null;
+		if($ku_trans) {
+			$ku_title = $ku_trans->topic;
+			$ku_abstract = $ku_trans->abstract;
+		}
+
+		return response()->json([
+			'error' => false,
+			'topic' => $topic->topic,
+			'abstract' => $topic->abstract,
+			'ku_topic' => $ku_title,
+			'ku_abstract' => $ku_abstract,
 		]);
 	}
 }

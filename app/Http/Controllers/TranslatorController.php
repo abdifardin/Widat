@@ -83,7 +83,8 @@ class TranslatorController extends Controller
 		for($i = 1; $i <= $history_count; $i++) {
 			$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
 			$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
-			$sh = ScoreHistory::whereBetween('created_at', [ $start_date, $end_date ])
+			$sh = ScoreHistory::where('user_id', $user_id)
+				->whereBetween('created_at', [ $start_date, $end_date ])
 				->orderBy('created_at', 'DESC')
 				->first();
 			$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?

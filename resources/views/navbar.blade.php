@@ -79,9 +79,10 @@
 				</li>
 
 			</ul>
-			<form class="navbar-form navbar-right" role="search">
+			<form id="search-form" class="navbar-form navbar-right" action="{{ route('main.peek') }}" method="post">
+				{!! csrf_field() !!}
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Search Topics">
+					<input id="topic-peek-search" type="text" class="form-control" placeholder="Search Topics">
 				</div>
 			</form>
 		</div><!-- /.navbar-collapse -->

@@ -44,6 +44,45 @@
 
 		@include('footer')
 
+		<div class="modal fade topic-peek-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">{{ trans('common.peek') }}</h4>
+					</div>
+					<div class="modal-body">
+						<h4 class="text-center text-danger topic-not-found hidden">
+							{{ trans('common.topic_not_found') }}
+						</h4>
+
+						<div class="translation-group en hidden">
+							<h3 class="lang-name navbar-left">{{ trans('common.english') }}</h3>
+							<h3 id="peek-en-title" class="title"></h3>
+							<div><p id="peek-en-abstract"></p></div>
+						</div>
+						<p id="peek-no-ku-trans" class="text-center text-danger no-trans hidden">
+							<br />
+							{{ trans('common.no_trans') }}
+							<br />
+						</p>
+						<div class="translation-group ku hidden">
+							<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
+							<h3 id="peek-ku-title" class="title rtl-text"></h3>
+							<div>
+								<p id="peek-ku-abstract" class="rtl-text"></p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							{{ trans('common.close') }}
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
 		<script src="{{ url('js/jquery.js') }}"></script>
 		<script src="{{ url('js/jquery-ui.js') }}"></script>
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>

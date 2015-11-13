@@ -1,6 +1,11 @@
 var sentencePos = 0;
 
 $(function() {
+    $('#search-form').submit(function() {
+        peek();
+        return false;
+    });
+
     $('.toggle-down-sibling').click(function() {
         var $sibling = $(this).parent().siblings();
         $sibling.toggleClass('hidden');
@@ -40,6 +45,38 @@ $(function() {
     highlightEnAbstract();
 });
 
+function peek()
+{
+    var url = $('#search-form').prop('action');
+    var token = $('input[name=_token]').val();
+    var title = $('#topic-peek-search').val();
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {topic: title, _token: token},
+        success: function(data) {
+            $('.topic-peek-modal').modal('show');
+            if(data.error) {
+                $('.topic-peek-modal .topic-not-found').removeClass('hidden');
+            }
+            else {
+                $('.topic-peek-modal .translation-group.en').removeClass('hidden');
+                $('#peek-en-title').html(data.topic);
+                $('#peek-en-abstract').html(data.abstract);
+
+                if(data.ku_topic) {
+                    $('.topic-peek-modal .translation-group.ku').removeClass('hidden');
+                    $('#peek-ku-title').html(data.ku_topic);
+                    $('#peek-ku-abstract').html(data.ku_abstract);
+                }
+                else {
+                    $('#peek-no-ku-trans').removeClass('hidden');
+                }
+            }
+        }
+    });
+}
+
 function showPassword()
 {
     $(this).children('span.fa').removeClass('fa-eye-slash').addClass('fa-eye');
@@ -68,6 +105,10 @@ function hidePassword()
 
 function highlightEnAbstract()
 {
+    if(!$("#hidden-en-abstract").length) {
+        return;
+    }
+
     var abstract = $("#hidden-en-abstract").val().trim().replace(/\.(?!\d)/g,'.|').split("|");
     if(sentencePos >= abstract.length) {
         sentencePos = abstract.length;
@@ -104,7 +145,11 @@ function highlightEnAbstract()
 
 function updateTranslationScore()
 {
-    var plaintext = $('textarea#ku_trans_abstract').val().trim();
+    var abstract = $('textarea#ku_trans_abstract');
+    if(!abstract.length) {
+        return;
+    }
+    var plaintext = abstract.val().trim();
     var words = plaintext.split(" ");
     var wordcount = 0;
     for(var i = 0; i < words.length; i++) {
@@ -113,8 +158,7 @@ function updateTranslationScore()
         }
     }
 
-    var current_score = $('#current_score').val();
-    wordcount -= current_score;
+    wordcount -= $('#current_score').val();
 
     $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
 }
