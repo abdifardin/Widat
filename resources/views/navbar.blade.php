@@ -82,7 +82,7 @@
 			<form id="search-form" class="navbar-form navbar-right" action="{{ route('main.suggestions') }}" method="post">
 				{!! csrf_field() !!}
 				<div class="form-group search-form-group">
-					<input id="topic-peek-search" type="text" class="form-control" placeholder="Search Topics">
+					<input id="topic-peek-search" type="text" class="form-control" placeholder="Type and hit enter">
 					<div class="suggestions text-center hidden">
 						<div class="list-group">
 						</div>
