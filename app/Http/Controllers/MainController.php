@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Helpers\Utilities;
 use App\KuTranslation;
 use App\Topic;
 use App\User;
@@ -133,6 +134,7 @@ class MainController extends Controller
 		$topic = str_replace(' ', '_', trim($request->get('topic', '')));
 		if(!strlen($topic))
 			$topic = null;
+		Utilities::updateTopicFromWikipedia($topic);
 		$topic = Topic::where('topic', $topic)->first();
 		if(!$topic) {
 			return response()->json([

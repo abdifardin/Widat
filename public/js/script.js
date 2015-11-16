@@ -91,12 +91,14 @@ function peek()
     var url = $('#peek-form').prop('action');
     var token = $('input[name=_token]').val();
     var title = $(this).html();
+    $('.topic-peek-modal').modal('show');
+    $('.topic-peek-modal div.loader').removeClass('hidden');
     $.ajax({
         type: "POST",
         url: url,
         data: {topic: title, _token: token},
         success: function(data) {
-            $('.topic-peek-modal').modal('show');
+            $('.topic-peek-modal div.loader').addClass('hidden');
             if(data.error) {
                 $('.topic-peek-modal .topic-not-found').removeClass('hidden');
             }

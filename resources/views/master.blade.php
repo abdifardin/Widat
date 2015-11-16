@@ -52,6 +52,7 @@
 						<h4 class="modal-title">{{ trans('common.peek') }}</h4>
 					</div>
 					<div class="modal-body">
+						<div class="text-center loader hidden"><span class="fa fa-cog fa-4x fa-spin"></span></div>
 						<h4 class="text-center text-danger topic-not-found hidden">
 							{{ trans('common.topic_not_found') }}
 						</h4>

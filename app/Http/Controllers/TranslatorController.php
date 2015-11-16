@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\Utilities;
 use App\KuTranslation;
 use App\Nocando;
 use App\ScoreHistory;
@@ -177,6 +178,11 @@ class TranslatorController extends Controller
 		if($topic->user_id != null && $topic->user_id != $user->id) {
 			abort(403, 'This translation has been reserved by ' . $topic->user->name . ' ' . $topic->user->surname .
 				'.');
+		}
+
+		if(strlen($topic->abstract) < 50) {
+			Utilities::updateTopicFromWikipedia($topic->topic);
+			$topic = Topic::where('id', $topic_id)->first();
 		}
 
 		$ku_translation = KuTranslation::where('topic_id', $topic_id)->first();
