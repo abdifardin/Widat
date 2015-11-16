@@ -23,6 +23,10 @@ Route::any('peek', [
 	'as' => 'main.peek',
 	'uses' => 'MainController@peek',
 ]);
+Route::any('suggestions', [
+	'as' => 'main.suggestions',
+	'uses' => 'MainController@suggestions',
+]);
 
 // Authentication routes...
 Route::get('auth/login', [

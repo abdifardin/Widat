@@ -123,3 +123,23 @@ body {
     height: 400px !important;
 }
 .rtl-text { direction: rtl; text-align: right; }
+
+.search-form-group { position: relative; }
+.suggestions {
+    background: #fff;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 10px;
+    position: absolute;
+    width: 200%;
+    left: -100%;
+    margin-top: 5px;
+    max-height: 750%;
+    z-index: 999;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.suggestions .list-group {
+    margin: 0;
+    overflow: hidden;
+}

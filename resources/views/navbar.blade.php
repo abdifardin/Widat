@@ -40,7 +40,7 @@
 					</li>
 					<li>
 						<a href="{{ route('main.edit_account', [
-							'user_ud' => \Illuminate\Support\Facades\Auth::user()->id
+							'user_id' => \Illuminate\Support\Facades\Auth::user()->id
 						]) }}">
 							<span class="fa fa-pencil fa-2x"></span>
 							<span class="label">{{ trans('common.edit_account') }}</span>
@@ -63,8 +63,8 @@
 					</li>
 					<li>
 						<a href="{{ route('main.edit_account', [
-						'user_ud' => \Illuminate\Support\Facades\Auth::user()->id
-					]) }}">
+							'user_id' => \Illuminate\Support\Facades\Auth::user()->id
+						]) }}">
 							<span class="fa fa-pencil fa-2x"></span>
 							<span class="label">{{ trans('common.edit_account') }}</span>
 						</a>
@@ -79,12 +79,17 @@
 				</li>
 
 			</ul>
-			<form id="search-form" class="navbar-form navbar-right" action="{{ route('main.peek') }}" method="post">
+			<form id="search-form" class="navbar-form navbar-right" action="{{ route('main.suggestions') }}" method="post">
 				{!! csrf_field() !!}
-				<div class="form-group">
+				<div class="form-group search-form-group">
 					<input id="topic-peek-search" type="text" class="form-control" placeholder="Search Topics">
+					<div class="suggestions text-center hidden">
+						<div class="list-group">
+						</div>
+					</div>
 				</div>
 			</form>
+			<form class="hidden" action="{{ route('main.peek') }}" id="peek-form"></form>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>

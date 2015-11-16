@@ -103,6 +103,26 @@ class MainController extends Controller
 		]);
 	}
 
+	public function suggestions(Request $request)
+	{
+		if(!Auth::check()) {
+			abort(401, 'You must be logged in to access this area.');
+			return null;
+		}
+
+		$partial_topic = str_replace(' ', '_', trim($request->get('topic', '')));
+		$topics = Topic::where('topic', 'LIKE', "%{$partial_topic}%")
+			->take(50)->get();
+		$topics_array = [];
+		foreach($topics as $topic) {
+			$topics_array[] = $topic->topic;
+		}
+
+		return response()->json([
+			'topics' => $topics_array,
+		]);
+	}
+
 	public function peek(Request $request)
 	{
 		if(!Auth::check()) {

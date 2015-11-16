@@ -2,9 +2,11 @@ var sentencePos = 0;
 
 $(function() {
     $('#search-form').submit(function() {
-        peek();
+        suggestions();
         return false;
     });
+
+    $(document).click(hideSuggestions);
 
     $('.toggle-down-sibling').click(function() {
         var $sibling = $(this).parent().siblings();
@@ -45,11 +47,50 @@ $(function() {
     highlightEnAbstract();
 });
 
-function peek()
+function suggestions()
 {
     var url = $('#search-form').prop('action');
     var token = $('input[name=_token]').val();
     var title = $('#topic-peek-search').val();
+    $('div.suggestions').removeClass('hidden');
+    var listGroup = $('.suggestions .list-group');
+    listGroup.html('<span class="fa fa-cog fa-spin"></span>');
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {topic: title, _token: token},
+        success: function(data) {
+            var topics = data.topics;
+
+            if(!topics) {
+                listGroup.html('<p class="text-danger text-center">Error!</div>');
+            }
+            else if(!topics.length) {
+                listGroup.html('<p class="text-danger text-center">No Hits Found</div>');
+            }
+            else {
+                var items = "";
+                for(var i = 0; i < topics.length; i++) {
+                    items += "<a href='javascript:;' class='list-group-item peek-link'>" + topics[i] + "</a>";
+                }
+                listGroup.html(items);
+                $('.peek-link').click(peek);
+            }
+        }
+    });
+}
+
+function hideSuggestions()
+{
+    $('.suggestions .list-group').html("");
+    $('.suggestions').addClass("hidden");
+}
+
+function peek()
+{
+    var url = $('#peek-form').prop('action');
+    var token = $('input[name=_token]').val();
+    var title = $(this).html();
     $.ajax({
         type: "POST",
         url: url,
