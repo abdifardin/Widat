@@ -32,12 +32,15 @@ class Utilities
 		catch(\Exception $ex) { return; }
 
 		// pattern for first match of a paragraph
-		$pattern = '#<p>(.*)</p>#Us'; // http://www.phpbuilder.com/board/showthread.php?t=10352690
+		$pattern = '#<p>(.*)</p>#Us';
 		$abstract = "";
-		if(preg_match($pattern, $content, $matches))
+		if(preg_match_all($pattern, $content, $matches))
 		{
 			// print $matches[0]; // content of the first paragraph (including wrapping <p> tag)
-			$abstract = strip_tags($matches[1]); // Content of the first paragraph without the HTML tags.
+			//$abstract = strip_tags($matches[1]); // Content of the first paragraph without the HTML tags.
+			foreach($matches[1] as $p) {
+				$abstract .= strip_tags($p) . "\n";
+			}
 		}
 
 		Topic::where('topic', $topic)->update(['abstract' => $abstract]);
