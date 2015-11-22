@@ -10,6 +10,16 @@
 					<h3 class="panel-title">{{ trans('common.login') }}</h3>
 				</div>
 
+				@if (count($errors) > 0)
+					<div class="alert alert-danger">
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }} </li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
+
 				<div class="panel-body">
 					<label for="email">{{ trans('common.email') }}</label>
 					<input type="email" class="form-control" name="email" id="email"

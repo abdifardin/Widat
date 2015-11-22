@@ -18,19 +18,18 @@
 									</a>
 								</small>
 							</h3>
-							@if($last_score > $translator->score)
+							@if($last_score >= $translator->score)
 								<p class="count text-center text-danger">
 							@elseif($last_score < $translator->score)
 								<p class="count text-center text-success">
-									@endif
-
-									@if($last_score > $translator->score)
-										<span class="fa fa-caret-down"></span>
-									@elseif($last_score < $translator->score)
-										<span class="fa fa-caret-up"></span>
-									@endif
-									{{ number_format($translator->score) }}
-								</p>
+							@endif
+								@if($last_score > $translator->score)
+									<span class="fa fa-caret-down"></span>
+								@elseif($last_score < $translator->score)
+									<span class="fa fa-caret-up"></span>
+								@endif
+								{{ number_format($translator->score) }}
+							</p>
 						</div>
 					</div>
 
