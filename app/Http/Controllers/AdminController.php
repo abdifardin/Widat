@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\KuTranslation;
+use App\ScoreHistory;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
@@ -36,11 +37,44 @@ class AdminController extends Controller
 		$translators_count = User::where('user_type', 'translator')->count();
 		$topics_count = Topic::count();
 		$ku_translations_count = KuTranslation::count();
+
+		$translators = User::where('user_type', 'translator')->get();
+		$translators_stats = array();
+
+		foreach($translators as $t) {
+			$last_score_total = ScoreHistory::where('user_id', $t->id)
+				->where('created_at', '<', date('Y-m-d'))
+				->orderBy('created_at', 'DESC')
+				->first();
+
+			$score_today_total = ScoreHistory::where('user_id', $t->id)
+				->where('created_at', '>', date('Y-m-d'))
+				->orderBy('created_at', 'DESC')
+				->first();
+
+			if(!$score_today_total) {
+				$score_today = 0;
+			}
+			else if(!$last_score_total) {
+				$score_today = $score_today_total->score;
+			}
+			else {
+				$score_today = $score_today_total->score - $last_score_total->score;
+			}
+
+			$translators_stats[] = array(
+				'id' => $t->id,
+				'name' => $t->name . ' ' . $t->surname,
+				'score_today' => $score_today,
+			);
+		}
+
 		return view('admin.home', [
 			'admins_count' => $admins_count,
 			'translators_count' => $translators_count,
 			'topics_count' => $topics_count,
 			'ku_translations_count' => $ku_translations_count,
+			'translators_stats' => $translators_stats,
 		]);
 	}
 

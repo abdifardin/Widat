@@ -38,6 +38,25 @@
 							</p>
 						</div>
 					</div>
+
+					<div class="col-sm-12">
+						<h3 class="text-center">Today's Scores</h3>
+					</div>
+
+					@foreach($translators_stats as $ts)
+						<div class="col-sm-12 col-md-3">
+							<div class="stat-item">
+								<h3 class="text-center">
+									<a href="{{ route('translator.stats', ['user_id' => $ts['id']]) }}">
+										{{ $ts['name'] }}
+									</a>
+								</h3>
+								<p class="count text-center">
+									{{ number_format($ts['score_today']) }}
+								</p>
+							</div>
+						</div>
+					@endforeach
 				</div>
 			</div>
 		</div>

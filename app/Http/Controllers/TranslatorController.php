@@ -100,6 +100,7 @@ class TranslatorController extends Controller
 	public function topics(Request $request)
 	{
 		$filter_all = false;
+		$filter_my = false;
 		$filter_untranslated_changed = false;
 		$filter_untranslated = false;
 		$filter_changed = false;
@@ -109,6 +110,9 @@ class TranslatorController extends Controller
 			switch($request->get('filter', null)) {
 				case 'all':
 					$filter_all = true;
+					break;
+				case 'my':
+					$filter_my = true;
 					break;
 				case 'untranslated':
 					$filter_untranslated = true;
@@ -128,6 +132,10 @@ class TranslatorController extends Controller
 
 		if($filter_all) {
 			$topics = Topic::paginate($this->topics_per_page);
+		}
+		else if($filter_my) {
+			$topics = Topic::where('topics.user_id', Auth::user()->id)
+				->paginate($this->topics_per_page);
 		}
 		else if($filter_untranslated) {
 			$topics = Topic::where('topics.user_id', null)
@@ -161,6 +169,7 @@ class TranslatorController extends Controller
 		return view('translator.topics', [
 			'topics' => $topics,
 			'filter_all' => $filter_all,
+			'filter_my' => $filter_my,
 			'filter_untranslated' => $filter_untranslated,
 			'filter_changed' => $filter_changed,
 			'filter_nocando' => $filter_nocando,

@@ -149,7 +149,7 @@
 				</div>
 				<div class="modal-footer">
 					<form class="form-inline" action="" method="post">
-						{!!csrf_field() !!}
+						{!! csrf_field() !!}
 						<input type="hidden" name="user_id" />
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							<span class="fa fa-smile-o"></span>
