@@ -1,4 +1,5 @@
 var sentencePos = 0;
+var disallow_keystroke_register = false;
 
 $(function() {
     $('#search-form').submit(function() {
@@ -45,6 +46,13 @@ $(function() {
         highlightEnAbstract();
     });
     highlightEnAbstract();
+
+    $('.register-keystroke').keyup(function() {
+        registerKeystroke();
+    });
+
+    setTimeout(registerActivity, 1000);
+    setTimeout(refreshStatuses, 1000);
 });
 
 function suggestions()
@@ -204,4 +212,49 @@ function updateTranslationScore()
     wordcount -= $('#current_score').val();
 
     $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
+}
+
+function registerActivity()
+{
+    var url = $('#reg-activity-url').val();
+    $.get(url, function() {
+        setTimeout(registerActivity, 1000);
+    });
+}
+
+function registerKeystroke()
+{
+    if(disallow_keystroke_register) {
+        return;
+    }
+    var url = $('#reg-keystroke-url').val();
+    $.get(url);
+    disallow_keystroke_register = true;
+    setTimeout(function() {
+        disallow_keystroke_register = false;
+    }, 1000);
+}
+
+function refreshStatuses() {
+    var statusUrl = $('#get-statuses-url').val();
+
+    $.get(statusUrl, function(data) {
+        for(var i = 0; i < data.length; i++) {
+            if(data[i].typing == "typing") {
+                $('#typing-status-' + data[i].id).removeClass('hidden');
+            }
+            else {
+                $('#typing-status-' + data[i].id).addClass('hidden');
+            }
+            if(data[i].online == "online") {
+                $('#online-status-' + data[i].id).removeClass('offline');
+                $('#online-status-' + data[i].id).addClass('online');
+            }
+            else {
+                $('#online-status-' + data[i].id).removeClass('online');
+                $('#online-status-' + data[i].id).addClass('offline');
+            }
+        }
+        setTimeout(refreshStatuses, 1000);
+    });
 }

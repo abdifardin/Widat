@@ -6,12 +6,23 @@
 			<div class="col-sm-12">
 				<h3 class="text-center">{{ trans('common.inspection') }}</h3>
 				@if(isset($translators))
-					@foreach($translators as $translator)
-						<a href="{{ route('admin.inspection', ['user_id' => $translator->id]) }}"
-							class="btn btn-primary">
-							{{ $translator->name . ' ' . $translator->surname }}
-						</a>
-					@endforeach
+					<div class="row">
+						@foreach($translators as $translator)
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+								<a href="{{ route('admin.inspection', ['user_id' => $translator->id]) }}"
+								   class="btn btn-primary btn-block btn-lg">
+									<span id="online-status-{{ $translator->id }}" class="online-status"></span>
+
+									{{ $translator->name . ' ' . $translator->surname }}
+
+
+									<span id="typing-status-{{ $translator->id }}"
+											class="fa fa-keyboard-o hidden"></span>
+								</a>
+								<br />
+							</div>
+						@endforeach
+					</div>
 				@elseif($topic == null)
 					<h3 class="text-center text-danger">No topics have been translated by this user.</h3>
 				@else

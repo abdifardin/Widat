@@ -237,7 +237,8 @@ class TranslatorController extends Controller
 		]);
 	}
 
-	public function nocando($topic_id) {
+	public function nocando($topic_id)
+	{
 		if(!Auth::check()) {
 			abort(401, 'Unauthorized');
 		}
@@ -259,6 +260,53 @@ class TranslatorController extends Controller
 		$user->score = $user->score + (int)Config::get('custom.nocando_score');
 		$user->save();
 		return redirect()->route('translator.topics');
+	}
+
+	public function registerKeystroke()
+	{
+		$uid = Auth::user()->id;
+
+		User::where('id', $uid)->update([
+			'last_activity' => date('Y-m-d H:i:s'),
+			'last_keystroke_at' => date('Y-m-d H:i:s'),
+		]);
+	}
+
+	public function registerActivity()
+	{
+		$uid = Auth::user()->id;
+
+		User::where('id', $uid)->update([
+			'last_activity' => date('Y-m-d H:i:s'),
+		]);
+	}
+
+	public function getStatuses()
+	{
+		$translators = User::where('user_type', 'translator')->get();
+		$online_status = array();
+
+		foreach($translators as $t) {
+			$temp = array();
+			$temp['id'] = $t->id;
+
+			if(strtotime($t->last_activity) > strtotime("-10 seconds")) {
+				$temp['online'] = 'online';
+			}
+			else {
+				$temp['online'] = 'offline';
+			}
+
+			if(strtotime($t->last_keystroke_at) > strtotime("-3 seconds")) {
+				$temp['typing'] = 'typing';
+			}
+			else {
+				$temp['typing'] = 'not typing';
+			}
+			$online_status[] = $temp;
+		}
+
+		return response()->json($online_status);
 	}
 
 	private function calculateTranslationScore($translation)

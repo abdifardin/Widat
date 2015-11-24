@@ -83,4 +83,17 @@ Route::get('nocando/{topic_id}', [
 	'as' => 'translator.nocando',
 	'uses' => 'TranslatorController@nocando',
 ]);
+Route::get('register-activity', [
+	'as' => 'translator.register_activity',
+	'uses' => 'TranslatorController@registerActivity',
+]);
+Route::get('register-keystroke', [
+	'as' => 'translator.register_keystroke',
+	'uses' => 'TranslatorController@registerKeystroke',
+]);
+Route::get('get-statuses', [
+	'as' => 'translator.get_statuses',
+	'uses' => 'TranslatorController@getStatuses',
+]);
+
 

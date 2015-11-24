@@ -143,3 +143,21 @@ body {
     margin: 0;
     overflow: hidden;
 }
+
+.online-status.online {
+    background: #fc0;
+    border: 2px solid #fffa90;
+    border-radius: 20px;
+    width: 13px;
+    height: 13px;
+    display: inline-block;
+}
+
+.online-status.offline {
+    background: #333;
+    border: 2px solid #999;
+    border-radius: 20px;
+    width: 13px;
+    height: 13px;
+    display: inline-block;
+}
