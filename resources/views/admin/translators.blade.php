@@ -114,7 +114,12 @@
 										{{ $translator->email }}
 									</a>
 								</td>
-								<td>{{ $translator->name . ' ' . $translator->surname }}</td>
+								<td>
+									<span id="online-status-{{ $translator->id }}" class="online-status"></span>
+									{{ $translator->name . ' ' . $translator->surname }}
+									<span id="typing-status-{{ $translator->id }}"
+										  class="fa fa-keyboard-o hidden"></span>
+								</td>
 								<td>
 									<span class="fa fa-star"></span>
 									{{ number_format($translator->score) }}
