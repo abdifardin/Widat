@@ -31,7 +31,7 @@
 
 						<h3 class="title">{{ str_replace('_', ' ', $topic->topic) }}</h3>
 
-						<div>
+						<div class="abstract-wrapper">
 							<p id="en-abstract">
 								{{ $topic->abstract }}
 							</p>
@@ -42,9 +42,10 @@
 						<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
 
 						<h3 class="title rtl-text">
-							{{ str_replace('_', ' ', $ku_trans_title) }}
+							&nbsp; {{ str_replace('_', ' ', $ku_trans_title) }}
 						</h3>
-						<div>
+
+						<div class="abstract-wrapper">
 							<p id="en-abstract" class="rtl-text">
 								{{ $ku_trans_abstract }}
 							</p>
