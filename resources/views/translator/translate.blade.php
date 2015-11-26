@@ -11,7 +11,7 @@
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">{{ trans('common.english') }}</h3>
 
-					<h3 class="title">{{ str_replace('_', ' ', $topic->topic) }}</h3>
+					<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
 
 					<div>
 						<a href="javascript:;" class="beg-sentence btn btn-warning">

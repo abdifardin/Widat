@@ -57,7 +57,10 @@ class TranslatorController extends Controller
 
 		$no_can_dos = $translator->nocandos->count();
 
-		$translated = Topic::where('user_id', $user_id)->count();
+		$translated = Topic::where('user_id', $user_id)
+			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+			->whereNotNull('ku_translations.abstract')
+			->count();
 
 		return view('translator.stats', [
 			'translator' => $translator,
