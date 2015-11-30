@@ -192,7 +192,7 @@ class TranslatorController extends Controller
 				'.');
 		}
 
-		if(strlen($topic->abstract) < 50) {
+		if(strlen($topic->abstract) < 200) {
 			Utilities::updateTopicFromWikipedia($topic->topic);
 			$topic = Topic::where('id', $topic_id)->first();
 		}
