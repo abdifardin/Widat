@@ -50,17 +50,6 @@
 					<div class="col-sm-12 col-md-3">
 						<div class="stat-item">
 							<h3 class="text-center">
-								{{ trans('common.nocandos') }}
-							</h3>
-							<p class="count text-center text-danger">
-								{{ number_format($no_can_dos) }}
-							</p>
-						</div>
-					</div>
-
-					<div class="col-sm-12 col-md-3">
-						<div class="stat-item">
-							<h3 class="text-center">
 								{{ trans('common.translated') }}
 							</h3>
 							<p class="count text-center">

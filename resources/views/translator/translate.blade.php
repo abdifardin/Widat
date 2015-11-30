@@ -52,12 +52,6 @@
 								<span class="fa fa-circle-o-notch fa-spin hidden"></span>
 							</button>
 							@else
-							<a class="btn btn-danger nocando-topic" href="{{ route('translator.nocando',
-								['topic_id' => $topic->id]) }}">
-								<span class="fa fa-life-ring"></span>
-								{{ trans('common.nocando') }}
-								<span class="badge">-5</span>
-							</a>
 							<button type="submit" name="reserve" value="1" class="btn btn-primary reserve-topic">
 								<span class="fa fa-flag"></span>
 								{{ trans('common.reserve_topic') }}

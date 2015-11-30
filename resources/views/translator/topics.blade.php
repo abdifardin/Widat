@@ -50,14 +50,6 @@
 						{{ trans('common.changed') }}
 					</a>
 
-					&nbsp;&nbsp;&nbsp;&nbsp;
-
-					<a href="{{ route('translator.topics') }}?filter=nocando" class="btn btn-primary">
-						@if(isset($filter_nocando) && $filter_nocando)
-							<span class="fa fa-check"></span>
-						@endif
-						{{ trans('common.nocandos') }}
-					</a>
 				</div>
 
 				<br />
