@@ -27,8 +27,8 @@
 							{{ trans('common.next_sent') }}
 						</a>
 
-
 						<br /><br />
+
 						<p id="en-abstract">
 							{{ $topic->abstract }}
 						</p>
@@ -71,12 +71,14 @@
 
 						<div class="form-group">
 							<input type="text" name="ku_trans_title" class="form-control rtl-text register-keystroke"
-								   value="{{
-							$ku_translation_title }}" />
+								   value="{{$ku_translation_title }}" placeholder="سەردێڕ"
+									@if(!$is_owner) disabled @endif
+									/>
 						</div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
-									  name="ku_trans_abstract">{{ $ku_translation_abstract }}</textarea>
+									  name="ku_trans_abstract" placeholder="ئەبستراکت" @if(!$is_owner) disabled @endif>{{
+									  $ku_translation_abstract }}</textarea>
 							<input type="hidden" id="current_score" value="{{ $current_score }}" />
 						</div>
 					</form>
@@ -84,5 +86,4 @@
 			</div>
 		</div>
 	</div>
-
 @endsection
