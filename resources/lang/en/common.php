@@ -58,4 +58,5 @@ return [
 	'topic_not_found' => 'The topic was not found. Try using copy and paste instead of typing.',
 	'no_trans' => 'No translation has been added for this topic yet.',
 	'my_topics' => 'My Topics',
+	'translated_topics' => 'Translated Topics',
 ];

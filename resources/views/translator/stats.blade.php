@@ -53,7 +53,7 @@
 								{{ trans('common.translated') }}
 							</h3>
 							<p class="count text-center">
-								{{ number_format($translated) }}
+								{{ number_format($translated->count()) }}
 							</p>
 						</div>
 					</div>
@@ -66,6 +66,23 @@
 							<p class="text-center">
 								{!! nl2br(date("l, d F Y \n H:i:s e", strtotime($translator->last_activity))) !!}
 							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<h3 class="text-center">{{ trans('common.translated_topics') }}</h3>
+
+						<div class="row">
+							@foreach($translated as $t)
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+								<a href="javascript:;"
+								   class="btn btn-block btn-default peek-link">
+									{{ urldecode($t->topic) }}
+								</a>
+							</div>
+							@endforeach
 						</div>
 					</div>
 				</div>

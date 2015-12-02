@@ -59,6 +59,8 @@ $(function() {
             return 'You have unsaved changes!';
         }
     });
+
+    $('.peek-link').click(peek);
 });
 
 function suggestions()
@@ -107,6 +109,9 @@ function peek()
     var title = $(this).html();
     $('.topic-peek-modal').modal('show');
     $('.topic-peek-modal div.loader').removeClass('hidden');
+    $('.topic-peek-modal .topic-not-found').addClass('hidden');
+    $('.topic-peek-modal .translation-group.en').addClass('hidden');
+    $('.topic-peek-modal .translation-group.ku').addClass('hidden');
     $.ajax({
         type: "POST",
         url: url,

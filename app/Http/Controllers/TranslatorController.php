@@ -58,7 +58,8 @@ class TranslatorController extends Controller
 		$translated = Topic::where('user_id', $user_id)
 			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
 			->whereNotNull('ku_translations.abstract')
-			->count();
+			->select("topics.*", "topics.topic")
+			->get();
 
 		return view('translator.stats', [
 			'translator' => $translator,
