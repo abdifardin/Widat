@@ -1,5 +1,6 @@
 var sentencePos = 0;
 var disallow_keystroke_register = false;
+var translation_save_clicked = false;
 
 $(function() {
     $('#search-form').submit(function() {
@@ -55,9 +56,14 @@ $(function() {
     setTimeout(refreshStatuses, 1000);
 
     $(window).on('beforeunload', function() {
-        if (checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null) {
+        if (checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null &&
+            !translation_save_clicked) {
             return 'You have unsaved changes!';
         }
+    });
+
+    $('#translation-form').submit(function() {
+        translation_save_clicked = true;
     });
 
     $('.peek-link').click(peek);

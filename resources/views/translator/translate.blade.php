@@ -40,7 +40,7 @@
 
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
-					<form action="" method="post">
+					<form action="" method="post" id="translation-form">
 						{!! csrf_field() !!}
 
 						<div class="form-toolbar float-right">
