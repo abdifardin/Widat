@@ -303,6 +303,7 @@ function refreshCsrf()
     var url = '/csrf';
     $.get(url, function(data) {
         $('input[name=_token]').val(data.csrf);
+        $('meta[name=csrf-token]').attr('content', data.csrf);
         setTimeout(refreshCsrf, 1000 * 60);
     });
 }
