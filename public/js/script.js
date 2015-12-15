@@ -67,6 +67,8 @@ $(function() {
     });
 
     $('.peek-link').click(peek);
+
+    refreshCsrf();
 });
 
 function suggestions()
@@ -293,5 +295,14 @@ function refreshStatuses() {
             }
         }
         setTimeout(refreshStatuses, 1000);
+    });
+}
+
+function refreshCsrf()
+{
+    var url = '/csrf';
+    $.get(url, function(data) {
+        $('input[name=_token]').val(data.csrf);
+        setTimeout(refreshCsrf, 1000 * 60);
     });
 }

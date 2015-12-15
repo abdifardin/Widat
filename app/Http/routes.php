@@ -95,5 +95,9 @@ Route::get('get-statuses', [
 	'as' => 'translator.get_statuses',
 	'uses' => 'TranslatorController@getStatuses',
 ]);
+Route::get('csrf', [
+	'as' => 'translator.csrf',
+	'uses' => 'TranslatorController@getNewCsrf',
+]);
 
 

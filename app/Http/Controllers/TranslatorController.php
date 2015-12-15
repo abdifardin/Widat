@@ -261,6 +261,15 @@ class TranslatorController extends Controller
 		return response()->json($online_status);
 	}
 
+	public function getNewCsrf()
+	{
+		if(!Auth::check()) {
+			return;
+		}
+
+		return response()->json(['csrf' => csrf_token()]);
+	}
+
 	private function calculateTranslationScore($translation)
 	{
 		if(!$translation) {

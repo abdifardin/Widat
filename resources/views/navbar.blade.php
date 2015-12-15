@@ -57,7 +57,7 @@
 					</li>
 					<li>
 						<a href="{{ route('translator.topics') }}">
-							<span class="fa fa-bars fa-2x"></span>
+							<span class="fa fa-language fa-2x"></span>
 							<span class="label">{{ trans('common.topics') }}</span>
 						</a>
 					</li>
