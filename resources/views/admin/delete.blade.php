@@ -44,11 +44,14 @@
 							class="btn btn-danger">
 						<span class="fa fa-trash"></span>
 					</button>
-					{{ urldecode(str_replace("_", " ", $t->topic)) }}
+					<a href="javascript:;" class="peek-link">
+						{{ urldecode(str_replace("_", " ", $t->topic)) }}
+					</a>
 				</form>
 				<br />
 			</div>
 			@endforeach
+			{!! $topics->render() !!}
 		</div>
 	</div>
 @endsection
