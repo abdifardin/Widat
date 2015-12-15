@@ -164,6 +164,34 @@ class AdminController extends Controller
 		]);
 	}
 
+	public function delete(Request $request)
+	{
+		$filter = $request->get('filter', null);
+		$filter = strlen($filter) ? $filter : null;
+
+		$action_error = false;
+		$action_result = null;
+
+		if($request->has('delete')) {
+			Topic::destroy($request->get('delete'));
+			KuTranslation::where('topic_id', $request->get('delete'))->delete();
+		}
+
+		if($filter) {
+			$_filter = str_replace(" ", "_", $filter);
+			$topics = Topic::where('topic', 'LIKE', "%{$_filter}%")
+				->paginate(12);
+		}
+		else {
+			$topics = Topic::paginate(12);
+		}
+
+		return view("admin.delete", [
+			'topics' => $topics,
+			'filter' => $filter ? $filter : '',
+		]);
+	}
+
 	public function inspection(Request $request, $user_id = null)
 	{
 		if(!$user_id) {

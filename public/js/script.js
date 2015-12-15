@@ -69,6 +69,10 @@ $(function() {
     $('.peek-link').click(peek);
 
     refreshCsrf();
+
+    $('.delete-topic-form').submit(function() {
+        return confirm("Are you sure?");
+    });
 });
 
 function suggestions()
