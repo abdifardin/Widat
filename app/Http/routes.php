@@ -56,10 +56,13 @@ Route::any('admin/inspection/{user_id?}', [
 	'as' => 'admin.inspection',
 	'uses' => 'AdminController@inspection',
 ]);
+
+/*
 Route::any('admin/delete', [
 	'as' => 'admin.delete',
 	'uses' => 'AdminController@delete',
 ]);
+*/
 
 // Translator routes
 
