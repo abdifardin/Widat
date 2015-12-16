@@ -78,7 +78,7 @@ Route::get('translator/{user_id}/score-history', [
 	'as' => 'translator.score_history',
 	'uses' => 'TranslatorController@scoreHistory',
 ]);
-Route::any('topics', [
+Route::any('topics/{filter?}', [
 	'as' => 'translator.topics',
 	'uses' => 'TranslatorController@topics',
 ]);

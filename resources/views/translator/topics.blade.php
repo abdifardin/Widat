@@ -7,7 +7,8 @@
 				<h3 class="text-center">{{ trans('common.topics') }}</h3>
 
 				<div class="text-center">
-					<a href="{{ route('translator.topics') }}?filter=all" class="btn btn-primary">
+					<a href="{{ route('translator.topics', ['filter' => 'all']) }}"
+					   class="btn btn-primary">
 						@if(isset($filter_all) && $filter_all)
 							<span class="fa fa-check"></span>
 						@endif
@@ -16,7 +17,8 @@
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 
-					<a href="{{ route('translator.topics') }}?filter=my" class="btn btn-primary">
+					<a href="{{ route('translator.topics', ['filter' => 'my']) }}"
+					   class="btn btn-primary">
 						@if(isset($filter_my) && $filter_my)
 							<span class="fa fa-check"></span>
 						@endif
@@ -34,7 +36,8 @@
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 
-					<a href="{{ route('translator.topics') }}?filter=untranslated" class="btn btn-primary">
+					<a href="{{ route('translator.topics', ['filter' => 'untranslated']) }}"
+					   class="btn btn-primary">
 						@if(isset($filter_untranslated) && $filter_untranslated)
 							<span class="fa fa-check"></span>
 						@endif
@@ -43,7 +46,8 @@
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 
-					<a href="{{ route('translator.topics') }}?filter=changed" class="btn btn-primary">
+					<a href="{{ route('translator.topics', ['filter' => 'changed']) }}"
+					   class="btn btn-primary">
 						@if(isset($filter_changed) && $filter_changed)
 							<span class="fa fa-check"></span>
 						@endif

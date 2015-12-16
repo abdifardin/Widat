@@ -90,7 +90,7 @@ class TranslatorController extends Controller
 		]);
 	}
 
-	public function topics(Request $request)
+	public function topics(Request $request, $filter = null)
 	{
 		$filter_all = false;
 		$filter_my = false;
@@ -98,24 +98,22 @@ class TranslatorController extends Controller
 		$filter_untranslated = false;
 		$filter_changed = false;
 
-		if($request->has('filter')) {
-			switch($request->get('filter', null)) {
-				case 'all':
-					$filter_all = true;
-					break;
-				case 'my':
-					$filter_my = true;
-					break;
-				case 'untranslated':
-					$filter_untranslated = true;
-					break;
-				case 'changed':
-					$filter_changed = true;
-					break;
-			}
-		}
-		else {
-			$filter_untranslated_changed = true;
+		switch($filter) {
+			case 'all':
+				$filter_all = true;
+				break;
+			case 'my':
+				$filter_my = true;
+				break;
+			case 'untranslated':
+				$filter_untranslated = true;
+				break;
+			case 'changed':
+				$filter_changed = true;
+				break;
+			default:
+				$filter_untranslated_changed = true;
+				break;
 		}
 
 
