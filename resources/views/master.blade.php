@@ -66,6 +66,9 @@
 							<br />
 							{{ trans('common.no_trans') }}
 							<br />
+							<a href="" class="translate-now btn btn-primary">
+								Translate Now
+							</a>
 						</p>
 						<div class="translation-group ku hidden">
 							<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>

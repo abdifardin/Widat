@@ -152,6 +152,7 @@ class MainController extends Controller
 
 		return response()->json([
 			'error' => false,
+			'translate_url' => route('translator.translate', ['topic_id' => $topic->id]),
 			'topic' => $topic->topic,
 			'abstract' => $topic->abstract,
 			'ku_topic' => $ku_title,
