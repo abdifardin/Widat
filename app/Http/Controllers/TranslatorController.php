@@ -59,6 +59,7 @@ class TranslatorController extends Controller
 			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
 			->whereNotNull('ku_translations.abstract')
 			->select("topics.*", "topics.topic")
+			->orderBy('edited_at', 'desc')
 			->get();
 
 		return view('translator.stats', [
@@ -122,6 +123,7 @@ class TranslatorController extends Controller
 		}
 		else if($filter_my) {
 			$topics = Topic::where('topics.user_id', Auth::user()->id)
+				->orderBy('edited_at', 'desc')
 				->paginate($this->topics_per_page);
 		}
 		else if($filter_untranslated) {
@@ -194,7 +196,10 @@ class TranslatorController extends Controller
 			$ku_translation->topic = $ku_trans_title;
 			$ku_translation->abstract = $ku_trans_abstract;
 			$ku_translation->save();
-
+			
+			$topic->edited_at = time();
+			$topic->save();
+			
 			$current_score = $this->calculateTranslationScore($ku_translation->abstract);
 
 			$user->score = $user->score + $delta_score;
