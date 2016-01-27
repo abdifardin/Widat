@@ -19,7 +19,7 @@ class CreateDeleteRecommendationsTable extends Migration
 			$table->text('reason');
 			$table->boolean('viewed')->default(0);
 			$table->timestamps();
-			$table->timestamp('deleted_at');
+			$table->timestamp('deleted_at')->default(NULL)->nullable();
         });
     }
 
