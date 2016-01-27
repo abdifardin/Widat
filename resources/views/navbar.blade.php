@@ -52,6 +52,12 @@
 							<span class="label">{{ trans('common.edit_account') }}</span>
 						</a>
 					</li>
+					<li>
+						<a href="{{ route('admin.delete_recommendation') }}">
+							<span class="fa fa-trash fa-2x"></span>
+							<span class="label">{{ trans('common.delete_recommendations') }} <span class="badge">{{ $delete_recommendations_num }}</span></span>
+						</a>
+					</li>
 				@elseif(\Illuminate\Support\Facades\Auth::user()->user_type=='translator')
 					<li>
 						<a href="{{ route('translator.stats',[

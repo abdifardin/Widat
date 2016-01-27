@@ -69,6 +69,7 @@
 							<a href="" class="translate-now btn btn-primary">
 								Translate Now
 							</a>
+							{{-- "Recommend for Deletion" Key place here by script.js --}}
 						</p>
 						<div class="translation-group ku hidden">
 							<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>

@@ -29,6 +29,7 @@ return [
 	'score' => 'Score',
 	'stats' => 'Statistics',
 	'edit_account' => 'Edit Account',
+	'delete_recommendations' => 'Delete Recommendations',
 	'save_changes' => 'Save Changes',
 	'account_info_saved' => 'Account information updated!',
 	'password_too_short' => 'Password is too short. It must be at least 8 characters long.',
@@ -59,4 +60,10 @@ return [
 	'no_trans' => 'No translation has been added for this topic yet.',
 	'my_topics' => 'My Topics',
 	'translated_topics' => 'Translated Topics',
+	'delete_recommendation' => 'Recommend for Deletion',
+	'delete_recommendation_message' => 'Type your reason below:',
+	'delete_recommendation_submit' => 'Recommend for Deletion',
+	'delete_recommendation_confirm' => 'Remove Topic',
+	'delete_recommendation_deny' => 'Deny',
+	'delete_recommendation_postpone' => 'Postpone',
 ];

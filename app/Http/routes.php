@@ -56,6 +56,10 @@ Route::any('admin/inspection/{user_id?}', [
 	'as' => 'admin.inspection',
 	'uses' => 'AdminController@inspection',
 ]);
+Route::any('admin/delete-recommendation/{rec_id?}', [
+	'as' => 'admin.delete_recommendation',
+	'uses' => 'AdminController@deleteRecommendations',
+]);
 
 /*
 Route::any('admin/delete', [
@@ -85,6 +89,10 @@ Route::any('topics/{filter?}', [
 Route::any('translate/{topic_id}', [
 	'as' => 'translator.translate',
 	'uses' => 'TranslatorController@translate',
+]);
+Route::any('delete-recommendation/{topic_id}', [
+	'as' => 'translator.delete_recommendation',
+	'uses' => 'TranslatorController@deleteRecommendation',
 ]);
 Route::get('nocando/{topic_id}', [
 	'as' => 'translator.nocando',

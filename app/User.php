@@ -46,4 +46,9 @@ class User extends Model implements AuthenticatableContract,
 	{
 		return $this->hasMany(Nocando::class);
 	}
+	
+	public function delete_recommendations()
+	{
+		return $this->hasMany(DeleteRecommendation::class);
+	}
 }

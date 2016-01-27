@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Topic extends Model
 {
@@ -17,6 +18,9 @@ class Topic extends Model
      *
      * @var string
      */
+	
+	use SoftDeletes;
+	
     protected $table = 'topics';
 	public $timestamps = false;
     /**
@@ -25,7 +29,9 @@ class Topic extends Model
      * @var array
      */
     protected $fillable = ['topic', 'abstract', 'user_id'];
-
+	
+	protected $dates = ['deleted_at'];
+	
 	public function kutranslation()
 	{
 		return $this->hasOne(KuTranslation::class);
@@ -34,5 +40,10 @@ class Topic extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class);
+	}
+	
+	public function delete_recommendations()
+	{
+		return $this->hasMany(DeleteRecommendation::class);
 	}
 }

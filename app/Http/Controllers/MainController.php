@@ -14,6 +14,7 @@ use App\Helpers\Utilities;
 use App\KuTranslation;
 use App\Topic;
 use App\User;
+use App\DeleteRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,18 @@ class MainController extends Controller
 	 * his/her corresponding home page. Otherwise redirects to the login page.
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
+	 
+	public function __construct()
+	{
+		view()->share('delete_recommendations_num', 
+			DeleteRecommendation::where('viewed', 0)
+			->select('delete_recommendations.id', 'topics.topic')
+			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
+			->whereNull('topics.deleted_at')
+			->count()
+		);
+	}
+	
 	public function index()
 	{
 		if(Auth::check()) { // user is authenticated.
@@ -149,14 +162,21 @@ class MainController extends Controller
 			$ku_title = $ku_trans->topic;
 			$ku_abstract = $ku_trans->abstract;
 		}
+		
+		$delete_recomend = '';
+		if(strlen($topic->abstract) < 10 AND $topic->user_id === NULL){
+			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
+		}
 
 		return response()->json([
 			'error' => false,
 			'translate_url' => route('translator.translate', ['topic_id' => $topic->id]),
 			'topic' => $topic->topic,
 			'abstract' => $topic->abstract,
+			'abstract_len' => strlen($topic->abstract),
 			'ku_topic' => $ku_title,
 			'ku_abstract' => $ku_abstract,
+			'delete_recomend' => $delete_recomend,
 		]);
 	}
 }

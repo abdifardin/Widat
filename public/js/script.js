@@ -146,6 +146,7 @@ function peek()
                 else {
                     $('#peek-no-ku-trans').removeClass('hidden');
                     $('a.btn.translate-now').prop('href', data.translate_url);
+					$('a.btn.translate-now').after(data.delete_recomend);
                 }
             }
         }
