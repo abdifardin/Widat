@@ -116,7 +116,8 @@ function hideSuggestions()
 
 function peek()
 {
-    var url = $('#peek-form').prop('action');
+    $('#peek-no-ku-trans').addClass('hidden');
+	var url = $('#peek-form').prop('action');
     var token = $('input[name=_token]').val();
     var title = $(this).html();
     $('.topic-peek-modal').modal('show');
@@ -139,14 +140,15 @@ function peek()
                 $('#peek-en-abstract').html(data.abstract);
 
                 if(data.ku_topic) {
-                    $('.topic-peek-modal .translation-group.ku').removeClass('hidden');
+                    $('#peek-no-ku-trans').addClass('hidden');
+					$('.topic-peek-modal .translation-group.ku').removeClass('hidden');
                     $('#peek-ku-title').html(data.ku_topic);
                     $('#peek-ku-abstract').html(data.ku_abstract);
                 }
                 else {
                     $('#peek-no-ku-trans').removeClass('hidden');
                     $('a.btn.translate-now').prop('href', data.translate_url);
-					$('a.btn.translate-now').after(data.delete_recomend);
+					$('#deletion-rec-box').html(data.delete_recomend);
                 }
             }
         }

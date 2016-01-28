@@ -35,7 +35,7 @@ class AdminController extends Controller
 			DeleteRecommendation::where('viewed', 0)
 			->select('delete_recommendations.id', 'topics.topic')
 			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
-			->whereNull('topics.deleted_at')
+			//->whereNull('topics.deleted_at')
 			->count()
 		);
 	}
@@ -238,7 +238,7 @@ class AdminController extends Controller
 				'recommendations_list' => DeleteRecommendation::where('viewed', 0)
 					->select('delete_recommendations.id', 'topics.topic')
 					->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
-					->whereNull('topics.deleted_at')
+					//->whereNull('topics.deleted_at')
 					->orderBy('delete_recommendations.id', 'desc')
 					->get(),
 			]);
@@ -256,17 +256,14 @@ class AdminController extends Controller
 			return redirect()->route('admin.delete_recommendation');
 		}
 		
+		$topic = Topic::withTrashed()->where('id', $recommendations_delete->topic_id)->first();
+		
 		if($request->has('deny')) {
 			$recommendations_delete->delete();
 			$recommendations_delete_same = DeleteRecommendation::where('topic_id', $recommendations_delete->topic_id);
 			$recommendations_delete_same->delete();
-			return redirect()->route('admin.delete_recommendation');
-		}
-		
-		$topic = Topic::where('id', $recommendations_delete->topic_id)->first();
-		
-		if($request->has('delete')) {
-			$topic->delete();
+			
+			$topic->restore();
 			return redirect()->route('admin.delete_recommendation');
 		}
 		

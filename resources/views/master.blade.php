@@ -69,6 +69,7 @@
 							<a href="" class="translate-now btn btn-primary">
 								Translate Now
 							</a>
+							<span id="deletion-rec-box"></span>
 							{{-- "Recommend for Deletion" Key place here by script.js --}}
 						</p>
 						<div class="translation-group ku hidden">

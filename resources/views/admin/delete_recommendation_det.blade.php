@@ -15,9 +15,6 @@
 							<button type="submit" name="deny" value="1" class="btn btn-info">
 								{{ trans('common.delete_recommendation_deny') }}
 							</button>
-							<button type="submit" name="delete" value="1" class="btn btn-danger">
-								{{ trans('common.delete_recommendation_confirm') }}
-							</button>
 						</div>
 						<div class="clearfix"></div>
 					</form>

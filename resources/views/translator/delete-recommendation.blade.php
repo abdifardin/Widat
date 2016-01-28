@@ -20,7 +20,6 @@
 				</div>
 
 				<br />
-				{!! $site_message !!}
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">{{ trans('common.delete_recommendation_message') }}</h3>
 					<form action="" method="post" id="translation-form">
@@ -32,8 +31,11 @@
 						</div>
 						<div class="clearfix"></div>
 						<div class="form-group">
-							<textarea class="form-control abstract-trans register-keystroke"
-							name="delete_recommendation_reason" rows="4" style="height:auto !important;" ></textarea>
+							<select class="form-control" name="delete_recommendation_reason">
+								<option value="Incomplete or meaningless article">Incomplete or meaningless article</option>
+								<option value="Empty topic">Empty topic</option>
+								<option value="Any other reason">Any other reason</option>
+							</select>
 						</div>
 					</form>
 				</div>

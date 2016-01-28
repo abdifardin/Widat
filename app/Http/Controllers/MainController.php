@@ -36,7 +36,7 @@ class MainController extends Controller
 			DeleteRecommendation::where('viewed', 0)
 			->select('delete_recommendations.id', 'topics.topic')
 			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
-			->whereNull('topics.deleted_at')
+			//->whereNull('topics.deleted_at')
 			->count()
 		);
 	}
@@ -164,7 +164,7 @@ class MainController extends Controller
 		}
 		
 		$delete_recomend = '';
-		if(strlen($topic->abstract) < 10 AND $topic->user_id === NULL){
+		if($topic->user_id === NULL){
 			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
 		}
 

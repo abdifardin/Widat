@@ -40,7 +40,7 @@ class TranslatorController extends Controller
 			DeleteRecommendation::where('viewed', 0)
 			->select('delete_recommendations.id', 'topics.topic')
 			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
-			->whereNull('topics.deleted_at')
+			//->whereNull('topics.deleted_at')
 			->count()
 		);
 	}
@@ -228,8 +228,6 @@ class TranslatorController extends Controller
 	
 	public function deleteRecommendation(Request $request, $topic_id)
 	{
-		$data['site_message'] = '';
-		
 		$topic = Topic::where('id', $topic_id)
 			->firstOrFail();
 
@@ -238,10 +236,6 @@ class TranslatorController extends Controller
 		if($topic->user_id !== NULL) {
 			abort(403, 'This translation has been reserved by ' . $topic->user->name . ' ' . $topic->user->surname .
 				'.');
-		}
-
-		if(strlen($topic->abstract) > 200) {
-			abort(403, 'You are unable to submit this recommendation.');
 		}
 		
 		if($request->has('delete')) {
@@ -258,7 +252,9 @@ class TranslatorController extends Controller
 			$delete_recommendations->reason = $delete_recommendation_reason;
 			$delete_recommendations->save();
 			
-			$data['site_message'] = '<div class="alert alert-success" role="alert">Your recommendation submitted</div>';
+			$topic->delete();  //Soft delete
+						
+			return redirect()->route('translator.topics');
 		}
 		
 		$data['topic'] = $topic;

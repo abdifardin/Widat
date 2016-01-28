@@ -61,9 +61,8 @@ return [
 	'my_topics' => 'My Topics',
 	'translated_topics' => 'Translated Topics',
 	'delete_recommendation' => 'Recommend for Deletion',
-	'delete_recommendation_message' => 'Type your reason below:',
+	'delete_recommendation_message' => 'Select your reason below:',
 	'delete_recommendation_submit' => 'Recommend for Deletion',
-	'delete_recommendation_confirm' => 'Remove Topic',
-	'delete_recommendation_deny' => 'Deny',
+	'delete_recommendation_deny' => 'Deny And Restore Topic',
 	'delete_recommendation_postpone' => 'Postpone',
 ];
