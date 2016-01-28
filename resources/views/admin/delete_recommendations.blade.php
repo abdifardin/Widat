@@ -23,7 +23,7 @@
 
 				@foreach($recommendations_list as $r)
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-						<a href="{{ route('admin.delete_recommendation', ['rec_id' => $r->id]) }}"
+						<a href="{{ route('admin.delete_recommendation', ['rec_id' => $r->topic_id]) }}"
 						   class="btn btn-block btn-default">
 							{{ urldecode(str_replace("_", " ", $r->topic)) }}
 						</a>

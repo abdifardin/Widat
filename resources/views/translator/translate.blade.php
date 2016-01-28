@@ -45,19 +45,21 @@
 
 						<div class="form-toolbar float-right">
 							@if($is_owner)
-							<button type="submit" name="save" value="1" class="btn btn-success">
-								<span class="fa fa-floppy-o"></span>
-								{{ trans('common.save_changes') }}
-								<span class="badge">0</span>
-								<span class="fa fa-circle-o-notch fa-spin hidden"></span>
-							</button>
+								<button type="submit" name="save" value="1" class="btn btn-success">
+									<span class="fa fa-floppy-o"></span>
+									{{ trans('common.save_changes') }}
+									<span class="badge">0</span>
+									<span class="fa fa-circle-o-notch fa-spin hidden"></span>
+								</button>
 							@else
-							<a href="{{ route('translator.delete_recommendation', ['topic_id' => $topic->id]) }}" class="deletion-rec btn btn-warning" style="margin-left: 4px;">{{ trans('common.delete_recommendation_submit') }}</a>
-							<button type="submit" name="reserve" value="1" class="btn btn-primary reserve-topic">
-								<span class="fa fa-flag"></span>
-								{{ trans('common.reserve_topic') }}
-								<span class="badge">+5</span>
-							</button>
+								@if($topic->user_id == NULL AND $topic->delete_recommended == 0)
+								<a href="{{ route('translator.delete_recommendation', ['topic_id' => $topic->id]) }}" class="deletion-rec btn btn-warning" style="margin-left: 4px;">{{ trans('common.delete_recommendation_submit') }}</a>
+								@endif
+								<button type="submit" name="reserve" value="1" class="btn btn-primary reserve-topic">
+									<span class="fa fa-flag"></span>
+									{{ trans('common.reserve_topic') }}
+									<span class="badge">+5</span>
+								</button>
 							@endif
 						</div>
 

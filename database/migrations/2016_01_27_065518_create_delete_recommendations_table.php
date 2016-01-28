@@ -13,7 +13,6 @@ class CreateDeleteRecommendationsTable extends Migration
     public function up()
     {
         Schema::create('delete_recommendations', function (Blueprint $table) {
-            $table->increments('id');
 			$table->integer('topic_id');
 			$table->integer('user_id');
 			$table->text('reason');

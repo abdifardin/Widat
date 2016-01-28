@@ -18,7 +18,7 @@ class DeleteRecommendation extends Model
 	use SoftDeletes;
 	
 	protected $table = 'delete_recommendations';
-	
+	protected $primaryKey = 'topic_id';
 	protected $dates = ['deleted_at'];
 	
 	

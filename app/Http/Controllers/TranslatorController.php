@@ -38,7 +38,7 @@ class TranslatorController extends Controller
 		
 		view()->share('delete_recommendations_num', 
 			DeleteRecommendation::where('viewed', 0)
-			->select('delete_recommendations.id', 'topics.topic')
+			->select('delete_recommendations.topic_id', 'topics.topic')
 			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
 			//->whereNull('topics.deleted_at')
 			->count()
@@ -233,9 +233,8 @@ class TranslatorController extends Controller
 
 		$user = Auth::user();
 
-		if($topic->user_id !== NULL) {
-			abort(403, 'This translation has been reserved by ' . $topic->user->name . ' ' . $topic->user->surname .
-				'.');
+		if($topic->user_id !== NULL OR $topic->delete_recommended != 0) {
+			abort(403, 'Access Denied');
 		}
 		
 		if($request->has('delete')) {
@@ -252,7 +251,9 @@ class TranslatorController extends Controller
 			$delete_recommendations->reason = $delete_recommendation_reason;
 			$delete_recommendations->save();
 			
-			$topic->delete();  //Soft delete
+			$topic->delete_recommended = 1;
+			$topic->save();
+			$topic->delete(); //Soft delete
 						
 			return redirect()->route('translator.topics');
 		}

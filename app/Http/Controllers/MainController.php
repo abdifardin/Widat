@@ -164,7 +164,7 @@ class MainController extends Controller
 		}
 		
 		$delete_recomend = '';
-		if($topic->user_id === NULL){
+		if($topic->user_id === NULL AND $topic->delete_recommended == 0){
 			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
 		}
 

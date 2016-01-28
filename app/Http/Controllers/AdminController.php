@@ -33,7 +33,7 @@ class AdminController extends Controller
 		
 		view()->share('delete_recommendations_num', 
 			DeleteRecommendation::where('viewed', 0)
-			->select('delete_recommendations.id', 'topics.topic')
+			->select('delete_recommendations.topic_id', 'topics.topic')
 			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
 			//->whereNull('topics.deleted_at')
 			->count()
@@ -236,15 +236,15 @@ class AdminController extends Controller
 		if(!$rec_id) {
 			return view('admin.delete_recommendations', [
 				'recommendations_list' => DeleteRecommendation::where('viewed', 0)
-					->select('delete_recommendations.id', 'topics.topic')
+					->select('delete_recommendations.topic_id', 'topics.topic')
 					->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
 					//->whereNull('topics.deleted_at')
-					->orderBy('delete_recommendations.id', 'desc')
+					->orderBy('delete_recommendations.topic_id', 'desc')
 					->get(),
 			]);
 		}
 		
-		$recommendations_delete = DeleteRecommendation::where('id', $rec_id)->first();
+		$recommendations_delete = DeleteRecommendation::where('topic_id', $rec_id)->first();
 		if(!$recommendations_delete){
 			abort(404, "Not found!");
 		}
@@ -260,8 +260,6 @@ class AdminController extends Controller
 		
 		if($request->has('deny')) {
 			$recommendations_delete->delete();
-			$recommendations_delete_same = DeleteRecommendation::where('topic_id', $recommendations_delete->topic_id);
-			$recommendations_delete_same->delete();
 			
 			$topic->restore();
 			return redirect()->route('admin.delete_recommendation');
