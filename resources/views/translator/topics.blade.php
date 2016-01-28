@@ -64,6 +64,9 @@
 							<a href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
 							   class="btn btn-block btn-default">
 								{{ urldecode(str_replace("_", " ", $t->topic)) }}
+								@if($t->edited_at)
+								<br />{{ date('n/j/Y - H:i', $t->edited_at) }}
+								@endif
 							</a>
 							<br />
 						</div>
