@@ -64,14 +64,16 @@
 						</div>
 
 						<div class="clearfix"></div>
-
-
+						
+						
 						<div class="form-group">
 							<input type="text" name="ku_trans_title" class="form-control rtl-text register-keystroke"
 								   value="{{$ku_translation_title }}" placeholder="سەردێڕ"
 									@if(!$is_owner) disabled @endif
 									/>
 						</div>
+						<div class="col-sm-12" id="save_changes_label" style="display:none;">Saving changes to drafts...</div>
+						<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve Drafts</a></div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
 									  name="ku_trans_abstract" placeholder="ئەبستراکت" @if(!$is_owner) disabled @endif>{{

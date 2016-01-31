@@ -16,6 +16,7 @@ use App\ScoreHistory;
 use App\Topic;
 use App\User;
 use App\DeleteRecommendation;
+use App\Draft;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -213,16 +214,49 @@ class TranslatorController extends Controller
 
 			$user->score = $user->score + $delta_score;
 			$user->save();
+			
+			$draft = Draft::where('topic_id', $topic_id)->first();
+			$draft->delete();
 		}
-
+		else if($request->has('autosave')) {
+			$draft = Draft::where('topic_id', $topic_id)->first();
+			if(empty($draft)){
+				$newdraft = new Draft();
+				$newdraft->topic_id = $topic_id;
+				$newdraft->abstract = $request->input('ku_trans_abstract');
+				$newdraft->last_update = time();
+				$newdraft->save();
+			}else{
+				$draft->abstract = $request->input('ku_trans_abstract');
+				$draft->last_update = time();
+				$draft->save();
+			}
+			
+			return response()->json('suc');
+		}
+		else if($request->has('retrieve')) {
+			$draft = Draft::where('topic_id', $topic_id)->first();
+			if(empty($draft)){
+				return response()->json('empty');
+			}else{
+				return response()->json($draft->abstract);
+			}
+		}
+		
 		$is_owner = $topic->user_id == Auth::user()->id;
-
+		
+		$draft_available = FALSE;
+		if(!empty(Draft::where('topic_id', $topic_id)->first())){
+			$draft_available = TRUE;
+		}
+			
 		return view('translator.translate', [
 			'topic' => $topic,
 			'is_owner' => $is_owner,
 			'ku_translation_title' => ($ku_translation && $ku_translation->topic) ? $ku_translation->topic : '',
 			'ku_translation_abstract' => ($ku_translation && $ku_translation->abstract) ? $ku_translation->abstract : '',
 			'current_score' => $current_score,
+			'draft_available' => $draft_available,
 		]);
 	}
 	

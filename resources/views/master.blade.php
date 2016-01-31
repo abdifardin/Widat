@@ -93,6 +93,7 @@
 		<script src="{{ url('js/jquery-ui.js') }}"></script>
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		<script src="{{ url('js/script.js') }}"></script>
+		<script src="{{ url('js/autosave.js') }}"></script>
 		<input type="hidden" id="reg-keystroke-url" value="{{ route('translator.register_keystroke') }}" />
 		<input type="hidden" id="reg-activity-url" value="{{ route('translator.register_activity') }}" />
 		<input type="hidden" id="get-statuses-url" value="{{ route('translator.get_statuses') }}" />
