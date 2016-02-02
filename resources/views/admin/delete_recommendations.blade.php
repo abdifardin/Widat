@@ -20,16 +20,56 @@
 					<span class="fa fa-trash"></span>
 					{{ trans('common.delete_recommendations') }}
 				</h2>
-
-				@foreach($recommendations_list as $r)
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-						<a href="{{ route('admin.delete_recommendation', ['rec_id' => $r->topic_id]) }}"
-						   class="btn btn-block btn-default">
-							{{ urldecode(str_replace("_", " ", $r->topic)) }}
-						</a>
-						<br />
+				@if(count($recommendations_list) > 0)
+				<form action="{{ route('admin.bulk_restore') }}" method="post">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<th></th>
+								<th>{{ trans('common.id') }}</th>
+								<th>{{ trans('common.title') }}</th>
+								<th>{{ trans('common.abstract') }}</th>
+								<th>{{ trans('common.reason') }}</th>
+								<th></th>
+							</thead>
+							<tbody>
+								@foreach($recommendations_list as $r)
+								<tr>
+									<td><input type="checkbox" name="bulk_restore[]" value="{{ $r->topic_id }}"></td>
+									<td>{{ $r->topic_id }}</td>
+									<td>
+										{{ urldecode(str_replace("_", " ", $r->topic)) }}
+									</td>
+									<td>
+										{{ substr($r->abstract, 0, 50) }}
+									</td>
+									<td>
+										{{ substr($r->reason, 0, 50) }}
+									</td>
+									<td class="text-right">
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="{{ route('admin.restore', ['rec_id' => $r->topic_id]) }}"
+										   class="btn btn-primary">
+											{{ trans('common.restore') }}
+										</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="{{ route('admin.delete_recommendation', ['rec_id' => $r->topic_id]) }}"
+										   class="btn btn-default">
+											{{ trans('common.details') }}
+										</a>
+									</td>
+								</tr>
+								@endforeach
+							</tbody>
+						</table>
+						<button type="submit" name="restore_selected" value="1" class="btn btn-primary">
+							{{ trans('common.restore_selected') }}
+						</button>
+						
 					</div>
-				@endforeach
+					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				</form>
+				@endif
 				@if(!count($recommendations_list))
 					<h4 class="text-center text-danger text-capitalize">
 						No Items Found..!

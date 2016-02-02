@@ -37,14 +37,27 @@
 				</div>
 
 				<br />
-
+				{!! $msg !!}
+				@if($is_translated)
+						@if($translation_status == 'accepted')
+							<div class="alert alert-warning" role="alert">This translation accepted by inspector.</div>
+						@elseif($translation_status == 'denied')
+							<div class="alert alert-warning" role="alert">This translation denied by inspector.</div>
+						@elseif($translation_status == 'wait')
+							<div class="alert alert-warning" role="alert">This translation wait for inspection.</div>
+						@endif
+				@endif
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
 					<form action="" method="post" id="translation-form">
 						{!! csrf_field() !!}
-
 						<div class="form-toolbar float-right">
 							@if($is_owner)
+								@if($is_translated AND $translation_status != 'wait' AND $translation_status != 'accepted')
+								<button type="submit" name="inspection" value="1" class="btn btn-info">
+									{{ trans('common.submit_inspection') }}
+								</button>
+								@endif
 								<button type="submit" name="save" value="1" class="btn btn-success">
 									<span class="fa fa-floppy-o"></span>
 									{{ trans('common.save_changes') }}

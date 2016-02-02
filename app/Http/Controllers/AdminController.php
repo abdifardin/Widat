@@ -16,6 +16,7 @@ use App\User;
 use App\DeleteRecommendation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 class AdminController extends Controller
 {
@@ -130,6 +131,49 @@ class AdminController extends Controller
 		]);
 	}
 
+	public function inspectors(Request $request)
+	{
+		$action_error = false;
+		$action_result = null;
+
+		if($request->has('delete')) {
+			$user_id = $request->get('user_id');
+			if($user_id <= 1) {
+				$action_error = true;
+				$action_result = trans('common.cannot_delete_user');
+			}
+			else {
+				User::where('id', $user_id)->delete();
+				$action_result = trans('common.user_deleted');
+			}
+		}
+		else if($request->has('create')) {
+			$current_email = User::where('email', $request->get('email'))->first();
+			if($current_email) {
+				$action_error = true;
+				$action_result = trans('common.email_exists');
+			}
+			else {
+				$new_inspector = new User;
+				$new_inspector->email = $request->get('email');
+				$new_inspector->name = $request->get('name');
+				$new_inspector->surname = $request->get('surname');
+				$new_inspector->password = bcrypt($request->get('password'));
+				$new_inspector->user_type = 'inspector';
+				$new_inspector->save();
+				$action_result = trans('common.user_created');
+			}
+		}
+
+		$inspectors = User::where('user_type', 'inspector')->get();
+
+		return view('admin.inspectors', [
+			'inspectors' => $inspectors,
+			'action_error' => $action_error,
+			'action_result' => $action_result,
+		]);
+	}
+
 	public function translators(Request $request)
 	{
 		$action_error = false;
@@ -236,7 +280,7 @@ class AdminController extends Controller
 		if(!$rec_id) {
 			return view('admin.delete_recommendations', [
 				'recommendations_list' => DeleteRecommendation::where('viewed', 0)
-					->select('delete_recommendations.topic_id', 'topics.topic')
+					->select('delete_recommendations.topic_id', 'delete_recommendations.reason', 'topics.topic', 'topics.abstract')
 					->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
 					//->whereNull('topics.deleted_at')
 					->orderBy('delete_recommendations.topic_id', 'desc')
@@ -276,5 +320,35 @@ class AdminController extends Controller
 			'abstract' => $topic->abstract,
 			'translator' => $translator,
 		]);
+	}
+
+	public function bulkRestore(Request $request)
+	{
+		if($request->has('restore_selected')) {
+			foreach($request->input('bulk_restore') as $r){
+				$recommendations_delete = DeleteRecommendation::where('topic_id', $r)->first();
+				$topic = Topic::withTrashed()->where('id', $recommendations_delete->topic_id)->first();
+				$recommendations_delete->viewed = 1;
+				$recommendations_delete->save();
+				$recommendations_delete->delete();
+			
+				$topic->restore();
+			}
+		}
+		return redirect()->route('admin.delete_recommendation');
+	}
+
+	public function restore(Request $request, $rec_id = NULL)
+	{
+		if($rec_id) {
+			$recommendations_delete = DeleteRecommendation::where('topic_id', $rec_id)->first();
+			$topic = Topic::withTrashed()->where('id', $recommendations_delete->topic_id)->first();
+			$recommendations_delete->viewed = 1;
+			$recommendations_delete->save();
+			$recommendations_delete->delete();
+		
+			$topic->restore();
+		}
+		return redirect()->route('admin.delete_recommendation');
 	}
 }

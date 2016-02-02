@@ -27,6 +27,12 @@
 						</a>
 					</li>
 					<li>
+						<a href="{{ route('admin.inspectors') }}">
+							<span class="fa fa-eye fa-2x"></span>
+							<span class="label">{{ trans('common.inspectors') }}</span>
+						</a>
+					</li>
+					<li>
 						<a href="{{ route('admin.translators') }}">
 							<span class="fa fa-users fa-2x"></span>
 							<span class="label">{{ trans('common.translators') }}</span>

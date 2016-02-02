@@ -133,7 +133,9 @@ class TranslatorController extends Controller
 		}
 		else if($filter_my) {
 			$topics = Topic::where('topics.user_id', Auth::user()->id)
+				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
 				->orderBy('edited_at', 'desc')
+				->select("topics.*", "ku_translations.finished", "ku_translations.inspection_result", "ku_translations.inspector_id")
 				->paginate($this->topics_per_page);
 		}
 		else if($filter_untranslated) {
@@ -166,6 +168,7 @@ class TranslatorController extends Controller
 
 	public function translate(Request $request, $topic_id)
 	{
+		$msg = '';
 		$topic = Topic::where('id', $topic_id)
 			->firstOrFail();
 
@@ -183,6 +186,7 @@ class TranslatorController extends Controller
 
 		$ku_translation = KuTranslation::where('topic_id', $topic_id)->first();
 		$current_score = $this->calculateTranslationScore($ku_translation ? $ku_translation->abstract : null);
+
 
 		if($request->has('reserve') && !$topic->user_id) {
 			$topic->user_id = $user->id;
@@ -216,7 +220,19 @@ class TranslatorController extends Controller
 			$user->save();
 			
 			$draft = Draft::where('topic_id', $topic_id)->first();
-			$draft->delete();
+			if(!empty($draft))
+				$draft->delete();
+		}
+		else if($request->has('inspection')) {
+			if($ku_translation){
+				$ku_translation->finished = 1;
+				$ku_translation->inspector_id = NULL;
+				$ku_translation->save();
+				
+				return redirect()->route('translator.topics', ['filter' => 'my']);
+			}
+			
+			$msg = '<div class="alert alert-danger" role="alert">You must translate topic and save it first.</div>';
 		}
 		else if($request->has('autosave')) {
 			$draft = Draft::where('topic_id', $topic_id)->first();
@@ -244,19 +260,34 @@ class TranslatorController extends Controller
 		}
 		
 		$is_owner = $topic->user_id == Auth::user()->id;
-		
+		$is_translated = FALSE;
+		$translation_status = '';
+		if($ku_translation){
+			$is_translated = TRUE;
+			$translation_status = '';
+			if($ku_translation->inspection_result == 1)
+				$translation_status = 'accepted';
+			elseif($ku_translation->finished == 0 AND $ku_translation->inspector_id != NULL)
+				$translation_status = 'denied';
+			elseif($ku_translation->finished == 1 AND $ku_translation->inspector_id == NULL)
+				$translation_status = 'wait';
+		}
 		$draft_available = FALSE;
 		if(!empty(Draft::where('topic_id', $topic_id)->first())){
 			$draft_available = TRUE;
 		}
+		
 			
 		return view('translator.translate', [
 			'topic' => $topic,
 			'is_owner' => $is_owner,
+			'is_translated' => $is_translated,
+			'translation_status' => $translation_status,
 			'ku_translation_title' => ($ku_translation && $ku_translation->topic) ? $ku_translation->topic : '',
 			'ku_translation_abstract' => ($ku_translation && $ku_translation->abstract) ? $ku_translation->abstract : '',
 			'current_score' => $current_score,
 			'draft_available' => $draft_available,
+			'msg' => $msg,
 		]);
 	}
 	

@@ -48,6 +48,10 @@ Route::any('admin/admins', [
 	'as' => 'admin.admins',
 	'uses' => 'AdminController@admins',
 ]);
+Route::any('admin/inspectors', [
+	'as' => 'admin.inspectors',
+	'uses' => 'AdminController@inspectors',
+]);
 Route::any('admin/translators', [
 	'as' => 'admin.translators',
 	'uses' => 'AdminController@translators',
@@ -59,6 +63,14 @@ Route::any('admin/inspection/{user_id?}', [
 Route::any('admin/delete-recommendation/{rec_id?}', [
 	'as' => 'admin.delete_recommendation',
 	'uses' => 'AdminController@deleteRecommendations',
+]);
+Route::any('admin/bulk-restore', [
+	'as' => 'admin.bulk_restore',
+	'uses' => 'AdminController@bulkRestore',
+]);
+Route::any('admin/restore/{rec_id?}', [
+	'as' => 'admin.restore',
+	'uses' => 'AdminController@restore',
 ]);
 
 /*
@@ -115,4 +127,14 @@ Route::get('csrf', [
 	'uses' => 'TranslatorController@getNewCsrf',
 ]);
 
+// Inspector routes
+
+Route::get('inspector', [
+	'as' => 'inspector.home',
+	'uses' => 'InspectorController@inspection',
+]);
+Route::any('inspection/{topic_id?}', [
+	'as' => 'inspector.inspection',
+	'uses' => 'InspectorController@inspection',
+]);
 

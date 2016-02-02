@@ -48,6 +48,9 @@ class MainController extends Controller
 			if($user->user_type == 'admin') {
 				return redirect()->route('admin.home');
 			}
+			elseif($user->user_type == 'inspector') {
+				return redirect()->route('inspector.home');
+			}
 			else {
 				return redirect()->route('translator.home');
 			}
