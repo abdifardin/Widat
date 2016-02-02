@@ -55,9 +55,9 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'widatdb'),
-            'username'  => env('DB_USERNAME', 'widat'),
-            'password'  => env('DB_PASSWORD', 'CDqZUfq7XjrKPu8y'),
+            'database'  => env('DB_DATABASE', 'widatwip'),
+            'username'  => env('DB_USERNAME', 'widatwip'),
+            'password'  => env('DB_PASSWORD', 'WIP2016WIDAT'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
