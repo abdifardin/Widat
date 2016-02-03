@@ -87,6 +87,21 @@
 							<span class="label">{{ trans('common.edit_account') }}</span>
 						</a>
 					</li>
+				@elseif(\Illuminate\Support\Facades\Auth::user()->user_type=='inspector')	
+					<li>
+						<a href="{{ route('inspector.inspection') }}">
+							<span class="fa fa-language fa-2x"></span>
+							<span class="label">{{ trans('common.topics') }}</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{ route('main.edit_account', [
+							'user_id' => \Illuminate\Support\Facades\Auth::user()->id
+						]) }}">
+							<span class="fa fa-pencil fa-2x"></span>
+							<span class="label">{{ trans('common.edit_account') }}</span>
+						</a>
+					</li>
 				@endif
 
 				<li>

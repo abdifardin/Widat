@@ -60,8 +60,16 @@
 
 				<div class="row">
 					@foreach($topics as $t)
-						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" style="background-color:#f0f;">
-							<a href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+							@if($t->inspection_result == 1)
+							<a style="background-color:#DCEDC8;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
+							@elseif($t->finished == 0 AND $t->inspector_id != NULL)
+							<a style="background-color:#ffcdd2;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
+							@elseif($t->finished == 1 AND $t->inspector_id == NULL)
+							<a style="background-color:#FFF9C4;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
+							@else
+							<a style="background-color:#FAFAFA;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
+							@endif
 							   class="btn btn-block btn-default">
 								{{ urldecode(str_replace("_", " ", $t->topic)) }}
 								@if($t->edited_at)

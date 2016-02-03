@@ -127,7 +127,6 @@ class TranslatorController extends Controller
 				break;
 		}
 
-
 		if($filter_all) {
 			$topics = Topic::paginate($this->topics_per_page);
 		}

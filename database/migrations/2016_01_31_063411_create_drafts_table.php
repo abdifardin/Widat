@@ -12,8 +12,8 @@ class CreateDraftsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ku_translations', function (Blueprint $table) {
-			$table->integer('topic_id');
+        Schema::create('drafts', function (Blueprint $table) {
+			$table->increments('topic_id', 10);
 			$table->Text('abstract');
 			$table->string('last_update', 10);
 		});
