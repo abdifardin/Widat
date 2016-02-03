@@ -75,6 +75,9 @@ return [
 	'restore_selected' => 'Restore Selected',
 	'details' => 'Details',
 	'inspector_accept' => 'Accept',
-	'inspector_deny' => 'Deny',
+	'inspector_deny' => 'Reject',
 	'inspection_list' => 'Inspection List',
+	'accepted_translation_message' => 'This translation accepted by proofreader.',
+	'rejected_translation_message' => 'This topic was rejected by a proofreader.',
+	'wait_translation_message' => 'This translation wait for inspection.',
 ];

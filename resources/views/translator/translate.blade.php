@@ -40,11 +40,11 @@
 				{!! $msg !!}
 				@if($is_translated)
 						@if($translation_status == 'accepted')
-							<div class="alert alert-warning" role="alert">This translation accepted by inspector.</div>
+							<div class="alert alert-warning" role="alert">{{ trans('common.accepted_translation_message') }}</div>
 						@elseif($translation_status == 'denied')
-							<div class="alert alert-warning" role="alert">This translation denied by inspector.</div>
+							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}</div>
 						@elseif($translation_status == 'wait')
-							<div class="alert alert-warning" role="alert">This translation wait for inspection.</div>
+							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>
 						@endif
 				@endif
 				<div class="translation-group">
