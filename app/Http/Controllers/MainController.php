@@ -146,12 +146,12 @@ class MainController extends Controller
 			abort(401, 'You must be logged in to access this area.');
 			return null;
 		}
-
 		$topic = str_replace(' ', '_', trim($request->get('topic', '')));
 		if(!strlen($topic))
 			$topic = null;
 		Utilities::updateTopicFromWikipedia($topic);
 		$topic = Topic::where('topic', $topic)->first();
+		
 		if(!$topic) {
 			return response()->json([
 				'error' => true,

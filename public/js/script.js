@@ -52,8 +52,8 @@ $(function() {
         registerKeystroke();
     });
 
-    setTimeout(registerActivity, 1000);
-    setTimeout(refreshStatuses, 1000);
+    //setTimeout(registerActivity, 1000);
+    //setTimeout(refreshStatuses, 1000);
 
     $(window).on('beforeunload', function() {
         if (checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null &&
@@ -119,7 +119,7 @@ function peek()
     $('#peek-no-ku-trans').addClass('hidden');
 	var url = $('#peek-form').prop('action');
     var token = $('input[name=_token]').val();
-    var title = $(this).html();
+    var title = $(".peek_topic_title_box").html();
     $('.topic-peek-modal').modal('show');
     $('.topic-peek-modal div.loader').removeClass('hidden');
     $('.topic-peek-modal .topic-not-found').addClass('hidden');
@@ -130,7 +130,7 @@ function peek()
         url: url,
         data: {topic: title, _token: token},
         success: function(data) {
-            $('.topic-peek-modal div.loader').addClass('hidden');
+			$('.topic-peek-modal div.loader').addClass('hidden');
             if(data.error) {
                 $('.topic-peek-modal .topic-not-found').removeClass('hidden');
             }

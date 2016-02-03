@@ -79,8 +79,11 @@
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 								<a href="javascript:;"
 								   class="btn btn-block btn-default peek-link">
-									{{ urldecode($t->topic) }}<br>
+									<span class="peek_topic_title_box">{{ urldecode($t->topic) }}</span>
+									@if($t->edited_at)
+									<br>
 									{{ date('n/j/Y - H:i', $t->edited_at) }}
+									@endif
 								</a>
 								<br />
 							</div>
