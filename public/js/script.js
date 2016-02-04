@@ -119,7 +119,7 @@ function peek()
     $('#peek-no-ku-trans').addClass('hidden');
 	var url = $('#peek-form').prop('action');
     var token = $('input[name=_token]').val();
-    var title = $(".peek_topic_title_box").html();
+    var title = $(this).find(".peek_topic_title_box").html();
     $('.topic-peek-modal').modal('show');
     $('.topic-peek-modal div.loader').removeClass('hidden');
     $('.topic-peek-modal .topic-not-found').addClass('hidden');

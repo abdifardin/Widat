@@ -68,7 +68,7 @@ class TranslatorController extends Controller
 		$translated = Topic::where('user_id', $user_id)
 			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
 			->whereNotNull('ku_translations.abstract')
-			->select("topics.*", "topics.topic")
+			->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
 			->orderBy('edited_at', 'desc')
 			->get();
 
