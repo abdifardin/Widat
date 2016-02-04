@@ -120,6 +120,9 @@ function peek()
 	var url = $('#peek-form').prop('action');
     var token = $('input[name=_token]').val();
     var title = $(this).find(".peek_topic_title_box").html();
+	if(typeof title == 'undefined'){
+		title = $(this).text();
+	}
     $('.topic-peek-modal').modal('show');
     $('.topic-peek-modal div.loader').removeClass('hidden');
     $('.topic-peek-modal .topic-not-found').addClass('hidden');
