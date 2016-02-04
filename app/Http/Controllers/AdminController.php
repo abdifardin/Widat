@@ -110,6 +110,10 @@ class AdminController extends Controller
 				$action_error = true;
 				$action_result = trans('common.email_exists');
 			}
+			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
+				$action_error = true;
+				$action_result = trans('common.passwords_not_match');
+			}
 			else {
 				$new_admin = new User;
 				$new_admin->email = $request->get('email');
@@ -153,6 +157,10 @@ class AdminController extends Controller
 				$action_error = true;
 				$action_result = trans('common.email_exists');
 			}
+			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
+				$action_error = true;
+				$action_result = trans('common.passwords_not_match');
+			}
 			else {
 				$new_inspector = new User;
 				$new_inspector->email = $request->get('email');
@@ -195,6 +203,10 @@ class AdminController extends Controller
 			if($current_email) {
 				$action_error = true;
 				$action_result = trans('common.email_exists');
+			}
+			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
+				$action_error = true;
+				$action_result = trans('common.passwords_not_match');
 			}
 			else {
 				$new_admin = new User;

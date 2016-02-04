@@ -5,6 +5,7 @@ return [
 	/*-----------------------*/
 	'login' => 'Login',
 	'email' => 'Email',
+	'password_confirm' => 'Confirm Password',
 	'password' => 'Password',
 	'remember_me' => 'Remember Me',
 	'logout' => 'Logout',
@@ -26,6 +27,7 @@ return [
 	'add_translator' => 'Add New Translator',
 	'surname' => 'Surname',
 	'email_exists' => 'The email that you have entered already exists in our database.',
+	'passwords_not_match' => 'Password and Password confirm not match.',
 	'confirm_deletion' => 'Are you sure you want to delete this user?',
 	'cancel' => 'Cancel',
 	'score' => 'Score',

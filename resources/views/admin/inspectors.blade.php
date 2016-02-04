@@ -46,7 +46,7 @@
 							<br/>
 						</div>
 
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-md-12 col-lg-12">
 							<div class="input-group">
 								<label for="email" class="input-group-addon">
 									{{ trans('common.email') }}
@@ -64,6 +64,20 @@
 								</label>
 								<input type="password" class="form-control" name="password"
 									   id="password" value="{{ old('password') }}" />
+								<div class="input-group-addon toggle-password">
+									<span class="fa fa-eye-slash"></span>
+								</div>
+							</div>
+							<br />
+						</div>
+						
+						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
+							<div class="input-group">
+								<label for="password" class="input-group-addon">
+									{{ trans('common.password_confirm') }}
+								</label>
+								<input type="password" class="form-control" name="cpassword"
+									   id="cpassword" />
 								<div class="input-group-addon toggle-password">
 									<span class="fa fa-eye-slash"></span>
 								</div>
