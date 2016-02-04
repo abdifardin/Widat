@@ -315,3 +315,12 @@ function refreshCsrf()
         setTimeout(refreshCsrf, 1000 * 60);
     });
 }
+
+$(document).ready(function(){
+	$("[name='ku_trans_title']").keypress(function(event){
+		if (event.keyCode == 10 || event.keyCode == 13){
+			event.preventDefault();
+			$("#ku_trans_abstract").focus();
+		}
+	});
+});

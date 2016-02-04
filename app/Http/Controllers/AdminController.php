@@ -327,12 +327,14 @@ class AdminController extends Controller
 		if($request->has('restore_selected')) {
 			foreach($request->input('bulk_restore') as $r){
 				$recommendations_delete = DeleteRecommendation::where('topic_id', $r)->first();
-				$topic = Topic::withTrashed()->where('id', $recommendations_delete->topic_id)->first();
-				$recommendations_delete->viewed = 1;
-				$recommendations_delete->save();
-				$recommendations_delete->delete();
-			
-				$topic->restore();
+				if($recommendations_delete){
+					$topic = Topic::withTrashed()->where('id', $recommendations_delete->topic_id)->first();
+					$recommendations_delete->viewed = 1;
+					$recommendations_delete->save();
+					$recommendations_delete->delete();
+				
+					$topic->restore();
+				}
 			}
 		}
 		return redirect()->route('admin.delete_recommendation');
