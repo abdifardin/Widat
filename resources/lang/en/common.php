@@ -85,4 +85,6 @@ return [
 	'accepted_translation_message' => 'This translation accepted by proofreader.',
 	'rejected_translation_message' => 'This topic was rejected by a proofreader.',
 	'wait_translation_message' => 'This translation wait for inspection.',
+	'accepted_list' => 'Accepted List',
+	'arejected_list' => 'Rejected List',
 ];

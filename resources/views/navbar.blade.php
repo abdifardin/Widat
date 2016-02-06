@@ -95,6 +95,18 @@
 						</a>
 					</li>
 					<li>
+						<a href="{{ route('inspector.accepted_list') }}">
+							<span class="fa fa-check-circle fa-2x"></span>
+							<span class="label">{{ trans('common.accepted_list') }}</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{ route('inspector.rejected_list') }}">
+							<span class="fa fa-times-circle fa-2x"></span>
+							<span class="label">{{ trans('common.arejected_list') }}</span>
+						</a>
+					</li>
+					<li>
 						<a href="{{ route('main.edit_account', [
 							'user_id' => \Illuminate\Support\Facades\Auth::user()->id
 						]) }}">

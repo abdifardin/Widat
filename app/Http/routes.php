@@ -137,4 +137,12 @@ Route::any('inspection/{topic_id?}', [
 	'as' => 'inspector.inspection',
 	'uses' => 'InspectorController@inspection',
 ]);
+Route::any('accepted-list/', [
+	'as' => 'inspector.accepted_list',
+	'uses' => 'InspectorController@accepted',
+]);
+Route::any('rejected-list/', [
+	'as' => 'inspector.rejected_list',
+	'uses' => 'InspectorController@rejected',
+]);
 

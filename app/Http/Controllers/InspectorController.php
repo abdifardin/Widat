@@ -97,5 +97,37 @@ class InspectorController extends Controller
 				'ku_trans' => $ku_trans,
 			]);
 		}
-	}	
+	}
+	
+	public function accepted(Request $request)
+	{
+		$user_id = Auth::user()->id;
+		
+		$ku_translation = KuTranslation::where('finished', 1)
+			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
+			->where('ku_translations.inspection_result', 1)
+			->where('ku_translations.inspector_id', '=' , $user_id)
+			->orderBy('edited_at', 'desc')
+			->get();
+			
+		return view('inspector.home', [
+			'inspections' => $ku_translation,
+		]);
+	}
+	
+	public function rejected(Request $request)
+	{
+		$user_id = Auth::user()->id;
+		
+		$ku_translation = KuTranslation::where('finished', 1)
+			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
+			->where('ku_translations.inspection_result', -1)
+			->where('ku_translations.inspector_id', '=' , $user_id)
+			->orderBy('edited_at', 'desc')
+			->get();
+			
+		return view('inspector.home', [
+			'inspections' => $ku_translation,
+		]);
+	}
 }
