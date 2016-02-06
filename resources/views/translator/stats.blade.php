@@ -77,11 +77,11 @@
 						<div class="row">
 							@foreach($translated as $t)
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-								@if($t->inspection_result == 1)
+								@if($t->finished == 1 AND $t->inspection_result == 1)
 								<a href="javascript:;" style="background-color:#DCEDC8;" class="btn btn-block btn-default peek-link">
-								@elseif($t->finished == 0 AND $t->inspector_id != NULL)
+								@elseif($t->finished == 1 AND $t->inspection_result == -1)
 								<a href="javascript:;" style="background-color:#ffcdd2;" class="btn btn-block btn-default peek-link">
-								@elseif($t->finished == 1 AND $t->inspector_id == NULL)
+								@elseif($t->finished == 1 AND $t->inspection_result == 0)
 								<a href="javascript:;" style="background-color:#FFF9C4;" class="btn btn-block btn-default peek-link">
 								@else
 								<a href="javascript:;" style="background-color:#FAFAFA;" class="btn btn-block btn-default peek-link">

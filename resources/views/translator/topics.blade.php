@@ -61,11 +61,11 @@
 				<div class="row">
 					@foreach($topics as $t)
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-							@if($t->inspection_result == 1)
+							@if($t->finished == 1 AND $t->inspection_result == 1)
 							<a style="background-color:#DCEDC8;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
-							@elseif($t->finished == 0 AND $t->inspector_id != NULL)
+							@elseif($t->finished == 1 AND $t->inspection_result == -1)
 							<a style="background-color:#ffcdd2;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
-							@elseif($t->finished == 1 AND $t->inspector_id == NULL)
+							@elseif($t->finished == 1 AND $t->inspection_result == 0)
 							<a style="background-color:#FFF9C4;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
 							@else
 							<a style="background-color:#FAFAFA;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"

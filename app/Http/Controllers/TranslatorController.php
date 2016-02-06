@@ -264,11 +264,11 @@ class TranslatorController extends Controller
 		if($ku_translation){
 			$is_translated = TRUE;
 			$translation_status = '';
-			if($ku_translation->inspection_result == 1)
+			if($ku_translation->finished == 1 AND $ku_translation->inspection_result == 1)
 				$translation_status = 'accepted';
-			elseif($ku_translation->finished == 0 AND $ku_translation->inspector_id != NULL)
+			elseif($ku_translation->finished == 1 AND $ku_translation->inspection_result == -1)
 				$translation_status = 'denied';
-			elseif($ku_translation->finished == 1 AND $ku_translation->inspector_id == NULL)
+			elseif($ku_translation->finished == 1 AND $ku_translation->inspection_result == 0)
 				$translation_status = 'wait';
 		}
 		$draft_available = FALSE;
