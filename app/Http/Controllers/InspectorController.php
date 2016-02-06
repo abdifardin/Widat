@@ -67,6 +67,26 @@ class InspectorController extends Controller
 				
 				return redirect()->route('inspector.inspection');
 			}
+			if($request->has('save_accept')) {
+				$ku_trans->topic = $request->get('inspection_ku_trans_title');
+				$ku_trans->abstract = $request->get('inspection_ku_trans_abstract');
+				$ku_trans->finished = 0;
+				$ku_trans->inspection_result = 1;
+				$ku_trans->inspector_id = $user_id;
+				$ku_trans->save();
+				
+				return redirect()->route('inspector.inspection');
+			}
+			if($request->has('save_deny')) {
+				$ku_trans->topic = $request->get('inspection_ku_trans_title');
+				$ku_trans->abstract = $request->get('inspection_ku_trans_abstract');
+				$ku_trans->finished = 0;
+				$ku_trans->inspection_result = 0;
+				$ku_trans->inspector_id = $user_id;
+				$ku_trans->save();
+				
+				return redirect()->route('inspector.inspection');
+			}
 			
 			return view('inspector.inspection', [
 				'topic' => $topic,

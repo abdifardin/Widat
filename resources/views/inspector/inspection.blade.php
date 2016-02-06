@@ -15,27 +15,53 @@
 					</div>
 				</div>
 				<br />
-				<div class="translation-group">
-					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
-					<h3 class="title rtl-text">
-						&nbsp; {{ str_replace('_', ' ', $ku_trans->topic) }}
-					</h3>
-					<div class="abstract-wrapper">
-						<p id="en-abstract" class="rtl-text">
-							{{ $ku_trans->abstract }}
-						</p>
+				<div id="inspection">	
+					<div class="translation-group">
+						<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
+						<h3 class="title rtl-text">
+							&nbsp; {{ str_replace('_', ' ', $ku_trans->topic) }}
+						</h3>
+						<div class="abstract-wrapper">
+							<p id="en-abstract" class="rtl-text">
+								{{ $ku_trans->abstract }}
+							</p>
+						</div>
 					</div>
+					<br />
+					<form action="" method="post" id="translation-form">
+						<button type="submit" name="accept" value="1" class="btn btn-success pull-right">
+							{{ trans('common.inspector_accept') }}
+						</button>
+						<button type="submit" name="deny" value="1" class="btn btn-danger pull-right" style="margin-right:6px;">
+							{{ trans('common.inspector_deny') }}
+						</button>
+						<a href="" id="inspection_edit_key" class="btn btn-info pull-right" style="margin-right:6px;">Edit</a>
+						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+					</form>
 				</div>
-				<br />
-				<form action="" method="post" id="translation-form">
-					<button type="submit" name="accept" value="1" class="btn btn-success pull-right">
-						{{ trans('common.inspector_accept') }}
-					</button>
-					<button type="submit" name="deny" value="1" class="btn btn-danger pull-right" style="margin-right:6px;">
-						{{ trans('common.inspector_deny') }}
-					</button>
-					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-				</form>
+				
+				<div id="inspection_edit" style="display:none;">
+					<form action="" method="post" id="translation-form">
+						<div class="translation-group">
+							<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
+							<div class="form-group">
+								<input type="text" name="inspection_ku_trans_title" class="form-control rtl-text register-keystroke" value="{{ str_replace('_', ' ', $ku_trans->topic) }}"/>
+							</div>
+							<div class="form-group">
+								<textarea class="form-control abstract-trans rtl-text register-keystroke" id="inspection_ku_trans_abstract" name="inspection_ku_trans_abstract">{{$ku_trans->abstract }}</textarea>
+							</div>
+						</div>
+						<br />
+					
+						<button type="submit" name="save_accept" value="1" class="btn btn-success pull-right">
+							{{ trans('common.inspector_accept_save') }}
+						</button>
+						<button type="submit" name="save_deny" value="1" class="btn btn-danger pull-right" style="margin-right:6px;">
+							{{ trans('common.inspector_deny_save') }}
+						</button>
+						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

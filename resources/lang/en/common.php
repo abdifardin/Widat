@@ -78,6 +78,8 @@ return [
 	'details' => 'Details',
 	'inspector_accept' => 'Accept',
 	'inspector_deny' => 'Reject',
+	'inspector_accept_save' => 'Save Changes And Accept',
+	'inspector_deny_save' => 'Save Changes And Reject',
 	'inspection_list' => 'Inspection List',
 	'accepted_translation_message' => 'This translation accepted by proofreader.',
 	'rejected_translation_message' => 'This topic was rejected by a proofreader.',

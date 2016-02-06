@@ -326,4 +326,9 @@ $(document).ready(function(){
 			$("#ku_trans_abstract").focus();
 		}
 	});
+	$("#inspection_edit_key").click(function(event){
+		event.preventDefault();
+		$("#inspection").hide();
+		$("#inspection_edit").show();
+	});
 });
