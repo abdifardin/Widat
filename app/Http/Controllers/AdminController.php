@@ -349,6 +349,16 @@ class AdminController extends Controller
 				}
 			}
 		}
+		if($request->has('remove_selected')) {
+			foreach($request->input('bulk_restore') as $r){
+				$recommendations_delete = DeleteRecommendation::where('topic_id', $r)->first();
+				if($recommendations_delete){
+					$recommendations_delete->viewed = 1;
+					$recommendations_delete->save();
+					$recommendations_delete->delete();
+				}
+			}
+		}
 		return redirect()->route('admin.delete_recommendation');
 	}
 

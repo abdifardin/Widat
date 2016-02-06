@@ -75,6 +75,7 @@ return [
 	'reason' => 'Reason',
 	'restore' => 'Restore',
 	'restore_selected' => 'Restore Selected',
+	'remove_selected' => 'Remove Selected',
 	'details' => 'Details',
 	'inspector_accept' => 'Accept',
 	'inspector_deny' => 'Reject',

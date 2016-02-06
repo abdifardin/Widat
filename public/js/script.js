@@ -331,4 +331,11 @@ $(document).ready(function(){
 		$("#inspection").hide();
 		$("#inspection_edit").show();
 	});
+	$('#bulk_restore_all').change(function(){
+		if (this.checked) {
+			$('.bulk_restore').prop('checked', true);
+		}else{
+			$('.bulk_restore').prop('checked', false);
+		}
+	});
 });

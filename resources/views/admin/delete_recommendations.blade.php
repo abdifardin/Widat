@@ -25,7 +25,7 @@
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
-								<th></th>
+								<th><input type="checkbox" name="bulk_restore_all" id="bulk_restore_all" value=""></th>
 								<th>{{ trans('common.id') }}</th>
 								<th>{{ trans('common.title') }}</th>
 								<th>{{ trans('common.abstract') }}</th>
@@ -35,7 +35,7 @@
 							<tbody>
 								@foreach($recommendations_list as $r)
 								<tr>
-									<td><input type="checkbox" name="bulk_restore[]" value="{{ $r->topic_id }}"></td>
+									<td><input type="checkbox" name="bulk_restore[]" class="bulk_restore" value="{{ $r->topic_id }}"></td>
 									<td>{{ $r->topic_id }}</td>
 									<td>
 										{{ urldecode(str_replace("_", " ", $r->topic)) }}
@@ -64,6 +64,9 @@
 						</table>
 						<button type="submit" name="restore_selected" value="1" class="btn btn-primary">
 							{{ trans('common.restore_selected') }}
+						</button>
+						<button type="submit" name="remove_selected" value="1" class="btn btn-default">
+							{{ trans('common.remove_selected') }}
 						</button>
 						
 					</div>
