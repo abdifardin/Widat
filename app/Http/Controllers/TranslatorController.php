@@ -194,6 +194,19 @@ class TranslatorController extends Controller
 			$user->score = $user->score + Config::get('custom.reservation_score');
 			$user->save();
 		}
+		else if($request->has('unreserve') && $topic->user_id == $user->id) {
+			$topic->user_id = NULL;
+			$topic->save();
+			
+			if($ku_translation) {
+				$user->score = $user->score - Config::get('custom.reservation_score') - $current_score;
+				$ku_translation->delete();
+			}
+			else {
+				$user->score = $user->score - Config::get('custom.reservation_score');
+			}
+			$user->save();
+		}
 		else if($request->has('save')) {
 			$ku_trans_title = $request->get('ku_trans_title', '');
 			$ku_trans_abstract = $request->get('ku_trans_abstract', '');

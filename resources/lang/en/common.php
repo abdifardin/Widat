@@ -35,6 +35,7 @@ return [
 	'edit_account' => 'Edit Account',
 	'delete_recommendations' => 'Delete Recommendations',
 	'save_changes' => 'Save Changes',
+	'un_reserve_topic' => 'Unreserve',
 	'submit_inspection' => 'Submit for Inspection',
 	'account_info_saved' => 'Account information updated!',
 	'password_too_short' => 'Password is too short. It must be at least 8 characters long.',

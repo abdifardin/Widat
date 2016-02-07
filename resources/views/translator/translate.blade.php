@@ -53,6 +53,10 @@
 						{!! csrf_field() !!}
 						<div class="form-toolbar float-right">
 							@if($is_owner)
+								<button type="submit" name="unreserve" value="1" class="btn btn-default">
+									{{ trans('common.un_reserve_topic') }}
+									<span class="fa fa-circle-o-notch fa-spin hidden"></span>
+								</button>
 								@if($is_translated AND $translation_status != 'wait' AND $translation_status != 'accepted')
 								<button type="submit" name="inspection" value="1" class="btn btn-info">
 									{{ trans('common.submit_inspection') }}
@@ -78,7 +82,6 @@
 
 						<div class="clearfix"></div>
 						
-						
 						<div class="form-group">
 							<input type="text" name="ku_trans_title" class="form-control rtl-text register-keystroke"
 								   value="{{$ku_translation_title }}" placeholder="سەردێڕ"
@@ -87,6 +90,7 @@
 						</div>
 						<div class="col-sm-12" id="save_changes_label" style="display:none;">Saving changes to drafts...</div>
 						<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve Drafts</a></div>
+						<div class="clearfix"></div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
 									  name="ku_trans_abstract" placeholder="ئەبستراکت" @if(!$is_owner) disabled @endif>{{

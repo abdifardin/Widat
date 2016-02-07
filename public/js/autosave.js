@@ -11,6 +11,23 @@ $('#retrieve_drafts_label').on('click', function (e) {
 	$.post(window.location.href, {retrieve: retrieve, _token: _token}, function(result, status){
 		if(result != 'empty'){
 			$('#ku_trans_abstract').val(result);
+			
+			var abstract = $('textarea#ku_trans_abstract');
+			if(!abstract.length) {
+				return;
+			}
+			var plaintext = abstract.val().trim();
+			var words = plaintext.split(" ");
+			var wordcount = 0;
+			for(var i = 0; i < words.length; i++) {
+				if(words[i].trim().length > 1) {
+					wordcount++;
+				}
+			}
+
+			wordcount -= $('#current_score').val();
+
+			$('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
 		}
 	});
 });
