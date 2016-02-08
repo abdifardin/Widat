@@ -76,7 +76,7 @@ return [
 	'reason' => 'Reason',
 	'restore' => 'Restore',
 	'restore_selected' => 'Restore Selected',
-	'remove_selected' => 'Remove Selected',
+	'remove_selected' => 'Delete Selected',
 	'details' => 'Details',
 	'inspector_accept' => 'Accept',
 	'inspector_deny' => 'Reject',
@@ -88,4 +88,5 @@ return [
 	'wait_translation_message' => 'This translation wait for inspection.',
 	'accepted_list' => 'Accepted List',
 	'arejected_list' => 'Rejected List',
+	'refering_to_topic' => 'Refering to topic',
 ];

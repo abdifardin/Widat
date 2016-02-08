@@ -81,6 +81,9 @@
 						</div>
 					</div>
 					<div class="modal-footer">
+						<a href="" class="refering-to-topic btn btn-primary" style="display:none;">
+							{{ trans('common.refering_to_topic') }}
+						</a>
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							{{ trans('common.close') }}
 						</button>

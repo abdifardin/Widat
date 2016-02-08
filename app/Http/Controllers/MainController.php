@@ -146,6 +146,7 @@ class MainController extends Controller
 			abort(401, 'You must be logged in to access this area.');
 			return null;
 		}
+		$current_user = Auth::user();
 		$topic = str_replace(' ', '_', trim($request->get('topic', '')));
 		if(!strlen($topic))
 			$topic = null;
@@ -170,6 +171,11 @@ class MainController extends Controller
 		if($topic->user_id === NULL AND $topic->delete_recommended == 0){
 			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
 		}
+		
+		$refering_to_topic = '';
+		if($topic->user_id === NULL OR $topic->user_id == $current_user->id){
+			$refering_to_topic = url('/').'/translate/'.$topic->id;
+		}
 
 		return response()->json([
 			'error' => false,
@@ -180,6 +186,7 @@ class MainController extends Controller
 			'ku_topic' => $ku_title,
 			'ku_abstract' => $ku_abstract,
 			'delete_recomend' => $delete_recomend,
+			'refering_to_topic' => $refering_to_topic,
 		]);
 	}
 }
