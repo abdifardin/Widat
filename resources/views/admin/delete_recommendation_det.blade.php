@@ -9,6 +9,9 @@
 					<form action="" method="post" id="translation-form">
 						{!! csrf_field() !!}
 						<div class="form-toolbar float-right">
+							<button type="submit" name="delete" value="1" class="btn btn-danger">
+								{{ trans('common.delete') }}
+							</button>
 							<button type="submit" name="postpone" value="1" class="btn btn-info">
 								{{ trans('common.delete_recommendation_postpone') }}
 							</button>

@@ -321,6 +321,11 @@ class AdminController extends Controller
 			return redirect()->route('admin.delete_recommendation');
 		}
 		
+		if($request->has('delete')) {
+			$recommendations_delete->delete();
+			return redirect()->route('admin.delete_recommendation');
+		}
+		
 		$translator = User::where('id', $recommendations_delete->user_id)->first();
 		$recommendations_delete->viewed = 1;
 		$recommendations_delete->save();

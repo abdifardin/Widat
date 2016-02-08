@@ -65,7 +65,7 @@
 						<button type="submit" name="restore_selected" value="1" class="btn btn-primary">
 							{{ trans('common.restore_selected') }}
 						</button>
-						<button type="submit" name="remove_selected" value="1" class="btn btn-default">
+						<button type="submit" name="remove_selected" value="1" class="btn btn-danger">
 							{{ trans('common.remove_selected') }}
 						</button>
 						
