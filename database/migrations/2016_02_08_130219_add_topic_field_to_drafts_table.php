@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDraftsTable extends Migration
+class AddTopicFieldToDraftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,7 @@ class CreateDraftsTable extends Migration
      */
     public function up()
     {
-        Schema::create('drafts', function (Blueprint $table) {
-			$table->integer('topic_id');
-			$table->Text('abstract')->nullable();
-			$table->string('last_update', 10);
-		});
+        DB::statement("ALTER TABLE `drafts` ADD `topic` VARCHAR(500) NULL AFTER `topic_id`;");
     }
 
     /**

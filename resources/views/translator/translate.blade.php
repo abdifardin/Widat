@@ -83,7 +83,7 @@
 						<div class="clearfix"></div>
 						
 						<div class="form-group">
-							<input type="text" name="ku_trans_title" class="form-control rtl-text register-keystroke"
+							<input type="text" name="ku_trans_title" id="ku_trans_title" class="form-control rtl-text register-keystroke"
 								   value="{{$ku_translation_title }}" placeholder="سەردێڕ"
 									@if(!$is_owner) disabled @endif
 									/>

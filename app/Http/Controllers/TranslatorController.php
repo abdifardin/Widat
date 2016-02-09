@@ -252,10 +252,12 @@ class TranslatorController extends Controller
 			if(empty($draft)){
 				$newdraft = new Draft();
 				$newdraft->topic_id = $topic_id;
+				$newdraft->topic = $request->input('ku_trans_topic');
 				$newdraft->abstract = $request->input('ku_trans_abstract');
 				$newdraft->last_update = time();
 				$newdraft->save();
 			}else{
+				$draft->topic = $request->input('ku_trans_topic');
 				$draft->abstract = $request->input('ku_trans_abstract');
 				$draft->last_update = time();
 				$draft->save();
@@ -268,7 +270,7 @@ class TranslatorController extends Controller
 			if(empty($draft)){
 				return response()->json('empty');
 			}else{
-				return response()->json($draft->abstract);
+				return response()->json(['topic' => $draft->topic, 'abstract' => $draft->abstract]);
 			}
 		}
 		

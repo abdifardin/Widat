@@ -1,7 +1,9 @@
 window.setInterval(event, 5000);
 var previous_val = $("#ku_trans_abstract").val();
+var previous_title = $("#ku_trans_title").val();
 var save_changes_label = $("#save_changes_label").html();
 var current_val;
+var current_title;
 
 $('#retrieve_drafts_label').on('click', function (e) {
 	e.preventDefault();
@@ -10,7 +12,8 @@ $('#retrieve_drafts_label').on('click', function (e) {
 	var _token = $('input[name=_token]').val();
 	$.post(window.location.href, {retrieve: retrieve, _token: _token}, function(result, status){
 		if(result != 'empty'){
-			$('#ku_trans_abstract').val(result);
+			$('#ku_trans_abstract').val(result.abstract);
+			$('#ku_trans_title').val(result.topic);
 			
 			var abstract = $('textarea#ku_trans_abstract');
 			if(!abstract.length) {
@@ -34,16 +37,20 @@ $('#retrieve_drafts_label').on('click', function (e) {
 	
 function event() {
 	var current_val = $("#ku_trans_abstract").val();
-	if (current_val.localeCompare(previous_val) != 0 && document.getElementById("ku_trans_abstract").value != '') {
+	var current_title = $("#ku_trans_title").val();
+	if (current_val.localeCompare(previous_val) != 0 && document.getElementById("ku_trans_abstract").value != ''
+	|| current_title.localeCompare(previous_title) != 0 && document.getElementById("ku_trans_title").value != '') {
 		$("#save_changes_label").show();
 		$("#retrieve_drafts_label").hide();
+		var ku_trans_topic = $("#ku_trans_title").val();
 		var ku_trans_abstract = $("#ku_trans_abstract").val();
 		var autosave = 1;
 		var _token = $('input[name=_token]').val();
-		$.post(window.location.href, {ku_trans_abstract: ku_trans_abstract, autosave: autosave, _token: _token}, function(result, status){
+		$.post(window.location.href, {ku_trans_topic: ku_trans_topic, ku_trans_abstract: ku_trans_abstract, autosave: autosave, _token: _token}, function(result, status){
 			$("#save_changes_label").hide();
 			$("#retrieve_drafts_label").show();
 		});
 	}
 	previous_val = current_val;
+	previous_title = current_title;
 }
