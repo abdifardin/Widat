@@ -201,6 +201,7 @@ class TranslatorController extends Controller
 			if($ku_translation) {
 				$user->score = $user->score - Config::get('custom.reservation_score') - $current_score;
 				$ku_translation->delete();
+				$ku_translation = array();
 			}
 			else {
 				$user->score = $user->score - Config::get('custom.reservation_score');
