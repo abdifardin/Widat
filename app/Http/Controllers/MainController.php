@@ -153,7 +153,7 @@ class MainController extends Controller
 		Utilities::updateTopicFromWikipedia($topic);
 		$topic = Topic::where('topic', $topic)->first();
 		
-		if(!$topic) {
+		if(!$topic OR ($topic->user_id != NULL AND $topic->user_id != $current_user->id AND $current_user->user_type != 'admin')) {
 			return response()->json([
 				'error' => true,
 			]);
@@ -171,11 +171,6 @@ class MainController extends Controller
 		if($topic->user_id === NULL AND $topic->delete_recommended == 0){
 			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
 		}
-		
-		$refering_to_topic = '';
-		if($topic->user_id === NULL OR $topic->user_id == $current_user->id){
-			$refering_to_topic = url('/').'/translate/'.$topic->id;
-		}
 
 		return response()->json([
 			'error' => false,
@@ -186,7 +181,6 @@ class MainController extends Controller
 			'ku_topic' => $ku_title,
 			'ku_abstract' => $ku_abstract,
 			'delete_recomend' => $delete_recomend,
-			'refering_to_topic' => $refering_to_topic,
 		]);
 	}
 }

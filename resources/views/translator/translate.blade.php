@@ -58,7 +58,7 @@
 									<span class="fa fa-circle-o-notch fa-spin hidden"></span>
 								</button>
 								@if($is_translated AND $translation_status != 'wait' AND $translation_status != 'accepted')
-								<button type="submit" name="inspection" value="1" class="btn btn-info">
+								<button type="submit" name="inspection" id="inspection" value="1" class="btn btn-info">
 									{{ trans('common.submit_inspection') }}
 								</button>
 								@endif

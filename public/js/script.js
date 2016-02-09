@@ -62,6 +62,17 @@ $(function() {
         }
     });
 
+    $('#inspection').click(function() {
+        var ku_trans_title = $("#ku_trans_title").val();
+        var ku_trans_abstract = $("#ku_trans_abstract").val();
+        var en_abstract = $("#hidden-en-abstract").val();
+		if(ku_trans_abstract.length / en_abstract.length > 0.79){
+			return confirm('Do you want to submit this article for proofreading? You can still make changes whilst it is waiting for proof read.');
+		}else{
+			return confirm('This looks like shorter than English text, are you sure you want to send it for proofreading?');
+		}
+    });
+	
     $('#translation-form').submit(function() {
         translation_save_clicked = true;
     });
@@ -154,10 +165,8 @@ function peek()
                     $('a.btn.translate-now').prop('href', data.translate_url);
 					$('#deletion-rec-box').html(data.delete_recomend);
                 }
-				if(data.refering_to_topic){
-					$('.refering-to-topic').show();
-					$('.refering-to-topic').attr('href', data.refering_to_topic);
-				}
+				$('.refering-to-topic').show();
+				$('.refering-to-topic').attr('href', data.translate_url);
             }
         }
     });
