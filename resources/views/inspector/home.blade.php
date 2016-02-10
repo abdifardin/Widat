@@ -13,6 +13,8 @@
 							<a href="{{ route('inspector.inspection', ['topic_id' => $i->topic_id]) }}"
 							   class="btn btn-block btn-default">
 								{{ urldecode(str_replace("_", " ", $i->topic)) }}
+								<br>
+								{{ date('n/j/Y - H:i', $i->inspection_time) }}
 							</a>
 							<br />
 						</div>

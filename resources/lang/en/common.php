@@ -1,6 +1,6 @@
 <?php
 return [
-	'site_name' => 'WIDAT',
+	'site_name' => 'WIDAT WIP',
 	'site_description' => 'Wikipedia Introductions Downloader And Translator',
 	/*-----------------------*/
 	'login' => 'Login',
@@ -88,5 +88,5 @@ return [
 	'wait_translation_message' => 'This translation wait for inspection.',
 	'accepted_list' => 'Accepted List',
 	'arejected_list' => 'Rejected List',
-	'refering_to_topic' => 'Refering to topic',
+	'refering_to_topic' => 'Edit topic',
 ];
