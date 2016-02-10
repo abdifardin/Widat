@@ -66,7 +66,7 @@ $(function() {
     });
 	
     $('#inspection').click(function() {
-        var ku_trans_title = $("#ku_trans_title").val();
+		var ku_trans_title = $("#ku_trans_title").val();
         var ku_trans_abstract = $("#ku_trans_abstract").val();
         var en_abstract = $("#hidden-en-abstract").val();
 		if(ku_trans_abstract.length / en_abstract.length > 0.79){
@@ -168,8 +168,10 @@ function peek()
                     $('a.btn.translate-now').prop('href', data.translate_url);
 					$('#deletion-rec-box').html(data.delete_recomend);
                 }
-				$('.refering-to-topic').show();
-				$('.refering-to-topic').attr('href', data.translate_url);
+				if(!data.is_admin){
+					$('.refering-to-topic').show();
+					$('.refering-to-topic').attr('href', data.translate_url);
+				}
             }
         }
     });
