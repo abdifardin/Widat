@@ -290,8 +290,10 @@ class TranslatorController extends Controller
 				$translation_status = 'wait';
 		}
 		$draft_available = FALSE;
-		if(!empty(Draft::where('topic_id', $topic_id)->first())){
+		$draft_time = '';
+		if(!empty($topicdraft = Draft::where('topic_id', $topic_id)->first())){
 			$draft_available = TRUE;
+			$draft_time = $topicdraft->last_update;
 		}
 		
 			
@@ -304,6 +306,7 @@ class TranslatorController extends Controller
 			'ku_translation_abstract' => ($ku_translation && $ku_translation->abstract) ? $ku_translation->abstract : '',
 			'current_score' => $current_score,
 			'draft_available' => $draft_available,
+			'draft_time' => $draft_time,
 			'msg' => $msg,
 		]);
 	}

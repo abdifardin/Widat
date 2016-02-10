@@ -88,8 +88,9 @@
 									@if(!$is_owner) disabled @endif
 									/>
 						</div>
-						<div class="col-sm-12" id="save_changes_label" style="display:none;">Saving changes to drafts...</div>
-						<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve Drafts</a></div>
+						<div class="col-sm-12" id="save_changes_label" style="display:none;">Saving changes to draft...</div>
+						<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve draft @if($draft_available){{ date('n/j/Y : H:i', $draft_time) }}@endif hrs to save</a></div>
+						<input type="hidden" id="have_draft" value="{{ $draft_available }}" />
 						<div class="clearfix"></div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"

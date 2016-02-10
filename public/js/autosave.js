@@ -41,6 +41,7 @@ function event() {
 	if (current_val.localeCompare(previous_val) != 0 && document.getElementById("ku_trans_abstract").value != ''
 	|| current_title.localeCompare(previous_title) != 0 && document.getElementById("ku_trans_title").value != '') {
 		$("#save_changes_label").show();
+		$("#retrieve_drafts_label").html('<a href="">Draft saved 5 seconds ago, click here to retrieve and click "Save changes".</a>');
 		$("#retrieve_drafts_label").hide();
 		var ku_trans_topic = $("#ku_trans_title").val();
 		var ku_trans_abstract = $("#ku_trans_abstract").val();

@@ -54,14 +54,17 @@ $(function() {
 
     //setTimeout(registerActivity, 1000);
     //setTimeout(refreshStatuses, 1000);
-
-    $(window).on('beforeunload', function() {
-        if (checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null &&
+	
+	$(window).on('beforeunload', function() {
+		if($('#have_draft').val() && !translation_save_clicked){
+			return 'You have draft. To save it stay on this page and after retrieve draft click on save changes.';
+		}
+		if (checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null &&
             !translation_save_clicked) {
             return 'You have unsaved changes!';
         }
     });
-
+	
     $('#inspection').click(function() {
         var ku_trans_title = $("#ku_trans_title").val();
         var ku_trans_abstract = $("#ku_trans_abstract").val();
@@ -73,9 +76,9 @@ $(function() {
 		}
     });
 	
-    $('#translation-form').submit(function() {
-        translation_save_clicked = true;
-    });
+	$("button[name = 'save']").click(function() {
+		translation_save_clicked = true;
+	});
 
     $('.peek-link').click(peek);
 
@@ -261,6 +264,7 @@ function updateTranslationScore()
 function checkForUnsavedChanges()
 {
     var abstract = $('textarea#ku_trans_abstract');
+	
     if(!abstract.length) {
         return null;
     }
@@ -274,7 +278,6 @@ function checkForUnsavedChanges()
     }
 
     wordcount -= $('#current_score').val();
-
     return wordcount;
 }
 
