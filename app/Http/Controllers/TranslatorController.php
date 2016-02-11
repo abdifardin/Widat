@@ -243,7 +243,7 @@ class TranslatorController extends Controller
 		else if($request->has('inspection')) {
 			if($ku_translation){
 				$ku_translation->finished = 1;
-				$ku_translation->inspector_id = NULL;
+				//$ku_translation->inspector_id = NULL;
 				$ku_translation->inspection_result = 0;
 				$ku_translation->inspection_time = time();
 				$ku_translation->save();

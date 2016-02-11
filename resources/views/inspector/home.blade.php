@@ -9,6 +9,7 @@
 				</h2>
 				@if(count($inspections) > 0)
 					@foreach($inspections as $i)
+						@if($i->inspector_id == NULL OR $i->inspector_id == $current_user_id)
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 							<a href="{{ route('inspector.inspection', ['topic_id' => $i->topic_id]) }}"
 							   class="btn btn-block btn-default">
@@ -18,6 +19,7 @@
 							</a>
 							<br />
 						</div>
+						@endif
 					@endforeach
 				@else
 					<h4 class="text-center text-danger text-capitalize">

@@ -66,6 +66,7 @@ return [
 	'no_trans' => 'No translation has been added for this topic yet.',
 	'my_topics' => 'My Topics',
 	'translated_topics' => 'Translated Topics',
+	'proofrede_topics' => 'Proofread Topics',
 	'delete_recommendation' => 'Recommend for Deletion',
 	'delete_recommendation_message' => 'Select your reason below:',
 	'delete_recommendation_submit' => 'Recommend for Deletion',

@@ -72,7 +72,7 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<h3 class="text-center">{{ trans('common.translated_topics') }}</h3>
+						<h3 class="text-center">{{ trans('common.proofrede_topics') }}</h3>
 
 						<div class="row">
 							@foreach($inspected as $t)
@@ -86,7 +86,10 @@
 								@else
 								<a href="javascript:;" style="background-color:#FAFAFA;" class="btn btn-block btn-default peek-link">
 								@endif
-									<span class="peek_topic_title_box">{{ urldecode($t->topic) }}</span> ({{ urldecode($t->auditing_count) }})
+									<span class="peek_topic_title_box">{{ urldecode($t->topic) }}</span> 
+									@if($t->auditing_count > 1 AND $t->inspection_result != 1)
+									({{ $t->auditing_count }})
+									@endif
 									@if($t->edited_at)
 									<br>
 									{{ date('n/j/Y - H:i', $t->edited_at) }}

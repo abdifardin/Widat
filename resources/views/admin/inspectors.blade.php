@@ -46,7 +46,7 @@
 							<br/>
 						</div>
 
-						<div class="col-xs-12 col-sm-12 col-md-12 col-md-12 col-lg-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
 							<div class="input-group">
 								<label for="email" class="input-group-addon">
 									{{ trans('common.email') }}
@@ -71,7 +71,7 @@
 							<br />
 						</div>
 						
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6 pull-right">
 							<div class="input-group">
 								<label for="password" class="input-group-addon">
 									{{ trans('common.password_confirm') }}

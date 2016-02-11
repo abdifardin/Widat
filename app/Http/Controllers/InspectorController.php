@@ -38,9 +38,10 @@ class InspectorController extends Controller
 	
 	public function inspection(Request $request, $topic_id = null)
 	{
-		$user_id = Auth::user()->id;
+		$user = Auth::user();
+		$user_id = $user->id;
 		
-		if(!$topic_id){			
+		if(!$topic_id){
 			$ku_translation = KuTranslation::where('finished', 1)
 			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
 			->where('ku_translations.inspection_result', 0)
@@ -50,6 +51,7 @@ class InspectorController extends Controller
 			
 			return view('inspector.home', [
 				'inspections' => $ku_translation,
+				'current_user_id' => $user_id,
 			]);
 		}
 		
@@ -57,11 +59,21 @@ class InspectorController extends Controller
 		$topic = Topic::where('id', $ku_trans->topic_id)->first();
 		
 		if($topic->user_id == $user_id){
-			abort(403, 'You can not inspect you topic.');
+			abort(403, 'You can not inspect your topic.');
+		}
+		
+		if($ku_trans->inspector_id != NULL AND $ku_trans->inspector_id != $user_id){
+			abort(403, 'You can not access this area.');
 		}
 		
 		if($ku_trans AND $topic){
 			if($request->has('accept')) {
+				if($ku_trans->inspector_id == NULL){
+					$new_score = $this->calculateTranslationScore($ku_trans->abstract) + $this->calculateTranslationScore($ku_trans->topic);
+					$user->score = $user->score + $new_score;
+					$user->save();
+				}
+				
 				//$ku_trans->finished = 0;
 				$ku_trans->inspection_result = 1;
 				$ku_trans->inspector_id = $user_id;
@@ -71,6 +83,12 @@ class InspectorController extends Controller
 				return redirect()->route('inspector.inspection');
 			}
 			if($request->has('deny')) {
+				if($ku_trans->inspector_id == NULL){
+					$new_score = $this->calculateTranslationScore($ku_trans->abstract) + $this->calculateTranslationScore($ku_trans->topic);
+					$user->score = $user->score + $new_score;
+					$user->save();
+				}
+				
 				//$ku_trans->finished = 0;
 				$ku_trans->inspection_result = -1;
 				$ku_trans->inspector_id = $user_id;
@@ -80,6 +98,12 @@ class InspectorController extends Controller
 				return redirect()->route('inspector.inspection');
 			}
 			if($request->has('save_accept')) {
+				if($ku_trans->inspector_id == NULL){
+					$new_score = $this->calculateTranslationScore($ku_trans->abstract) + $this->calculateTranslationScore($ku_trans->topic);
+					$user->score = $user->score + $new_score;
+					$user->save();
+				}
+				
 				$ku_trans->topic = $request->get('inspection_ku_trans_title');
 				$ku_trans->abstract = $request->get('inspection_ku_trans_abstract');
 				//$ku_trans->finished = 0;
@@ -91,6 +115,12 @@ class InspectorController extends Controller
 				return redirect()->route('inspector.inspection');
 			}
 			if($request->has('save_deny')) {
+				if($ku_trans->inspector_id == NULL){
+					$new_score = $this->calculateTranslationScore($ku_trans->abstract) + $this->calculateTranslationScore($ku_trans->topic);
+					$user->score = $user->score + $new_score;
+					$user->save();
+				}
+				
 				$ku_trans->topic = $request->get('inspection_ku_trans_title');
 				$ku_trans->abstract = $request->get('inspection_ku_trans_abstract');
 				//$ku_trans->finished = 0;
@@ -122,6 +152,7 @@ class InspectorController extends Controller
 			
 		return view('inspector.home', [
 			'inspections' => $ku_translation,
+			'current_user_id' => $user_id,
 		]);
 	}
 	
@@ -138,6 +169,7 @@ class InspectorController extends Controller
 			
 		return view('inspector.home', [
 			'inspections' => $ku_translation,
+			'current_user_id' => $user_id,
 		]);
 	}
 
@@ -185,5 +217,21 @@ class InspectorController extends Controller
 		return view('translator.score-history', [
 			'score_history' => $score_history,
 		]);
+	}
+	
+	private function calculateTranslationScore($translation)
+	{
+		if(!$translation) {
+			return 0;
+		}
+		$words = explode(' ', $translation);
+		$word_count = 0;
+		for($i = 0; $i < count($words); $i++) {
+			if (mb_strlen(trim($words[$i])) > 1) {
+				$word_count++;
+			}
+		}
+
+		return $word_count;
 	}
 }
