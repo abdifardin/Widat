@@ -145,4 +145,11 @@ Route::any('rejected-list/', [
 	'as' => 'inspector.rejected_list',
 	'uses' => 'InspectorController@rejected',
 ]);
-
+Route::get('inspector/{user_id}/stats', [
+	'as' => 'inspector.stats',
+	'uses' => 'InspectorController@stats',
+]);
+Route::get('inspector/{user_id}/score-history', [
+	'as' => 'inspector.score_history',
+	'uses' => 'InspectorController@scoreHistory',
+]);

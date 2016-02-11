@@ -136,6 +136,12 @@
 										<input type="hidden" name="user_id" value="{{ $inspector->id }}" />
 									</a>
 									&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="{{ route('inspector.stats', ['user_id' => $inspector->id]) }}"
+										class="btn btn-primary">
+										<span class="fa fa-bar-chart"></span>
+										{{ trans('common.stats') }}
+									</a>
+									&nbsp;&nbsp;&nbsp;&nbsp;
 									<a href="{{ route('main.edit_account', ['user_id'=>$inspector->id]) }}"
 									   class="btn btn-default">
 										<span class="fa fa-pencil"></span>

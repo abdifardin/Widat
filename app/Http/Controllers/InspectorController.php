@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\KuTranslation;
+use App\ScoreHistory;
+use App\DeleteRecommendation;
 use App\Topic;
 use App\User;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -15,7 +17,7 @@ class InspectorController extends Controller
 {
     public function __construct()
 	{
-		if(!Auth::check() || Auth::user()->user_type != "inspector") {
+		if(!Auth::check() || (Auth::user()->user_type != "inspector" && Auth::user()->user_type != "admin")) {
 			abort(401, "Unauthorized!");
 		}
 
@@ -24,6 +26,14 @@ class InspectorController extends Controller
 			$user->last_activity = date('Y-m-d H:i:s');
 			$user->save();
 		}
+		
+		view()->share('delete_recommendations_num', 
+			DeleteRecommendation::where('viewed', 0)
+			->select('delete_recommendations.topic_id', 'topics.topic')
+			->join('topics', 'delete_recommendations.topic_id', '=', 'topics.id')
+			//->whereNull('topics.deleted_at')
+			->count()
+		);
 	}
 	
 	public function inspection(Request $request, $topic_id = null)
@@ -128,6 +138,52 @@ class InspectorController extends Controller
 			
 		return view('inspector.home', [
 			'inspections' => $ku_translation,
+		]);
+	}
+
+	public function stats($user_id)
+	{
+		$inspector = User::where('id', $user_id)->first();
+		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
+
+		$last_month_history = ScoreHistory::whereRaw('MONTH(created_at) = ?',
+			[date('m', strtotime('-1 month'))])
+			->orderBy('id', 'DESC')
+			->first();
+
+		$this_month_score = $inspector->score - ($last_month_history ? $last_month_history->score : 0);
+
+		$inspected = KuTranslation::where('inspector_id', $user_id)
+			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
+			->orderBy('edited_at', 'desc')
+			->get();
+			
+		return view('inspector.stats', [
+			'inspector' => $inspector,
+			'last_score' => ($last_score) ? $last_score->score : 0,
+			'this_month_score' => $this_month_score,
+			'inspected' => $inspected,
+		]);
+	}
+
+	public function scoreHistory($user_id)
+	{
+		$score_history = array();
+		$history_count = 12;
+
+		for($i = 1; $i <= $history_count; $i++) {
+			$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
+			$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
+			$sh = ScoreHistory::where('user_id', $user_id)
+				->whereBetween('created_at', [ $start_date, $end_date ])
+				->orderBy('created_at', 'DESC')
+				->first();
+			$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
+				$sh->score : 0;
+		}
+
+		return view('translator.score-history', [
+			'score_history' => $score_history,
 		]);
 	}
 }
