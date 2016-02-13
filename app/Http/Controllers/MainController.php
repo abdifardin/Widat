@@ -153,7 +153,7 @@ class MainController extends Controller
 		Utilities::updateTopicFromWikipedia($topic);
 		$topic = Topic::where('topic', $topic)->first();
 		
-		if(!$topic OR ($topic->user_id != NULL AND $topic->user_id != $current_user->id AND $current_user->user_type != 'admin')) {
+		if(!$topic OR ($topic->user_id != NULL AND $topic->user_id != $current_user->id AND $current_user->user_type != 'admin' AND $current_user->user_type != 'inspector')) {
 			return response()->json([
 				'error' => true,
 			]);
