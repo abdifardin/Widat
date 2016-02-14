@@ -198,16 +198,24 @@ class InspectorController extends Controller
 		]);
 	}
 
-	public function scoreHistory($user_id)
+	public function scoreHistory(Request $request, $user_id)
 	{
 		$score_history = array();
-		$history_count = 12;
 		$created_at = date_parse(User::find($user_id)->created_at);
 		$created_at = $created_at['year'].'-'.$created_at['month'].'-'.$created_at['day'];
 		$start_date = date('Y-m-1', strtotime($created_at));
 		$current_date = date('Y-m-1', time());
 		
-		for($i = 12; $i >= 0; $i--) {
+		$history_count = 12;
+		$i = 12;
+		$first_flag = 12;
+		if($request->input('number')){
+			$i = $request->input('number');
+			$first_flag = $request->input('number');
+			$history_count = $request->input('number');
+		}
+		
+		for($i; $i > 0; $i--) {
 			if($i == 12){
 				$start_date = date('Y-m-1', time());
 			}else{
@@ -228,6 +236,7 @@ class InspectorController extends Controller
 
 		return view('translator.score-history', [
 			'score_history' => $score_history,
+			'month_num' => $first_flag,
 		]);
 	}
 	
