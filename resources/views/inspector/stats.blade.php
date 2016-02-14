@@ -64,10 +64,10 @@
 								{{ trans('common.last_activity') }}
 							</h3>
 							<p class="text-center">
-								@if(strtotime($translator->last_activity) < 0)
+								@if(strtotime($inspector->last_activity) < 0)
 									NEVER
 								@else
-									{!! nl2br(date("l, d F Y \n H:i:s e", strtotime($translator->last_activity))) !!}
+									{!! nl2br(date("l, d F Y \n H:i:s e", strtotime($inspector->last_activity))) !!}
 								@endif
 							</p>
 						</div>
