@@ -11,7 +11,7 @@
 								<input type="number" class="form-control" name="number" id="number" value="{{ $month_num }}">
 							</div>
 							<div class="col-sm-1">
-								<button type="submit" class="btn btn-default">Show</button>
+								<button type="submit" class="btn btn-default">{{ trans('common.scorehistory_number_option_key') }}</button>
 							</div>
 						</form>
 					</div>

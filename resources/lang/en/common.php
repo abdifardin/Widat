@@ -91,4 +91,5 @@ return [
 	'arejected_list' => 'Rejected List',
 	'refering_to_topic' => 'Edit topic',
 	'inspected' => 'Proofread',
+	'scorehistory_number_option_key' => 'Show',
 ];
