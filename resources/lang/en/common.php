@@ -90,5 +90,5 @@ return [
 	'accepted_list' => 'Accepted List',
 	'arejected_list' => 'Rejected List',
 	'refering_to_topic' => 'Edit topic',
-	'inspected' => 'Proofreaded',
+	'inspected' => 'Proofread',
 ];

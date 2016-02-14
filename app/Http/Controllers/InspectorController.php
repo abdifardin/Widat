@@ -202,9 +202,17 @@ class InspectorController extends Controller
 	{
 		$score_history = array();
 		$history_count = 12;
-
-		for($i = 1; $i <= $history_count; $i++) {
-			$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
+		$created_at = date_parse(User::find($user_id)->created_at);
+		$created_at = $created_at['year'].'-'.$created_at['month'].'-'.$created_at['day'];
+		$start_date = date('Y-m-1', strtotime($created_at));
+		$current_date = date('Y-m-1', time());
+		
+		for($i = 12; $i >= 0; $i--) {
+			if($i == 12){
+				$start_date = date('Y-m-1', time());
+			}else{
+				$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
+			}
 			$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
 			$sh = ScoreHistory::where('user_id', $user_id)
 				->whereBetween('created_at', [ $start_date, $end_date ])
@@ -212,6 +220,10 @@ class InspectorController extends Controller
 				->first();
 			$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
 				$sh->score : 0;
+			
+			if(strtotime($start_date) <= strtotime($created_at)){
+				break;
+			}
 		}
 
 		return view('translator.score-history', [
