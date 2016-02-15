@@ -89,6 +89,14 @@
 					</li>
 				@elseif(\Illuminate\Support\Facades\Auth::user()->user_type=='inspector')	
 					<li>
+						<a href="{{ route('inspector.stats',[
+							'user_id' => \Illuminate\Support\Facades\Auth::user()->id
+						]) }}">
+							<span class="fa fa-bar-chart fa-2x"></span>
+							<span class="label">{{ trans('common.stats') }}</span>
+						</a>
+					</li>
+					<li>
 						<a href="{{ route('inspector.inspection') }}">
 							<span class="fa fa-language fa-2x"></span>
 							<span class="label">{{ trans('common.topics') }}</span>
