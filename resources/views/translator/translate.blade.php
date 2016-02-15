@@ -75,7 +75,6 @@
 								<button type="submit" name="reserve" value="1" class="btn btn-primary reserve-topic">
 									<span class="fa fa-flag"></span>
 									{{ trans('common.reserve_topic') }}
-									<span class="badge">+5</span>
 								</button>
 							@endif
 						</div>

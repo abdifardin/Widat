@@ -8,5 +8,5 @@
 
 return [
 	'nocando_score' => -5,
-	'reservation_score' => 5,
+	'reservation_score' => 0,
 ];
