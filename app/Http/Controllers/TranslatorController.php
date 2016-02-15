@@ -208,7 +208,7 @@ class TranslatorController extends Controller
 
 		$ku_translation = KuTranslation::where('topic_id', $topic_id)->first();
 		$current_score = $this->calculateTranslationScore($ku_translation ? $ku_translation->abstract : null);
-
+		$current_score += $this->calculateTranslationScore($ku_translation ? $ku_translation->topic : null);
 
 		if($request->has('reserve') && !$topic->user_id) {
 			$topic->user_id = $user->id;
@@ -244,7 +244,7 @@ class TranslatorController extends Controller
 				$ku_translation->topic_id = $topic_id;
 			}
 
-			$new_score = $this->calculateTranslationScore($ku_trans_abstract);
+			$new_score = $this->calculateTranslationScore($ku_trans_abstract) + $this->calculateTranslationScore($ku_trans_title);
 			$delta_score = $new_score - $current_score;
 
 			$ku_translation->topic = $ku_trans_title;
@@ -254,7 +254,7 @@ class TranslatorController extends Controller
 			$topic->edited_at = time();
 			$topic->save();
 
-			$current_score = $this->calculateTranslationScore($ku_translation->abstract);
+			$current_score = $this->calculateTranslationScore($ku_translation->topic) + $this->calculateTranslationScore($ku_translation->abstract);
 
 			$user->score = $user->score + $delta_score;
 			$user->save();

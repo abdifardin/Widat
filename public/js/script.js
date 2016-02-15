@@ -26,6 +26,7 @@ $(function() {
         $('.delete-user-modal input[name=user_id]').val(user_id);
     });
 
+    $("input#ku_trans_title").change(updateTranslationScore).keyup(updateTranslationScore);
     $("textarea#ku_trans_abstract").change(updateTranslationScore).keyup(updateTranslationScore);
     updateTranslationScore();
 
@@ -242,7 +243,7 @@ function highlightEnAbstract()
 
     $("p#en-abstract").html(done + current + next);
 }
-
+/*
 function updateTranslationScore()
 {
     var abstract = $('textarea#ku_trans_abstract');
@@ -259,6 +260,36 @@ function updateTranslationScore()
     }
 
     wordcount -= $('#current_score').val();
+
+    $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
+}
+*/
+function updateTranslationScore()
+{
+    var abstract = $('textarea#ku_trans_abstract');
+    var topic = $('input#ku_trans_title');
+    if(!abstract.length && !topic.length) {
+        return;
+    }
+    var plaintext = abstract.val().trim();
+    var words = plaintext.split(" ");
+    var abstractwordcount = 0;
+    for(var i = 0; i < words.length; i++) {
+        if(words[i].trim().length > 1) {
+            abstractwordcount++;
+        }
+    }
+
+    var plaintext = topic.val().trim();
+    var words = plaintext.split(" ");
+    var titlewordcount = 0;
+    for(var i = 0; i < words.length; i++) {
+        if(words[i].trim().length > 1) {
+            titlewordcount++;
+        }
+    }
+
+	wordcount = titlewordcount + abstractwordcount - $('#current_score').val();
 
     $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
 }
