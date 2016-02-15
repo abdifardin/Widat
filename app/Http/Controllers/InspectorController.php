@@ -201,7 +201,8 @@ class InspectorController extends Controller
 	public function scoreHistory(Request $request, $user_id)
 	{
 		$score_history = array();
-		$created_at = date_parse(User::find($user_id)->created_at);
+		$user_info = User::find($user_id);
+		$created_at = date_parse($user_info->created_at);
 		$created_at = $created_at['year'].'-'.$created_at['month'].'-'.$created_at['day'];
 		$start_date = date('Y-m-1', strtotime($created_at));
 		$current_date = date('Y-m-1', time());
@@ -216,32 +217,46 @@ class InspectorController extends Controller
 		}
 		
 		for($i; $i > 0; $i--) {
-			if($i == 12){
+			if($i == $first_flag){
 				$start_date = date('Y-m-1', time());
+				$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
+				$shp = ScoreHistory::where('user_id', $user_id)
+					->whereBetween('created_at', [ $prev_month, $start_date ])
+					->orderBy('created_at', 'DESC')
+					->first();
+					
+				if(!isset($shp->score)){
+					$shpc = 0;
+				}else{
+					$shpc = $shp->score;
+				}
+				
+				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = $user_info->score - $shpc;
 			}else{
 				$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
+				$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
+				$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
+				$sh = ScoreHistory::where('user_id', $user_id)
+					->whereBetween('created_at', [ $start_date, $end_date ])
+					->orderBy('created_at', 'DESC')
+					->first();
+				
+				$shp = ScoreHistory::where('user_id', $user_id)
+					->whereBetween('created_at', [ $prev_month, $start_date ])
+					->orderBy('created_at', 'DESC')
+					->first();
+				
+				if(!isset($shp->score)){
+					$shpc = 0;
+				}else{
+					$shpc = $shp->score;
+				}
+				
+				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
+					($sh->score) - $shpc : 0;
+					
 			}
-			$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
-			$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
-			$sh = ScoreHistory::where('user_id', $user_id)
-				->whereBetween('created_at', [ $start_date, $end_date ])
-				->orderBy('created_at', 'DESC')
-				->first();
 			
-			$shp = ScoreHistory::where('user_id', $user_id)
-				->whereBetween('created_at', [ $prev_month, $start_date ])
-				->orderBy('created_at', 'DESC')
-				->first();
-			
-			if(!isset($shp->score)){
-				$shpc = 0;
-			}else{
-				$shpc = $shp->score;
-			}
-			
-			$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
-				($sh->score) - $shpc : 0;
-							
 			if(strtotime($start_date) <= strtotime($created_at)){
 				break;
 			}

@@ -101,31 +101,43 @@ class TranslatorController extends Controller
 		for($i; $i > 0; $i--) {
 			if($i == $first_flag){
 				$start_date = date('Y-m-1', time());
+				$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
+				$shp = ScoreHistory::where('user_id', $user_id)
+					->whereBetween('created_at', [ $prev_month, $start_date ])
+					->orderBy('created_at', 'DESC')
+					->first();
+					
+				if(!isset($shp->score)){
+					$shpc = 0;
+				}else{
+					$shpc = $shp->score;
+				}
+				
+				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = $user_info->score - $shpc;
 			}else{
 				$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
-			}
-			$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
-			$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
-			$sh = ScoreHistory::where('user_id', $user_id)
-				->whereBetween('created_at', [ $start_date, $end_date ])
-				->orderBy('created_at', 'DESC')
-				->first();
-			
-			$shp = ScoreHistory::where('user_id', $user_id)
-				->whereBetween('created_at', [ $prev_month, $start_date ])
-				->orderBy('created_at', 'DESC')
-				->first();
-			
-			if(!isset($shp->score)){
-				$shpc = 0;
-			}else{
-				$shpc = $shp->score;
-			}
-			
-			$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
-				($sh->score) - $shpc : 0;
+				$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
+				$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
+				$sh = ScoreHistory::where('user_id', $user_id)
+					->whereBetween('created_at', [ $start_date, $end_date ])
+					->orderBy('created_at', 'DESC')
+					->first();
 				
-			
+				$shp = ScoreHistory::where('user_id', $user_id)
+					->whereBetween('created_at', [ $prev_month, $start_date ])
+					->orderBy('created_at', 'DESC')
+					->first();
+				
+				if(!isset($shp->score)){
+					$shpc = 0;
+				}else{
+					$shpc = $shp->score;
+				}
+				
+				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
+					($sh->score) - $shpc : 0;
+					
+			}
 			
 			if(strtotime($start_date) <= strtotime($created_at)){
 				break;
