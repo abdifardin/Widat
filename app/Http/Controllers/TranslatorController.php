@@ -138,7 +138,7 @@ class TranslatorController extends Controller
 					$shpc = $shp->score;
 				}
 				
-				if($sh->score){
+				if(isset($sh->score)){
 					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->score) - $shpc . ':' . $sh->score;
 				}else{
 					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = 0 . ':' . $sh->score;
