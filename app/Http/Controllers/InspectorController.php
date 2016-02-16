@@ -178,8 +178,8 @@ class InspectorController extends Controller
 		$inspector = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
 
-		$last_month_history = ScoreHistory::whereRaw('MONTH(created_at) = ?',
-			[date('m', strtotime('-1 month'))])
+		$last_month_history = ScoreHistory::where('user_id', $user_id)
+			->whereRaw('MONTH(created_at) = ?', [date('m', strtotime('-1 month'))])
 			->orderBy('id', 'DESC')
 			->first();
 

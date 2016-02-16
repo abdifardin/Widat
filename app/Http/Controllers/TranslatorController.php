@@ -57,14 +57,14 @@ class TranslatorController extends Controller
 	{
 		$translator = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
-
-		$last_month_history = ScoreHistory::whereRaw('MONTH(created_at) = ?',
-			[date('m', strtotime('-1 month'))])
+		
+		$last_month_history = ScoreHistory::where('user_id', $user_id)
+			->whereRaw('MONTH(created_at) = ?', [date('m', strtotime('-1 month'))])
 			->orderBy('id', 'DESC')
 			->first();
-
+		
 		$this_month_score = $translator->score - ($last_month_history ? $last_month_history->score : 0);
-
+		
 		$translated = Topic::where('user_id', $user_id)
 			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
 			->whereNotNull('ku_translations.abstract')
