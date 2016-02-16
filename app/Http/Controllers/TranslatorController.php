@@ -268,29 +268,34 @@ class TranslatorController extends Controller
 			$ku_trans_title = $request->get('ku_trans_title', '');
 			$ku_trans_abstract = $request->get('ku_trans_abstract', '');
 
-			if(!$ku_translation) {
-				$ku_translation = new KuTranslation();
-				$ku_translation->topic_id = $topic_id;
+			if((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) > 1.2 OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) > 1.2){
+				$msg = '<div class="alert alert-danger" role="alert">Kurdish translation is too longer than english abstract.</div>';
 			}
+			else{
+				if(!$ku_translation) {
+					$ku_translation = new KuTranslation();
+					$ku_translation->topic_id = $topic_id;
+				}
 
-			$new_score = $this->calculateTranslationScore($ku_trans_abstract) + $this->calculateTranslationScore($ku_trans_title);
-			$delta_score = $new_score - $current_score;
+				$new_score = $this->calculateTranslationScore($ku_trans_abstract) + $this->calculateTranslationScore($ku_trans_title);
+				$delta_score = $new_score - $current_score;
 
-			$ku_translation->topic = $ku_trans_title;
-			$ku_translation->abstract = $ku_trans_abstract;
-			$ku_translation->save();
-			
-			$topic->edited_at = time();
-			$topic->save();
+				$ku_translation->topic = $ku_trans_title;
+				$ku_translation->abstract = $ku_trans_abstract;
+				$ku_translation->save();
+				
+				$topic->edited_at = time();
+				$topic->save();
 
-			$current_score = $this->calculateTranslationScore($ku_translation->topic) + $this->calculateTranslationScore($ku_translation->abstract);
+				$current_score = $this->calculateTranslationScore($ku_translation->topic) + $this->calculateTranslationScore($ku_translation->abstract);
 
-			$user->score = $user->score + $delta_score;
-			$user->save();
-			
-			$draft = Draft::where('topic_id', $topic_id)->first();
-			if(!empty($draft))
-				$draft->delete();
+				$user->score = $user->score + $delta_score;
+				$user->save();
+				
+				$draft = Draft::where('topic_id', $topic_id)->first();
+				if(!empty($draft))
+					$draft->delete();
+			}
 		}
 		else if($request->has('inspection')) {
 			if($ku_translation){
