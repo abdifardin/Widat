@@ -117,7 +117,7 @@ class TranslatorController extends Controller
 					$shpc = $shp->score;
 				}
 				
-				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = $user_info->score - $shpc;
+				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = $user_info->score - $shpc . ':' . $user_info->score;
 			}else{
 				$start_date = date('Y-m-1', strtotime("-" . ($history_count - $i) . " months"));
 				$end_date = date('Y-m-1', strtotime("-" . ($history_count - $i - 1) . " months"));
@@ -138,9 +138,11 @@ class TranslatorController extends Controller
 					$shpc = $shp->score;
 				}
 				
-				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = isset($sh->score) ?
-					($sh->score) - $shpc : 0;
-					
+				if($sh->score){
+					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->score) - $shpc . ':' . $sh->score;
+				}else{
+					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = 0 . ':' . $sh->score;
+				}	
 			}
 			
 			if(strtotime($start_date) <= strtotime($created_at)){

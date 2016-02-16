@@ -19,7 +19,8 @@
 								{{ $month }}
 							</h3>
 							<p class="count text-center">
-								{{ number_format($sh) }}
+								<?php $sh_arr = explode(':', $sh);?>
+								{{ number_format($sh_arr[0]) }} ({{ $sh_arr[1] }})
 							</p>
 						</div>
 					</div>
