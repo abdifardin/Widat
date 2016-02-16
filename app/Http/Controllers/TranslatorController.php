@@ -270,8 +270,13 @@ class TranslatorController extends Controller
 			$ku_trans_title = $request->get('ku_trans_title', '');
 			$ku_trans_abstract = $request->get('ku_trans_abstract', '');
 
-			if((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) > 1.2 OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) > 1.2){
-				$msg = '<div class="alert alert-danger" role="alert">Kurdish translation is too longer than english abstract.</div>';
+			if((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) > Config::get('custom.translation_length_max')
+				OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) > Config::get('custom.translation_length_max')){
+				$msg = '<div class="alert alert-danger" role="alert">Kurdish translation is too longer than english.</div>';
+			}
+			elseif((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) < Config::get('custom.translation_length_min')
+				OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) < Config::get('custom.translation_length_min')){
+				$msg = '<div class="alert alert-danger" role="alert">Kurdish translation is too shoter than english.</div>';
 			}
 			else{
 				if(!$ku_translation) {
