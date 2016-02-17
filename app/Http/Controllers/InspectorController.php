@@ -74,8 +74,14 @@ class InspectorController extends Controller
 					$user->save();
 				}
 				
-				//$ku_trans->finished = 0;
-				$ku_trans->inspection_result = 1;
+				if($request->get('reject_reason')){
+					$ku_trans->inspection_result = -1;
+					$ku_trans->inspector_message = $request->get('reject_reason');
+				}else{
+					$ku_trans->inspection_result = 1;
+					$ku_trans->inspector_message = NULL;
+				}
+				
 				$ku_trans->inspector_id = $user_id;
 				$ku_trans->auditing_count = $ku_trans->auditing_count+1;
 				$ku_trans->save();
@@ -83,6 +89,7 @@ class InspectorController extends Controller
 				return redirect()->route('inspector.inspection');
 			}
 			if($request->has('deny')) {
+				/*
 				if($ku_trans->inspector_id == NULL){
 					$new_score = $this->calculateTranslationScore($ku_trans->abstract) + $this->calculateTranslationScore($ku_trans->topic);
 					$user->score = $user->score + $new_score;
@@ -96,6 +103,7 @@ class InspectorController extends Controller
 				$ku_trans->save();
 				
 				return redirect()->route('inspector.inspection');
+				*/
 			}
 			if($request->has('save_accept')) {
 				if($ku_trans->inspector_id == NULL){
@@ -109,12 +117,14 @@ class InspectorController extends Controller
 				//$ku_trans->finished = 0;
 				$ku_trans->inspection_result = 1;
 				$ku_trans->inspector_id = $user_id;
+				$ku_trans->inspector_message = NULL;
 				$ku_trans->auditing_count = $ku_trans->auditing_count+1;
 				$ku_trans->save();
 				
 				return redirect()->route('inspector.inspection');
 			}
 			if($request->has('save_deny')) {
+				/*
 				if($ku_trans->inspector_id == NULL){
 					$new_score = $this->calculateTranslationScore($ku_trans->abstract) + $this->calculateTranslationScore($ku_trans->topic);
 					$user->score = $user->score + $new_score;
@@ -130,6 +140,7 @@ class InspectorController extends Controller
 				$ku_trans->save();
 				
 				return redirect()->route('inspector.inspection');
+				*/
 			}
 			
 			return view('inspector.inspection', [

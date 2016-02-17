@@ -79,7 +79,7 @@ return [
 	'restore_selected' => 'Restore Selected',
 	'remove_selected' => 'Delete Selected',
 	'details' => 'Details',
-	'inspector_accept' => 'Accept',
+	'inspector_submit' => 'Submit',
 	'inspector_deny' => 'Reject',
 	'inspector_accept_save' => 'Save Changes And Accept',
 	'inspector_deny_save' => 'Save Changes And Reject',

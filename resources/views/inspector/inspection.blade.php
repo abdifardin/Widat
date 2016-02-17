@@ -29,13 +29,13 @@
 					</div>
 					<br />
 					<form action="" method="post" id="translation-form">
-						<button type="submit" name="accept" value="1" class="btn btn-success pull-right">
-							{{ trans('common.inspector_accept') }}
+						<div class="form-group">	
+							<textarea class="form-control" name="reject_reason" id="reject_reason" rows="3" placeholder="Enter a message here to reject translation"></textarea>
+						</div>
+						<button type="submit" name="accept" value="1" class="btn btn-success pull-left" style="margin-right:6px;">
+							{{ trans('common.inspector_submit') }}
 						</button>
-						<button type="submit" name="deny" value="1" class="btn btn-danger pull-right" style="margin-right:6px;">
-							{{ trans('common.inspector_deny') }}
-						</button>
-						<a href="" id="inspection_edit_key" class="btn btn-info pull-right" style="margin-right:6px;">Edit</a>
+						<a href="" id="inspection_edit_key" class="btn btn-info pull-left">Edit</a>
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					</form>
 				</div>
@@ -56,7 +56,7 @@
 						<button type="submit" name="save_accept" value="1" class="btn btn-success pull-right">
 							{{ trans('common.inspector_accept_save') }}
 						</button>
-						<button type="submit" name="save_deny" value="1" class="btn btn-danger pull-right" style="margin-right:6px;">
+						<button type="submit" name="save_deny" value="1" class="btn btn-danger pull-right" disabled style="margin-right:6px;">
 							{{ trans('common.inspector_deny_save') }}
 						</button>
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

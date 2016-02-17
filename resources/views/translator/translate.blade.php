@@ -42,7 +42,9 @@
 						@if($translation_status == 'accepted')
 							<div class="alert alert-warning" role="alert">{{ trans('common.accepted_translation_message') }}</div>
 						@elseif($translation_status == 'denied')
-							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}</div>
+							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}
+								<br>{{ $inspector_message }}
+							</div>
 						@elseif($translation_status == 'wait')
 							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>
 						@endif

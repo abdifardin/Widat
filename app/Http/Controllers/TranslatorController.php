@@ -347,13 +347,16 @@ class TranslatorController extends Controller
 		$is_owner = $topic->user_id == Auth::user()->id;
 		$is_translated = FALSE;
 		$translation_status = '';
+		$inspector_message = '';
 		if($ku_translation){
 			$is_translated = TRUE;
 			$translation_status = '';
 			if($ku_translation->finished == 1 AND $ku_translation->inspection_result == 1)
 				$translation_status = 'accepted';
-			elseif($ku_translation->finished == 1 AND $ku_translation->inspection_result == -1)
+			elseif($ku_translation->finished == 1 AND $ku_translation->inspection_result == -1){
 				$translation_status = 'denied';
+				$inspector_message = $ku_translation->inspector_message;
+			}
 			elseif($ku_translation->finished == 1 AND $ku_translation->inspection_result == 0)
 				$translation_status = 'wait';
 		}
@@ -370,6 +373,7 @@ class TranslatorController extends Controller
 			'is_owner' => $is_owner,
 			'is_translated' => $is_translated,
 			'translation_status' => $translation_status,
+			'inspector_message' => $inspector_message,
 			'ku_translation_title' => ($ku_translation && $ku_translation->topic) ? $ku_translation->topic : '',
 			'ku_translation_abstract' => ($ku_translation && $ku_translation->abstract) ? $ku_translation->abstract : '',
 			'current_score' => $current_score,
