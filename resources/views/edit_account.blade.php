@@ -23,46 +23,61 @@
 				<form action="" method="post">
 					{!! csrf_field() !!}
 					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
-							<div class="input-group">
-								<label for="name" class="input-group-addon">
-									{{ trans('common.name') }}
-								</label>
-								<input type="text" class="form-control" name="name" id="name"
-										value="{{ $user->name }}"/>
+						@if(\Illuminate\Support\Facades\Auth::user()->user_type=='admin')
+							<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
+								<div class="input-group">
+									<label for="name" class="input-group-addon">
+										{{ trans('common.name') }}
+									</label>
+									<input type="text" class="form-control" name="name" id="name"
+											value="{{ $user->name }}"/>
+								</div>
+								<br />
 							</div>
-							<br />
-						</div>
 
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
-							<div class="input-group">
-								<label for="surname" class="input-group-addon">
-									{{ trans('common.surname') }}
-								</label>
-								<input type="text" class="form-control" name="surname" id="surname"
-									   value="{{ $user->surname }}"/>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
+								<div class="input-group">
+									<label for="surname" class="input-group-addon">
+										{{ trans('common.surname') }}
+									</label>
+									<input type="text" class="form-control" name="surname" id="surname"
+										   value="{{ $user->surname }}"/>
+								</div>
+								<br/>
 							</div>
-							<br/>
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
-							<div class="input-group">
-								<label for="email" class="input-group-addon">
-									{{ trans('common.email') }}
-								</label>
-								<input type="email" class="form-control" name="email" id="email"
-									   value="{{ $user->email }}"/>
+							
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="input-group">
+									<label for="email" class="input-group-addon">
+										{{ trans('common.email') }}
+									</label>
+									<input type="email" class="form-control" name="email" id="email"
+										   value="{{ old('email') }}"/>
+								</div>
+								<br />
 							</div>
-							<br />
-						</div>
-
+						@endif
 						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
 							<div class="input-group">
 								<label for="password" class="input-group-addon">
 									{{ trans('common.password') }}
 								</label>
 								<input type="password" class="form-control" name="password"
-									   id="password" />
+									   id="password" value="{{ old('password') }}" />
+								<div class="input-group-addon toggle-password">
+									<span class="fa fa-eye-slash"></span>
+								</div>
+							</div>
+							<br />
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6 pull-right">
+							<div class="input-group">
+								<label for="password" class="input-group-addon">
+									{{ trans('common.password_confirm') }}
+								</label>
+								<input type="password" class="form-control" name="cpassword"
+									   id="cpassword" />
 								<div class="input-group-addon toggle-password">
 									<span class="fa fa-eye-slash"></span>
 								</div>

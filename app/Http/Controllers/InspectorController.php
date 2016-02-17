@@ -120,7 +120,7 @@ class InspectorController extends Controller
 					$user->score = $user->score + $new_score;
 					$user->save();
 				}
-				
+
 				$ku_trans->topic = $request->get('inspection_ku_trans_title');
 				$ku_trans->abstract = $request->get('inspection_ku_trans_abstract');
 				//$ku_trans->finished = 0;

@@ -98,16 +98,43 @@ class MainController extends Controller
 
 		if($request->has('save')) {
 			$password = $request->get('password', '');
-
-			if(strlen($password) < 8) {
-				$action_error = true;
-				$action_result = trans('common.password_too_short');
+			$cpassword = $request->get('cpassword', '');
+			
+			if($password){
+				if(strlen($password) < 8) {
+					$action_error = true;
+					$action_result = trans('common.password_too_short');
+				}
+				elseif(strcmp($password, $cpassword) != 0){
+					$action_error = true;
+					$action_result = trans('common.passwords_not_match');
+				}
+				else {
+					if($is_current_admin){
+						if($request->get('name'))
+							$user->name = $request->get('name');
+						if($request->get('surname'))
+							$user->surname = $request->get('surname');
+						if($request->get('email'))
+							$user->email = $request->get('email');
+					}
+					$user->password = bcrypt($request->get('password'));
+					
+					$user->save();
+					$action_result = trans('common.account_info_saved');
+				}
 			}
 			else {
-				$user->name = $request->get('name');
-				$user->surname = $request->get('surname');
-				$user->email = $request->get('email');
-				$user->password = bcrypt($request->get('password'));
+				if($is_current_admin){
+					if($request->get('name'))
+						$user->name = $request->get('name');
+					if($request->get('surname'))
+						$user->surname = $request->get('surname');
+					if($request->get('email'))
+						$user->email = $request->get('email');
+				}
+				
+				//$user->password = bcrypt($request->get('password'));
 				$user->save();
 				$action_result = trans('common.account_info_saved');
 			}
