@@ -1,6 +1,7 @@
 var sentencePos = 0;
 var disallow_keystroke_register = false;
 var translation_save_clicked = false;
+var inspector_accept = true;
 
 $(function() {
     $('#search-form').submit(function() {
@@ -387,5 +388,28 @@ $(document).ready(function(){
 		}else{
 			$('.bulk_restore').prop('checked', false);
 		}
+	});
+	
+	$('#reject_reason').keyup(function(){
+		if($(this).val().length > 0){
+			$('button#accept').text('Reject');
+			$('button#accept').removeClass('btn-success');
+			$('button#accept').addClass('btn-danger');
+			inspector_accept = false;
+		}else{
+			$('button#accept').text('Accept');
+			$('button#accept').removeClass('btn-danger');
+			$('button#accept').addClass('btn-success');
+			inspector_accept = true;
+		}
+	});
+	
+	$('button#accept').click(function(event){
+		if(inspector_accept){
+			var msg = 'You have not provided any reason for rejection. This means accept. Is this correct?';
+		}else{
+			var msg = 'You have provided a reason for rejection. Do you want to reject this translation?';
+		}
+		return confirm(msg);
 	});
 });

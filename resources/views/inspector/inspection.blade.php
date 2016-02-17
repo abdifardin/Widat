@@ -32,8 +32,8 @@
 						<div class="form-group">	
 							<textarea class="form-control" name="reject_reason" id="reject_reason" rows="3" placeholder="Enter a message here to reject translation"></textarea>
 						</div>
-						<button type="submit" name="accept" value="1" class="btn btn-success pull-left" style="margin-right:6px;">
-							{{ trans('common.inspector_submit') }}
+						<button type="submit" name="accept" id="accept" value="1" class="btn btn-success pull-left" style="margin-right:6px;">
+							{{ trans('common.inspector_accept') }}
 						</button>
 						<a href="" id="inspection_edit_key" class="btn btn-info pull-left">Edit</a>
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
