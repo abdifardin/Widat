@@ -276,7 +276,7 @@ function updateTranslationScore()
     var words = plaintext.split(" ");
     var abstractwordcount = 0;
     for(var i = 0; i < words.length; i++) {
-        if(words[i].trim().length > 1) {
+        if(words[i].trim().length > 0) {
             abstractwordcount++;
         }
     }
@@ -285,7 +285,7 @@ function updateTranslationScore()
     var words = plaintext.split(" ");
     var titlewordcount = 0;
     for(var i = 0; i < words.length; i++) {
-        if(words[i].trim().length > 1) {
+        if(words[i].trim().length > 0) {
             titlewordcount++;
         }
     }

@@ -483,7 +483,7 @@ class TranslatorController extends Controller
 		$words = explode(' ', $translation);
 		$word_count = 0;
 		for($i = 0; $i < count($words); $i++) {
-			if (mb_strlen(trim($words[$i])) > 1) {
+			if (mb_strlen(trim($words[$i])) > 0) {
 				$word_count++;
 			}
 		}
