@@ -40,6 +40,7 @@
 
 			@section('content')
 			@show
+			{{ trans('common.site_name') }} application VER: {{ $app_version }}
 		</div>
 
 		@include('footer')

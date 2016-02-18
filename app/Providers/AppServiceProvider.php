@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-		
+		view()->share('app_version', env('APP_VERSION', '2.0.0'));
     }
 
     /**

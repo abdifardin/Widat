@@ -180,7 +180,7 @@ class InspectorController extends Controller
 	{
 		$inspector = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
-
+		$current_user = Auth::user();
 		$last_month_history = ScoreHistory::whereRaw('MONTH(created_at) = ? AND YEAR(created_at) = ? AND user_id = ?',
 			[
 				date('m', strtotime('-1 month')),
@@ -191,11 +191,21 @@ class InspectorController extends Controller
 			->first();
 		
 		$this_month_score = $inspector->score - ($last_month_history ? $last_month_history->score : 0);
-
-		$inspected = KuTranslation::where('inspector_id', $user_id)
+		
+		if($current_user->user_type == 'admin'){
+			$inspected = KuTranslation::where('inspector_id', $user_id)
 			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
 			->orderBy('edited_at', 'desc')
 			->get();
+		}
+		else{
+			$inspected = KuTranslation::where('inspector_id', $user_id)
+			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
+			->where('ku_translations.inspection_result', '<>', -1)
+			->orderBy('edited_at', 'desc')
+			->get();
+		}
+		
 			
 		return view('inspector.stats', [
 			'inspector' => $inspector,
