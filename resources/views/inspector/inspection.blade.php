@@ -52,12 +52,11 @@
 							</div>
 						</div>
 						<br />
-					
-						<button type="submit" name="save_accept" value="1" class="btn btn-success pull-right">
+						<div class="form-group">	
+							<textarea class="form-control" name="editpage_reject_reason" id="editpage_reject_reason" rows="3" placeholder="Enter a message here to reject translation"></textarea>
+						</div>
+						<button type="submit" name="save_accept" id="save_accept" value="1" class="btn btn-success pull-left">
 							{{ trans('common.inspector_accept_save') }}
-						</button>
-						<button type="submit" name="save_deny" value="1" class="btn btn-danger pull-right" disabled style="margin-right:6px;">
-							{{ trans('common.inspector_deny_save') }}
 						</button>
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					</form>

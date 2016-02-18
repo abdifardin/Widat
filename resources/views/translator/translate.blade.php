@@ -43,7 +43,7 @@
 							<div class="alert alert-warning" role="alert">{{ trans('common.accepted_translation_message') }}</div>
 						@elseif($translation_status == 'denied')
 							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}
-								<br>{{ $inspector_message }}
+								<br><br>The proofreader sent you the following message:<br><strong>{{ $inspector_message }}</strong>
 							</div>
 						@elseif($translation_status == 'wait')
 							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>

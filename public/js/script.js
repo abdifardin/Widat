@@ -390,6 +390,20 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('#editpage_reject_reason').keyup(function(){
+		if($(this).val().length > 0){
+			$('button#save_accept').text('Save Changes And Reject');
+			$('button#save_accept').removeClass('btn-success');
+			$('button#save_accept').addClass('btn-danger');
+			inspector_accept = false;
+		}else{
+			$('button#save_accept').text('Save Changes And Accept');
+			$('button#save_accept').removeClass('btn-danger');
+			$('button#save_accept').addClass('btn-success');
+			inspector_accept = true;
+		}
+	});
+	
 	$('#reject_reason').keyup(function(){
 		if($(this).val().length > 0){
 			$('button#accept').text('Reject');
@@ -405,6 +419,15 @@ $(document).ready(function(){
 	});
 	
 	$('button#accept').click(function(event){
+		if(inspector_accept){
+			var msg = 'You have not provided any reason for rejection. This means accept. Is this correct?';
+		}else{
+			var msg = 'You have provided a reason for rejection. Do you want to reject this translation?';
+		}
+		return confirm(msg);
+	});
+	
+	$('button#save_accept').click(function(event){
 		if(inspector_accept){
 			var msg = 'You have not provided any reason for rejection. This means accept. Is this correct?';
 		}else{
