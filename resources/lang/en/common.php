@@ -88,7 +88,6 @@ return [
 	'rejected_translation_message' => 'This topic was rejected by a proofreader.',
 	'wait_translation_message' => 'This translation wait for inspection.',
 	'accepted_list' => 'Accepted List',
-	'arejected_list' => 'Rejected List',
 	'refering_to_topic' => 'Edit topic',
 	'inspected' => 'Proofread',
 	'scorehistory_number_option_key' => 'Show',

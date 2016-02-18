@@ -141,10 +141,6 @@ Route::any('accepted-list/', [
 	'as' => 'inspector.accepted_list',
 	'uses' => 'InspectorController@accepted',
 ]);
-Route::any('rejected-list/', [
-	'as' => 'inspector.rejected_list',
-	'uses' => 'InspectorController@rejected',
-]);
 Route::get('inspector/{user_id}/stats', [
 	'as' => 'inspector.stats',
 	'uses' => 'InspectorController@stats',

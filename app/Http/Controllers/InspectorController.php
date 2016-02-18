@@ -66,6 +66,10 @@ class InspectorController extends Controller
 			abort(403, 'You can not access this area.');
 		}
 		
+		if($ku_trans->inspection_result == -1){
+			abort(403, 'You can not access this area.');
+		}
+		
 		if($ku_trans AND $topic){
 			if($request->has('accept')) {
 				if($ku_trans->inspector_id == NULL){
@@ -162,23 +166,6 @@ class InspectorController extends Controller
 		$ku_translation = KuTranslation::where('finished', 1)
 			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
 			->where('ku_translations.inspection_result', 1)
-			->where('ku_translations.inspector_id', '=' , $user_id)
-			->orderBy('edited_at', 'desc')
-			->get();
-			
-		return view('inspector.home', [
-			'inspections' => $ku_translation,
-			'current_user_id' => $user_id,
-		]);
-	}
-	
-	public function rejected(Request $request)
-	{
-		$user_id = Auth::user()->id;
-		
-		$ku_translation = KuTranslation::where('finished', 1)
-			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
-			->where('ku_translations.inspection_result', -1)
 			->where('ku_translations.inspector_id', '=' , $user_id)
 			->orderBy('edited_at', 'desc')
 			->get();

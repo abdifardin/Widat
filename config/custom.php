@@ -9,6 +9,6 @@
 return [
 	'nocando_score' => -5,
 	'reservation_score' => 0,
-	'translation_length_max' => 1.1,
-	'translation_length_min' => 0.8,
+	'translation_length_max' => 10,
+	'translation_length_min' => 0,
 ];
