@@ -8,6 +8,18 @@
 					{{ trans('common.translate') }}
 				</h3>
 				<br />
+				{!! $msg !!}
+				@if($is_translated)
+						@if($translation_status == 'accepted')
+							<div class="alert alert-warning" role="alert">{{ trans('common.accepted_translation_message') }}</div>
+						@elseif($translation_status == 'denied')
+							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}
+								<br><br>The proofreader sent you the following message:<br><strong>{{ $inspector_message }}</strong>
+							</div>
+						@elseif($translation_status == 'wait')
+							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>
+						@endif
+				@endif
 				<div class="translation-group" style="width:49%;float: left;">
 					<h3 class="lang-name navbar-left">{{ trans('common.english') }}</h3>
 
@@ -35,19 +47,6 @@
 					</div>
 					<textarea id="hidden-en-abstract" class="hidden">{{ $topic->abstract }}</textarea>
 				</div>
-				
-				{!! $msg !!}
-				@if($is_translated)
-						@if($translation_status == 'accepted')
-							<div class="alert alert-warning" role="alert">{{ trans('common.accepted_translation_message') }}</div>
-						@elseif($translation_status == 'denied')
-							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}
-								<br><br>The proofreader sent you the following message:<br><strong>{{ $inspector_message }}</strong>
-							</div>
-						@elseif($translation_status == 'wait')
-							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>
-						@endif
-				@endif
 				<div class="translation-group" style="width:49%;float: right;">
 					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
 					<form action="" method="post" id="translation-form">
