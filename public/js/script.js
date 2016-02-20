@@ -371,6 +371,8 @@ function refreshCsrf()
 }
 
 $(document).ready(function(){
+	$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height()-60)+"px");
+
 	$("[name='ku_trans_title']").keypress(function(event){
 		if (event.keyCode == 10 || event.keyCode == 13){
 			event.preventDefault();

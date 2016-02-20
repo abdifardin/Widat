@@ -7,8 +7,8 @@
 				<h3 class="text-center">
 					{{ trans('common.translate') }}
 				</h3>
-
-				<div class="translation-group">
+				<br />
+				<div class="translation-group" style="width:49%;float: left;">
 					<h3 class="lang-name navbar-left">{{ trans('common.english') }}</h3>
 
 					<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
@@ -35,8 +35,7 @@
 					</div>
 					<textarea id="hidden-en-abstract" class="hidden">{{ $topic->abstract }}</textarea>
 				</div>
-
-				<br />
+				
 				{!! $msg !!}
 				@if($is_translated)
 						@if($translation_status == 'accepted')
@@ -49,7 +48,7 @@
 							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>
 						@endif
 				@endif
-				<div class="translation-group">
+				<div class="translation-group" style="width:49%;float: right;">
 					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
 					<form action="" method="post" id="translation-form">
 						{!! csrf_field() !!}
