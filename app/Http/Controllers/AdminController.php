@@ -71,6 +71,10 @@ class AdminController extends Controller
 			else {
 				$score_today = $score_today_total->score - $last_score_total->score;
 			}
+			
+			if($score_today < 0){
+				$score_today = 0;
+			}
 
 			$translators_stats[] = array(
 				'id' => $t->id,

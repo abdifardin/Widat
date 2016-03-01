@@ -78,6 +78,10 @@ $(function() {
 		}
     });
 	
+    $('#unreserve').click(function() {
+		return confirm('Are you sure you want to unreserve topic?');
+    });
+	
 	$("button[name = 'save']").click(function() {
 		translation_save_clicked = true;
 	});

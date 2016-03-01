@@ -53,7 +53,7 @@
 						{!! csrf_field() !!}
 						<div class="form-toolbar float-right">
 							@if($is_owner)
-								<button type="submit" name="unreserve" value="1" class="btn btn-default">
+								<button type="submit" name="unreserve" id="unreserve" value="1" class="btn btn-default">
 									{{ trans('common.un_reserve_topic') }}
 									<span class="fa fa-circle-o-notch fa-spin hidden"></span>
 								</button>

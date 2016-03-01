@@ -265,6 +265,8 @@ class TranslatorController extends Controller
 			$draft = Draft::where('topic_id', $topic_id)->first();
 			if(!empty($draft))
 				$draft->delete();
+				
+			return redirect()->route('translator.topics', ['filter' => 'my']);
 		}
 		else if($request->has('save')) {
 			$ku_trans_title = $request->get('ku_trans_title', '');
