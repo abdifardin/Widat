@@ -17,6 +17,8 @@ use App\Topic;
 use App\User;
 use App\DeleteRecommendation;
 use App\Draft;
+use App\Category;
+use App\Categorylinks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -491,5 +493,28 @@ class TranslatorController extends Controller
 		}
 
 		return $word_count;
+	}
+	
+	public function categorization(Request $request)
+	{
+		$data['category_list'] = array();
+		$data['topics_list'] = array();
+		$data['cat_keyword'] = '';
+		if($request->has('search') and strlen(trim($request->input('cat_keyword'))) > 1) {
+			$k = $request->input('cat_keyword');
+			$data['cat_keyword'] = $k;
+			$data['category_list'] = Categorylinks::where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->get();
+		}
+		elseif($request->has('search_selected')) {
+			foreach($request->input('cats_selected') as $c){
+				$data['topics_list'] = Topic::whereNull('user_id')
+					->Join('categorylinks', 'topics.id', '=', 'categorylinks.cl_from')
+					->where('categorylinks.cl_to', $c)
+					->select("*")
+					->get();					
+			}
+		}
+		
+		return view('translator.categorization', $data);
 	}
 }

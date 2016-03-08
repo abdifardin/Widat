@@ -81,7 +81,10 @@ Route::any('admin/delete', [
 */
 
 // Translator routes
-
+Route::any('categorization', [
+	'as' => 'translator.categorization',
+	'uses' => 'TranslatorController@categorization',
+]);
 Route::get('translator', [
 	'as' => 'translator.home',
 	'uses' => 'TranslatorController@home',

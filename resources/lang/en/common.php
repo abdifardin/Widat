@@ -91,4 +91,8 @@ return [
 	'refering_to_topic' => 'Edit topic',
 	'inspected' => 'Proofread',
 	'scorehistory_number_option_key' => 'Show',
+	'categorization' => 'Categorization',
+	'categorization_message' => 'Enter a keyword',
+	'categorization_key_label' => 'Search',
+	'categorization_search_topics' => 'Start search by selected categories',
 ];
