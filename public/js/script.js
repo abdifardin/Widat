@@ -441,4 +441,8 @@ $(document).ready(function(){
 		}
 		return confirm(msg);
 	});
+	
+	$('.admin_delete_recomm_action_confirm').click(function(event){
+		return confirm('Are you sure you want to complete this action?');
+	});
 });

@@ -9,13 +9,13 @@
 					<form action="" method="post" id="translation-form">
 						{!! csrf_field() !!}
 						<div class="form-toolbar float-right">
-							<button type="submit" name="delete" value="1" class="btn btn-danger">
+							<button type="submit" name="delete" value="1" class="btn btn-danger admin_delete_recomm_action_confirm">
 								{{ trans('common.delete') }}
 							</button>
-							<button type="submit" name="postpone" value="1" class="btn btn-info">
+							<button type="submit" name="postpone" value="1" class="btn btn-info admin_delete_recomm_action_confirm">
 								{{ trans('common.delete_recommendation_postpone') }}
 							</button>
-							<button type="submit" name="deny" value="1" class="btn btn-info">
+							<button type="submit" name="deny" value="1" class="btn btn-info admin_delete_recomm_action_confirm">
 								{{ trans('common.delete_recommendation_deny') }}
 							</button>
 						</div>
