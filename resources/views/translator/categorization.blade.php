@@ -1,3 +1,8 @@
+<?php
+function currentUrl() {
+	return $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+}
+?>
 @extends('master')
 
 @section('content')
@@ -11,7 +16,7 @@
 				
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">{{ trans('common.categorization_message') }}</h3>
-					<form action="" method="post" id="translation-form">
+					<form action="" method="get" id="translation-form">
 						{!! csrf_field() !!}
 						<div class="form-group">
 							<input type="text" name="cat_keyword" value="{{ $cat_keyword }}" id="cat_keyword" class="form-control"/>
@@ -23,7 +28,41 @@
 					</form>
 				</div>
 				@if(count($category_list) > 0)
-				<form method="post">
+				<br>
+				<div class="translation-group">
+					<h3 class="lang-name navbar-left">Filter by first character</h3>
+					<ul class="pagination">
+						<li><a href="<?php echo currentUrl().'&firstchar=A'?>">A</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=B'?>">B</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=C'?>">C</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=D'?>">D</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=E'?>">E</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=F'?>">F</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=G'?>">G</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=H'?>">H</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=I'?>">I</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=J'?>">J</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=K'?>">K</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=L'?>">L</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=M'?>">M</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=N'?>">N</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=O'?>">O</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=P'?>">P</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=Q'?>">Q</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=R'?>">R</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=S'?>">S</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=T'?>">T</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=U'?>">U</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=V'?>">V</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=W'?>">W</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=X'?>">X</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=Y'?>">Y</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=Z'?>">Z</a></li>
+						<li><a href="<?php echo currentUrl().'&firstchar=Other'?>">Other</a></li>
+					</ul>
+				</div>
+				
+				<form method="get">
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>

@@ -503,7 +503,13 @@ class TranslatorController extends Controller
 		if($request->has('search') and strlen(trim($request->input('cat_keyword'))) > 1) {
 			$k = $request->input('cat_keyword');
 			$data['cat_keyword'] = $k;
-			$data['category_list'] = Categorylinks::where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->get();
+			
+			if($request->has('firstchar')){
+				$first_chat = $request->input('firstchar');
+				$data['category_list'] = Categorylinks::where('cl_to', 'like', "$first_chat%")->where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->get();
+			}else{
+				$data['category_list'] = Categorylinks::where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->get();
+			}
 		}
 		elseif($request->has('search_selected')) {
 			foreach($request->input('cats_selected') as $c){
