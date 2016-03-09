@@ -506,9 +506,9 @@ class TranslatorController extends Controller
 			
 			if($request->has('firstchar')){
 				$first_chat = $request->input('firstchar');
-				$data['category_list'] = Categorylinks::where('cl_to', 'like', "$first_chat%")->where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->get();
+				$data['category_list'] = Categorylinks::where('cl_to', 'like', "$first_chat%")->where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}else{
-				$data['category_list'] = Categorylinks::where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->get();
+				$data['category_list'] = Categorylinks::where('cl_to', 'like', "%$k%")->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}
 		}
 		elseif($request->has('search_selected')) {
