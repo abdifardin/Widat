@@ -443,6 +443,6 @@ $(document).ready(function(){
 	});
 	
 	$('.admin_delete_recomm_action_confirm').click(function(event){
-		return confirm('Are you sure you want to complete this action?');
+		return confirm('Are you sure you want to delete/restore this topic?');
 	});
 });
