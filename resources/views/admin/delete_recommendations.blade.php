@@ -49,7 +49,7 @@
 									<td class="text-right">
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<a href="{{ route('admin.restore', ['rec_id' => $r->topic_id]) }}"
-										   class="btn btn-primary admin_delete_recomm_action_confirm">
+										   class="btn btn-primary admin_delete_recomm_action_confirm_restore">
 											{{ trans('common.restore') }}
 										</a>
 										&nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,10 +62,10 @@
 								@endforeach
 							</tbody>
 						</table>
-						<button type="submit" name="restore_selected" value="1" class="btn btn-primary admin_delete_recomm_action_confirm">
+						<button type="submit" name="restore_selected" value="1" class="btn btn-primary admin_delete_recomm_action_confirm_restore_bulk">
 							{{ trans('common.restore_selected') }}
 						</button>
-						<button type="submit" name="remove_selected" value="1" class="btn btn-danger admin_delete_recomm_action_confirm">
+						<button type="submit" name="remove_selected" value="1" class="btn btn-danger admin_delete_recomm_action_confirm_delete_bulk">
 							{{ trans('common.remove_selected') }}
 						</button>
 						

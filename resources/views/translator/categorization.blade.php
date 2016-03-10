@@ -58,11 +58,22 @@ function currentUrl() {
 						<li><a href="<?php echo currentUrl().'&firstchar=X'?>">X</a></li>
 						<li><a href="<?php echo currentUrl().'&firstchar=Y'?>">Y</a></li>
 						<li><a href="<?php echo currentUrl().'&firstchar=Z'?>">Z</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=Other'?>">Other</a></li>
 					</ul>
 				</div>
-				
+				<br><br>
 				<form method="get">
+					<div class="form-group">
+						<select name="cats_selected[]" id="cats_selected" size="1" multiple="multiple" class="form-control">
+							@foreach($category_list as $c)
+							<option value="{{ $c['cl_to'] }}">{{ $c['cl_to'] }}</option>
+							@endforeach
+						</select>
+						<br><br>
+						<button type="submit" name="search_selected" value="1" class="btn btn-primary">
+							{{ trans('common.categorization_search_topics') }}
+						</button>
+					</div>
+					<!--
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
@@ -82,6 +93,7 @@ function currentUrl() {
 							{{ trans('common.categorization_search_topics') }}
 						</button>
 					</div>
+					-->
 					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 				</form>
 				

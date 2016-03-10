@@ -512,6 +512,7 @@ class TranslatorController extends Controller
 			}
 		}
 		elseif($request->has('search_selected')) {
+			print_r($request->input('cats_selected'));
 			foreach($request->input('cats_selected') as $c){
 				$data['topics_list'] = Topic::whereNull('user_id')
 					->Join('categorylinks', 'topics.id', '=', 'categorylinks.cl_from')

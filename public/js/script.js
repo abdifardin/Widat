@@ -442,7 +442,21 @@ $(document).ready(function(){
 		return confirm(msg);
 	});
 	
-	$('.admin_delete_recomm_action_confirm').click(function(event){
-		return confirm('Are you sure you want to delete/restore this topic?');
+	$('.admin_delete_recomm_action_confirm_restore_bulk').click(function(event){
+		return confirm('Are you sure you want to restore these topics?');
 	});
+	
+	$('.admin_delete_recomm_action_confirm_delete_bulk').click(function(event){
+		return confirm('Are you sure you want to delete these topics?');
+	});
+	
+	$('.admin_delete_recomm_action_confirm_restore').click(function(event){
+		return confirm('Are you sure you want to restore this topic?');
+	});
+	
+	$('.admin_delete_recomm_action_confirm_delete').click(function(event){
+		return confirm('Are you sure you want to delete this topic?');
+	});
+	
+	$("#cats_selected").chosen();
 });

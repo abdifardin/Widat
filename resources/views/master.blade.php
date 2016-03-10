@@ -27,6 +27,7 @@
 		<link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/font-awesome.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/style.css') }}" />
+		<link rel="stylesheet" href="{{ url('css/chosen.min.css') }}" />
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png"> <!-- 180 -->
@@ -98,6 +99,7 @@
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		<script src="{{ url('js/script.js') }}"></script>
 		<script src="{{ url('js/autosave.js') }}"></script>
+		<script src="{{ url('js/chosen.jquery.min.js') }}"></script>
 		<input type="hidden" id="reg-keystroke-url" value="{{ route('translator.register_keystroke') }}" />
 		<input type="hidden" id="reg-activity-url" value="{{ route('translator.register_activity') }}" />
 		<input type="hidden" id="get-statuses-url" value="{{ route('translator.get_statuses') }}" />
