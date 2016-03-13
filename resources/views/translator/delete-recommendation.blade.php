@@ -31,7 +31,7 @@
 						</div>
 						<div class="clearfix"></div>
 						<div class="form-group">
-							<select class="form-control" name="delete_recommendation_reason">
+							<select class="form-control" name="delete_recommendation_reason" autofocus>
 								<option value="Incomplete or meaningless article">Incomplete or meaningless article</option>
 								<option value="Empty topic">Empty topic</option>
 								<option value="Any other reason">Any other reason</option>

@@ -30,7 +30,7 @@
 										{{ trans('common.name') }}
 									</label>
 									<input type="text" class="form-control" name="name" id="name"
-											value="{{ $user->name }}"/>
+											value="{{ $user->name }}" autofocus/>
 								</div>
 								<br />
 							</div>
@@ -63,7 +63,7 @@
 									{{ trans('common.password') }}
 								</label>
 								<input type="password" class="form-control" name="password"
-									   id="password" value="{{ old('password') }}" />
+									   id="password" value="{{ old('password') }}" autofocus/>
 								<div class="input-group-addon toggle-password">
 									<span class="fa fa-eye-slash"></span>
 								</div>

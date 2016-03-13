@@ -45,7 +45,7 @@
 						<div class="translation-group">
 							<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
 							<div class="form-group">
-								<input type="text" name="inspection_ku_trans_title" class="form-control rtl-text register-keystroke" value="{{ str_replace('_', ' ', $ku_trans->topic) }}"/>
+								<input type="text" name="inspection_ku_trans_title" class="form-control rtl-text register-keystroke" value="{{ str_replace('_', ' ', $ku_trans->topic) }}" autofocus/>
 							</div>
 							<div class="form-group">
 								<textarea class="form-control abstract-trans rtl-text register-keystroke" id="inspection_ku_trans_abstract" name="inspection_ku_trans_abstract">{{$ku_trans->abstract }}</textarea>

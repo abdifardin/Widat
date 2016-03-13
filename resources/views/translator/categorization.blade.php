@@ -19,7 +19,7 @@ function currentUrl() {
 					<form action="" method="get" id="translation-form">
 						{!! csrf_field() !!}
 						<div class="form-group">
-							<input type="text" name="cat_keyword" value="{{ $cat_keyword }}" id="cat_keyword" class="form-control"/>
+							<input type="text" name="cat_keyword" value="{{ $cat_keyword }}" id="cat_keyword" class="form-control" autofocus/>
 							<button type="submit" name="search" value="1" class="btn btn-primary" style="margin-left: 12px;">
 								<i class="fa fa-search"></i>
 								{{ trans('common.categorization_key_label') }}

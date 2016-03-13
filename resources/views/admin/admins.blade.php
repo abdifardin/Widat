@@ -30,7 +30,7 @@
 									{{ trans('common.name') }}
 								</label>
 								<input type="text" class="form-control" name="name" id="name"
-										value="{{ old('name') }}"/>
+										value="{{ old('name') }}" autofocus/>
 							</div>
 							<br />
 						</div>
