@@ -103,6 +103,7 @@
 							</div>
 							@endforeach
 						</div>
+						{!! $inspected->render() !!}
 					</div>
 				</div>
 			</div>

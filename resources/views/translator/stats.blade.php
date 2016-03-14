@@ -100,6 +100,8 @@
 							</div>
 							@endforeach
 						</div>
+
+						{!! $translated->render() !!}
 					</div>
 				</div>
 			</div>

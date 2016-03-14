@@ -15,6 +15,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 class InspectorController extends Controller
 {
+	private $topics_per_page = 24;
+	
     public function __construct()
 	{
 		if(!Auth::check() || (Auth::user()->user_type != "inspector" && Auth::user()->user_type != "admin")) {
@@ -47,7 +49,8 @@ class InspectorController extends Controller
 			->where('ku_translations.inspection_result', 0)
 			->where('topics.user_id', '<>' , $user_id)
 			->orderBy('edited_at', 'desc')
-			->get();
+			//->get();
+			->paginate($this->topics_per_page);
 			
 			return view('inspector.home', [
 				'inspections' => $ku_translation,
@@ -168,7 +171,8 @@ class InspectorController extends Controller
 			->where('ku_translations.inspection_result', 1)
 			->where('ku_translations.inspector_id', '=' , $user_id)
 			->orderBy('edited_at', 'desc')
-			->get();
+			//->get();
+			->paginate($this->topics_per_page);
 			
 		return view('inspector.home', [
 			'inspections' => $ku_translation,
@@ -196,14 +200,16 @@ class InspectorController extends Controller
 			$inspected = KuTranslation::where('inspector_id', $user_id)
 			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
 			->orderBy('edited_at', 'desc')
-			->get();
+			//->get();
+			->paginate($this->topics_per_page);
 		}
 		else{
 			$inspected = KuTranslation::where('inspector_id', $user_id)
 			->join('topics', 'topics.id', '=', 'ku_translations.topic_id')
 			->where('ku_translations.inspection_result', '<>', -1)
 			->orderBy('edited_at', 'desc')
-			->get();
+			//->get();
+			->paginate($this->topics_per_page);
 		}
 		
 			

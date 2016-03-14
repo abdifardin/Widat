@@ -76,7 +76,8 @@ class TranslatorController extends Controller
 			->whereNotNull('ku_translations.abstract')
 			->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
 			->orderBy('edited_at', 'desc')
-			->get();
+			//->get();
+			->paginate($this->topics_per_page);
 
 		return view('translator.stats', [
 			'translator' => $translator,
