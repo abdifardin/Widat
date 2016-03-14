@@ -272,6 +272,7 @@ class TranslatorController extends Controller
 		}
 		else if($request->has('unreserve') && $topic->user_id == $user->id) {
 			$topic->user_id = NULL;
+			$topic->edited_at = NULL;
 			$topic->save();
 			
 			if($ku_translation) {
