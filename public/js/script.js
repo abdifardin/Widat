@@ -54,8 +54,8 @@ $(function() {
         registerKeystroke();
     });
 
-    //setTimeout(registerActivity, 1000);
-    //setTimeout(refreshStatuses, 1000);
+    setTimeout(registerActivity, 1000);
+    setTimeout(refreshStatuses, 1000);
 	
 	$(window).on('beforeunload', function() {
 		if($('#have_draft').val() && !translation_save_clicked){
