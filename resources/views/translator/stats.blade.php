@@ -77,8 +77,26 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<h3 class="text-center">{{ trans('common.translated_topics') }}</h3>
-
 						<div class="row">
+							<div class="col-sm-12">
+								@if(\Illuminate\Support\Facades\Auth::user()->user_type=='translator')
+								<br />
+								<div class="translation-group">
+									<h3 class="lang-name navbar-left">{{ trans('common.translator_search_topics_message') }}</h3>
+									<form action="{{ route('translator.topics', ['filter' => 'my']) }}" method="post">
+										{!! csrf_field() !!}
+										<div class="form-group">
+											<input type="text" name="topic_keyword" id="topic_keyword" class="form-control" autofocus/>
+											<button type="submit" name="search" value="1" class="btn btn-primary" style="margin-left: 12px;">
+												<i class="fa fa-search"></i>
+												{{ trans('common.translator_search_key_label') }}
+											</button>
+										</div>
+									</form>
+								</div>
+								@endif
+								<br /><br />
+							</div>
 							@foreach($translated as $t)
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 								@if($t->finished == 1 AND $t->inspection_result == 1)

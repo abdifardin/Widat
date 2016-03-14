@@ -69,7 +69,7 @@
 									<input type="text" name="topic_keyword" value="{{ $topic_keyword }}" id="topic_keyword" class="form-control" autofocus/>
 									<button type="submit" name="search" value="1" class="btn btn-primary" style="margin-left: 12px;">
 										<i class="fa fa-search"></i>
-										{{ trans('common.categorization_key_label') }}
+										{{ trans('common.translator_search_key_label') }}
 									</button>
 								</div>
 							</form>
