@@ -95,4 +95,5 @@ return [
 	'categorization_message' => 'Enter a keyword',
 	'categorization_key_label' => 'Search',
 	'categorization_search_topics' => 'Start search by selected categories',
+	'translator_search_topics_message' => 'Search your topics',
 ];

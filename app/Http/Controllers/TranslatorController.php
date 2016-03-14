@@ -166,7 +166,9 @@ class TranslatorController extends Controller
 		$filter_untranslated_changed = false;
 		$filter_untranslated = false;
 		$filter_changed = false;
-
+		
+		$topic_keyword = '';
+		
 		switch($filter) {
 			case 'all':
 				$filter_all = true;
@@ -189,11 +191,26 @@ class TranslatorController extends Controller
 			$topics = Topic::paginate($this->topics_per_page);
 		}
 		else if($filter_my) {
-			$topics = Topic::where('topics.user_id', Auth::user()->id)
-				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
-				->orderBy('edited_at', 'desc')
-				->select("topics.*", "ku_translations.finished", "ku_translations.inspection_result", "ku_translations.inspector_id")
-				->paginate($this->topics_per_page);
+			if($request->has('search') and strlen(trim($request->input('topic_keyword'))) > 1) {
+				$k = trim($request->input('topic_keyword'));
+				$topic_keyword = $k;
+				
+				$partial_keyword = str_replace(' ', '_', $k);
+				
+				$topics = Topic::where('topics.user_id', Auth::user()->id)
+					->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+					->where('topics.topic', 'LIKE', "%{$partial_keyword}%")
+					->orderBy('edited_at', 'desc')
+					->select("topics.*", "ku_translations.finished", "ku_translations.inspection_result", "ku_translations.inspector_id")
+					->paginate($this->topics_per_page);
+			}
+			else{
+				$topics = Topic::where('topics.user_id', Auth::user()->id)
+					->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+					->orderBy('edited_at', 'desc')
+					->select("topics.*", "ku_translations.finished", "ku_translations.inspection_result", "ku_translations.inspector_id")
+					->paginate($this->topics_per_page);
+			}
 		}
 		else if($filter_untranslated) {
 			$topics = Topic::where('topics.user_id', null)
@@ -220,6 +237,7 @@ class TranslatorController extends Controller
 			'filter_untranslated' => $filter_untranslated,
 			'filter_changed' => $filter_changed,
 			'filter_untranslated_changed' => $filter_untranslated_changed,
+			'topic_keyword' => $topic_keyword,
 		]);
 	}
 

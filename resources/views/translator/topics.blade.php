@@ -59,6 +59,24 @@
 				<br />
 
 				<div class="row">
+					@if(isset($filter_my) && $filter_my)
+					<div class="col-sm-12">
+						<div class="translation-group">
+							<h3 class="lang-name navbar-left">{{ trans('common.translator_search_topics_message') }}</h3>
+							<form action="" method="post" id="translation-form">
+								{!! csrf_field() !!}
+								<div class="form-group">
+									<input type="text" name="topic_keyword" value="{{ $topic_keyword }}" id="topic_keyword" class="form-control" autofocus/>
+									<button type="submit" name="search" value="1" class="btn btn-primary" style="margin-left: 12px;">
+										<i class="fa fa-search"></i>
+										{{ trans('common.categorization_key_label') }}
+									</button>
+								</div>
+							</form>
+						</div>
+						<br /><br />
+					</div>
+					@endif
 					@foreach($topics as $t)
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 							@if($t->finished == 1 AND $t->inspection_result == 1)
