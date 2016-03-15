@@ -10,7 +10,7 @@
 					<h3 class="title">{{ str_replace('_', ' ', $topic->topic) }}</h3>
 					<div class="abstract-wrapper">
 						<p id="en-abstract">
-							{{ $topic->abstract }}
+							{!! nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) !!}
 						</p>
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 						</h3>
 						<div class="abstract-wrapper">
 							<p id="en-abstract" class="rtl-text">
-								{{ $ku_trans->abstract }}
+								{!! nl2br($ku_trans->abstract) !!}
 							</p>
 						</div>
 					</div>
@@ -48,7 +48,9 @@
 								<input type="text" name="inspection_ku_trans_title" class="form-control rtl-text register-keystroke" value="{{ str_replace('_', ' ', $ku_trans->topic) }}" autofocus/>
 							</div>
 							<div class="form-group">
-								<textarea class="form-control abstract-trans rtl-text register-keystroke" id="inspection_ku_trans_abstract" name="inspection_ku_trans_abstract">{{$ku_trans->abstract }}</textarea>
+								<textarea class="form-control abstract-trans rtl-text register-keystroke" id="inspection_ku_trans_abstract" name="inspection_ku_trans_abstract">
+									{{$ku_trans->abstract }}
+								</textarea>
 							</div>
 						</div>
 						<br />

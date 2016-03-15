@@ -40,12 +40,18 @@
 						</a>
 
 						<br /><br />
-
+						<div class="col-sm-12">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-default" id="inc_text_size_engilsh"><span class="fa fa-plus"></span></button>
+								<button type="button" class="btn btn-default" id="dec_text_size_engilsh"><span class="fa fa-minus"></span></button>
+							</div>
+						</div>
+						<br /><br />
 						<p id="en-abstract">
-							{{ preg_replace('(\[[0-9]*\])', '', $topic->abstract) }}
+							{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}
 						</p>
 					</div>
-					<textarea id="hidden-en-abstract" class="hidden">{{ preg_replace('(\[[0-9]*\])', '', $topic->abstract) }}</textarea>
+					<textarea id="hidden-en-abstract" class="hidden">{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}</textarea>
 				</div>
 				<div class="translation-group" style="width:49%;float: right;">
 					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
@@ -91,6 +97,12 @@
 						<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve draft @if($draft_available){{ date('n/j/Y : H:i', $draft_time) }}@endif hrs to save</a></div>
 						<input type="hidden" id="have_draft" value="{{ $draft_available }}" />
 						<div class="clearfix"></div>
+						<div class="col-sm-12 pull-right" style="margin: 4px;">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-default" id="inc_text_size_translate"><span class="fa fa-plus"></span></button>
+								<button type="button" class="btn btn-default" id="dec_text_size_translate"><span class="fa fa-minus"></span></button>
+							</div>
+						</div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
 									  name="ku_trans_abstract" placeholder="ئەبستراکت" @if(!$is_owner) disabled @endif>{{

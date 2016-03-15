@@ -33,7 +33,7 @@
 					<h3 class="title">{{ str_replace('_', ' ', $topic) }}</h3>
 					<div class="abstract-wrapper">
 						<p id="en-abstract">
-							{{ $abstract }}
+							{!! nl2br(preg_replace('(\[[0-9]*\])', '', $abstract)) !!}
 						</p>
 					</div>
 				</div>

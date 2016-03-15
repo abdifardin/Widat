@@ -459,4 +459,28 @@ $(document).ready(function(){
 	});
 	
 	$("#cats_selected").chosen();
+	
+	$('button#inc_text_size_translate').click(function(event){
+		var fontSize = parseInt($("textarea#ku_trans_abstract").css("font-size")) + 1 + "px";
+		if(parseInt(fontSize) < 40)
+			$('textarea#ku_trans_abstract').css('font-size', fontSize);
+	});
+	
+	$('button#inc_text_size_engilsh').click(function(event){
+		var fontSize = parseInt($("#en-abstract").css("font-size")) + 1 + "px";
+		if(parseInt(fontSize) < 40)
+			$('#en-abstract').css('font-size', fontSize);
+	});
+	
+	$('button#dec_text_size_translate').click(function(event){
+		var fontSize = parseInt($("textarea#ku_trans_abstract").css("font-size")) - 1 + "px";
+		if(parseInt(fontSize) > 10)
+			$('textarea#ku_trans_abstract').css('font-size', fontSize);
+	});
+	
+	$('button#dec_text_size_engilsh').click(function(event){
+		var fontSize = parseInt($("#en-abstract").css("font-size")) - 1 + "px";
+		if(parseInt(fontSize) > 10)
+			$('#en-abstract').css('font-size', fontSize);
+	});
 });

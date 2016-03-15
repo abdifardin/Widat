@@ -33,7 +33,7 @@
 
 						<div class="abstract-wrapper">
 							<p id="en-abstract">
-								{{ $topic->abstract }}
+								{!! nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) !!}
 							</p>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 
 						<div class="abstract-wrapper">
 							<p id="en-abstract" class="rtl-text">
-								{{ $ku_trans_abstract }}
+								{!! nl2br($ku_trans_abstract) !!}
 							</p>
 						</div>
 					</div>
