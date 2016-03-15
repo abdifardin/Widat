@@ -42,10 +42,10 @@
 						<br /><br />
 
 						<p id="en-abstract">
-							{{ $topic->abstract }}
+							{{ preg_replace('(\[[0-9]*\])', '', $topic->abstract) }}
 						</p>
 					</div>
-					<textarea id="hidden-en-abstract" class="hidden">{{ $topic->abstract }}</textarea>
+					<textarea id="hidden-en-abstract" class="hidden">{{ preg_replace('(\[[0-9]*\])', '', $topic->abstract) }}</textarea>
 				</div>
 				<div class="translation-group" style="width:49%;float: right;">
 					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
