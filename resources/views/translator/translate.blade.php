@@ -21,11 +21,8 @@
 						@endif
 				@endif
 				<div class="translation-group" style="width:49%;float: left;">
-					<h3 class="lang-name navbar-left">{{ trans('common.english') }}</h3>
-
-					<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
-
-					<div>
+					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.english') }}</h3>
+					<div class="col-sm-12">
 						<a href="javascript:;" class="beg-sentence btn btn-warning">
 							<span class="fa fa-fast-backward"></span>
 							{{ trans('common.beg_sent') }}
@@ -38,8 +35,8 @@
 							<span class="fa fa-step-forward"></span>
 							{{ trans('common.next_sent') }}
 						</a>
-
-						<br /><br />
+						<br><br>
+						<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
 						<div class="col-sm-12">
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default" id="inc_text_size_engilsh"><span class="fa fa-plus"></span></button>
@@ -50,14 +47,15 @@
 						<p id="en-abstract">
 							{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}
 						</p>
+						<textarea id="hidden-en-abstract" class="hidden">{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}</textarea>
 					</div>
-					<textarea id="hidden-en-abstract" class="hidden">{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}</textarea>
 				</div>
 				<div class="translation-group" style="width:49%;float: right;">
-					<h3 class="lang-name navbar-left">{{ trans('common.kurdish') }}</h3>
+					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.kurdish') }}</h3>
+					<div class="col-sm-12">
 					<form action="" method="post" id="translation-form">
 						{!! csrf_field() !!}
-						<div class="form-toolbar float-right">
+						<div class="form-toolbar float-right" style="margin-top:0">
 							@if($is_owner)
 								<button type="submit" name="unreserve" id="unreserve" value="1" class="btn btn-default">
 									{{ trans('common.un_reserve_topic') }}
@@ -110,6 +108,7 @@
 							<input type="hidden" id="current_score" value="{{ $current_score }}" />
 						</div>
 					</form>
+					</div>
 				</div>
 			</div>
 		</div>
