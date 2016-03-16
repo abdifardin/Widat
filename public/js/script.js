@@ -136,7 +136,6 @@ function hideSuggestions()
 
 function peek()
 {
-    $('.refering-to-topic').hide();
 	$('#peek-no-ku-trans').addClass('hidden');
 	var url = $('#peek-form').prop('action');
     var token = $('input[name=_token]').val();
@@ -174,9 +173,10 @@ function peek()
                     $('a.btn.translate-now').prop('href', data.translate_url);
 					$('#deletion-rec-box').html(data.delete_recomend);
                 }
-				if(!data.is_admin){
-					$('.refering-to-topic').show();
+				if(data.user_type == 'translator'){
+					$('.refering-to-topic').removeClass('hidden');
 					$('.refering-to-topic').attr('href', data.translate_url);
+					$('a.btn.translate-now').removeClass('hidden');
 				}
             }
         }

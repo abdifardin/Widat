@@ -68,7 +68,7 @@
 							<br />
 							{{ trans('common.no_trans') }}
 							<br />
-							<a href="" class="translate-now btn btn-primary">
+							<a href="" class="translate-now btn btn-primary hidden">
 								Translate Now
 							</a>
 							<span id="deletion-rec-box"></span>
@@ -83,7 +83,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a href="" class="refering-to-topic btn btn-primary" style="display:none;">
+						<a href="" class="refering-to-topic btn btn-primary hidden">
 							{{ trans('common.refering_to_topic') }}
 						</a>
 						<button type="button" class="btn btn-default" data-dismiss="modal">

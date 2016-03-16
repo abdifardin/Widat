@@ -198,22 +198,17 @@ class MainController extends Controller
 		if($topic->user_id === NULL AND $topic->delete_recommended == 0){
 			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
 		}
-		
-		$is_admin = FALSE;
-		if($current_user->user_type == 'admin'){
-			$is_admin = TRUE;
-		}
 
 		return response()->json([
 			'error' => false,
 			'translate_url' => route('translator.translate', ['topic_id' => $topic->id]),
 			'topic' => $topic->topic,
-			'abstract' => $topic->abstract,
+			'abstract' => nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)),
 			'abstract_len' => strlen($topic->abstract),
 			'ku_topic' => $ku_title,
-			'ku_abstract' => $ku_abstract,
+			'ku_abstract' => nl2br($ku_abstract),
 			'delete_recomend' => $delete_recomend,
-			'is_admin' => $is_admin,
+			'user_type' => $current_user->user_type,
 		]);
 	}
 }

@@ -249,6 +249,9 @@ class TranslatorController extends Controller
 
 		$user = Auth::user();
 
+		if($user->user_type != 'translator') {
+			abort(403, 'Access denied');
+		}
 		if($topic->user_id != null && $topic->user_id != $user->id) {
 			abort(403, 'This translation has been reserved by ' . $topic->user->name . ' ' . $topic->user->surname .
 				'.');
