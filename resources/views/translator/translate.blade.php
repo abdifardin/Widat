@@ -37,6 +37,7 @@
 						</a>
 						<br><br>
 						<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
+						<br />
 						<div class="col-sm-12">
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default" id="inc_text_size_engilsh"><span class="fa fa-plus"></span></button>
