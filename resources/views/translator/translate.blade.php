@@ -44,7 +44,7 @@
 						<br><br>
 						<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
 						<br />
-						<div class="col-sm-12">
+						<div class="col-sm-12" style="margin-bottom: 34px;">
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default" id="inc_text_size_engilsh"><span class="fa fa-plus"></span></button>
 								<button type="button" class="btn btn-default reset_tex_size"><span class="fa fa-repeat"></span></button>

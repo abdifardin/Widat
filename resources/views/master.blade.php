@@ -27,6 +27,7 @@
 		<link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/font-awesome.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/style.css') }}" />
+		<link rel="stylesheet" href="{{ url('jQueryTE/jquery-te-1.4.0.css') }}" />
 		<link rel="stylesheet" href="{{ url('css/chosen.min.css') }}" />
 
 		<!-- Favicons -->
@@ -99,6 +100,7 @@
 		<script src="{{ url('js/bootstrap.min.js') }}"></script>
 		<script src="{{ url('js/script.js') }}"></script>
 		<script src="{{ url('js/autosave.js') }}"></script>
+		<script src="{{ url('jQueryTE/jquery-te-1.4.0.min.js') }}"></script>
 		<script src="{{ url('js/chosen.jquery.min.js') }}"></script>
 		<input type="hidden" id="reg-keystroke-url" value="{{ route('translator.register_keystroke') }}" />
 		<input type="hidden" id="reg-activity-url" value="{{ route('translator.register_activity') }}" />

@@ -12,7 +12,8 @@ $('#retrieve_drafts_label').on('click', function (e) {
 	var _token = $('input[name=_token]').val();
 	$.post(window.location.href, {retrieve: retrieve, _token: _token}, function(result, status){
 		if(result != 'empty'){
-			$('#ku_trans_abstract').val(result.abstract);
+			//$('#ku_trans_abstract').val(result.abstract);
+			$('.jqte_editor').html(result.abstract);
 			$('#ku_trans_title').val(result.topic);
 			
 			var abstract = $('textarea#ku_trans_abstract');

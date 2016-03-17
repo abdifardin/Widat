@@ -22,9 +22,9 @@
 							&nbsp; {{ str_replace('_', ' ', $ku_trans->topic) }}
 						</h3>
 						<div class="abstract-wrapper">
-							<p id="en-abstract" class="rtl-text">
-								{!! nl2br($ku_trans->abstract) !!}
-							</p>
+							<div id="en-abstract" class="rtl-text">
+								{!! ($ku_trans->abstract) !!}
+							</div>
 						</div>
 					</div>
 					<br />

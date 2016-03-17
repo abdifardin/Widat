@@ -46,9 +46,9 @@
 						</h3>
 
 						<div class="abstract-wrapper">
-							<p id="en-abstract" class="rtl-text">
-								{!! nl2br($ku_trans_abstract) !!}
-							</p>
+							<div id="en-abstract" class="rtl-text">
+								{!! ($ku_trans_abstract) !!}
+							</div>
 						</div>
 					</div>
 				@endif

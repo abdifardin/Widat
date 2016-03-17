@@ -377,6 +377,16 @@ function refreshCsrf()
 }
 
 $(document).ready(function(){
+	$("textarea#ku_trans_abstract").jqte({
+		b: false,br: false,center: false,color: false,fsize: false,format: false,i: false,indent: false,link: false,left: false,
+		outdent: false,p: false,remove: false,right: false,rule: false,source: false,strike: false,title: false,u: false, unlink: false,
+    });
+	$("textarea#inspection_ku_trans_abstract").jqte({
+		b: false,br: false,center: false,color: false,fsize: false,format: false,i: false,indent: false,link: false,left: false,
+		outdent: false,p: false,remove: false,right: false,rule: false,source: false,strike: false,title: false,u: false, unlink: false,
+    });
+	$('.jqte_editor').css({ height: ($("#en-abstract").height()-60)+"px" });
+	$('.jqte_editor').css({ direction: "rtl" });
 	$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height()-60)+"px");
 
 	$("[name='ku_trans_title']").keypress(function(event){
