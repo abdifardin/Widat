@@ -41,6 +41,7 @@
 						<div class="col-sm-12">
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default" id="inc_text_size_engilsh"><span class="fa fa-plus"></span></button>
+								<button type="button" class="btn btn-default reset_tex_size"><span class="fa fa-repeat"></span></button>
 								<button type="button" class="btn btn-default" id="dec_text_size_engilsh"><span class="fa fa-minus"></span></button>
 							</div>
 						</div>
@@ -99,6 +100,7 @@
 						<div class="col-sm-12 pull-right" style="margin: 4px;">
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default" id="inc_text_size_translate"><span class="fa fa-plus"></span></button>
+								<button type="button" class="btn btn-default reset_tex_size"><span class="fa fa-repeat"></span></button>
 								<button type="button" class="btn btn-default" id="dec_text_size_translate"><span class="fa fa-minus"></span></button>
 							</div>
 						</div>

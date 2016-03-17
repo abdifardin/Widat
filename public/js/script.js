@@ -2,6 +2,8 @@ var sentencePos = 0;
 var disallow_keystroke_register = false;
 var translation_save_clicked = false;
 var inspector_accept = true;
+var ku_translate_default_font_szie = parseInt($("textarea#ku_trans_abstract").css("font-size")) + "px";
+var en_abstract_default_font_szie = parseInt($("#en-abstract").css("font-size")) + "px";
 
 $(function() {
     $('#search-form').submit(function() {
@@ -482,5 +484,10 @@ $(document).ready(function(){
 		var fontSize = parseInt($("#en-abstract").css("font-size")) - 1 + "px";
 		if(parseInt(fontSize) > 10)
 			$('#en-abstract').css('font-size', fontSize);
+	});
+	
+	$('button.reset_tex_size').click(function(event){
+		$('#en-abstract').css('font-size', en_abstract_default_font_szie);
+		$('textarea#ku_trans_abstract').css('font-size', ku_translate_default_font_szie);
 	});
 });
