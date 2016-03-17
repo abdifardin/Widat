@@ -20,18 +20,24 @@
 							<div class="alert alert-warning" role="alert">{{ trans('common.wait_translation_message') }}</div>
 						@endif
 				@endif
-				<div class="translation-group" style="width:49%;float: left;">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
+					<div class="col-sm-12" id="save_changes_label" style="display:none;">Saving changes to draft...</div>
+					<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve draft @if($draft_available){{ date('n/j/Y : H:i', $draft_time) }}@endif hrs to save</a></div>
+					<input type="hidden" id="have_draft" value="{{ $draft_available }}" />
+				</div>
+				<br>
+				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
 					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.english') }}</h3>
 					<div class="col-sm-12">
-						<a href="javascript:;" class="beg-sentence btn btn-warning">
+						<a href="javascript:;" class="beg-sentence btn btn-warning col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							<span class="fa fa-fast-backward"></span>
 							{{ trans('common.beg_sent') }}
 						</a>
-						<a href="javascript:;" class="rewind-sentence btn btn-default">
+						<a href="javascript:;" class="rewind-sentence btn btn-default col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							<span class="fa fa-step-backward"></span>
 							{{ trans('common.prev_sent') }}
 						</a>
-						<a href="javascript:;" class="forward-sentence btn btn-success">
+						<a href="javascript:;" class="forward-sentence btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							<span class="fa fa-step-forward"></span>
 							{{ trans('common.next_sent') }}
 						</a>
@@ -45,14 +51,13 @@
 								<button type="button" class="btn btn-default" id="dec_text_size_engilsh"><span class="fa fa-minus"></span></button>
 							</div>
 						</div>
-						<br /><br />
 						<p id="en-abstract">
 							{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}
 						</p>
 						<textarea id="hidden-en-abstract" class="hidden">{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}</textarea>
 					</div>
 				</div>
-				<div class="translation-group" style="width:49%;float: right;">
+				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
 					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.kurdish') }}</h3>
 					<div class="col-sm-12">
 					<form action="" method="post" id="translation-form">
@@ -93,9 +98,7 @@
 									@if(!$is_owner) disabled @endif autofocus
 									/>
 						</div>
-						<div class="col-sm-12" id="save_changes_label" style="display:none;">Saving changes to draft...</div>
-						<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve draft @if($draft_available){{ date('n/j/Y : H:i', $draft_time) }}@endif hrs to save</a></div>
-						<input type="hidden" id="have_draft" value="{{ $draft_available }}" />
+						
 						<div class="clearfix"></div>
 						<div class="col-sm-12 pull-right" style="margin: 4px;">
 							<div class="btn-group" role="group">
