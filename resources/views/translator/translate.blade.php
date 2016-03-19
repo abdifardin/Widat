@@ -29,16 +29,13 @@
 				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
 					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.english') }}</h3>
 					<div class="col-sm-12">
-						<a href="javascript:;" class="beg-sentence btn btn-warning col-lg-4 col-md-4 col-sm-12 col-xs-12">
-							<span class="fa fa-fast-backward"></span>
+						<a href="javascript:;" class="beg-sentence btn btn-warning">
 							{{ trans('common.beg_sent') }}
 						</a>
-						<a href="javascript:;" class="rewind-sentence btn btn-default col-lg-4 col-md-4 col-sm-12 col-xs-12">
-							<span class="fa fa-step-backward"></span>
+						<a href="javascript:;" class="rewind-sentence btn btn-default">
 							{{ trans('common.prev_sent') }}
 						</a>
-						<a href="javascript:;" class="forward-sentence btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12">
-							<span class="fa fa-step-forward"></span>
+						<a href="javascript:;" class="forward-sentence btn btn-success">
 							{{ trans('common.next_sent') }}
 						</a>
 						<br><br>
