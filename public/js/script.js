@@ -5,6 +5,10 @@ var inspector_accept = true;
 var ku_translate_default_font_szie = parseInt($("textarea#ku_trans_abstract").css("font-size")) + "px";
 var en_abstract_default_font_szie = parseInt($("#en-abstract").css("font-size")) + "px";
 
+var prior_ku_trans = '';
+if(document.getElementById("ku_trans_abstract")){
+	var prior_ku_trans = $('textarea#ku_trans_abstract').val().trim();
+}
 $(function() {
     $('#search-form').submit(function() {
         suggestions();
@@ -60,10 +64,11 @@ $(function() {
     setTimeout(refreshStatuses, 1000);
 	
 	$(window).on('beforeunload', function() {
+		
 		if($('#have_draft').val() && !translation_save_clicked){
 			return 'You have draft. To save it stay on this page and after retrieve draft click on save changes.';
 		}
-		if (checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null &&
+		if (prior_ku_trans.localeCompare($('textarea#ku_trans_abstract').val()) != 0 && checkForUnsavedChanges() != 0 && checkForUnsavedChanges() != null &&
             !translation_save_clicked) {
             return 'You have unsaved changes!';
         }
