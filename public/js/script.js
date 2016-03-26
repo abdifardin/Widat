@@ -2,7 +2,6 @@ var sentencePos = 0;
 var disallow_keystroke_register = false;
 var translation_save_clicked = false;
 var inspector_accept = true;
-var ku_translate_default_font_szie = parseInt($("textarea#ku_trans_abstract").css("font-size")) + "px";
 var en_abstract_default_font_szie = parseInt($("#en-abstract").css("font-size")) + "px";
 
 var prior_ku_trans = '';
@@ -382,17 +381,24 @@ function refreshCsrf()
 }
 
 $(document).ready(function(){
-	$("textarea#ku_trans_abstract").jqte({
+	$("textarea#ku_trans_abstract").summernote({
+		height: ($("#en-abstract").height())+"px",
+		toolbar: [
+			['style', ['ul', 'ol', 'superscript', 'subscript']]
+		],
+	});
+	var ku_translate_default_font_szie = parseInt($('.note-editable').css("font-size")) + "px";
+	$('textarea#ku_trans_abstract').summernote('justifyRight');
+	$('textarea#ku_trans_abstract').summernote('fontSize', 25);
+	
+	/*$("textarea#ku_trans_abstract").jqte({
 		b: false,br: false,center: false,color: false,fsize: false,format: false,i: false,indent: false,link: false,left: false,
 		outdent: false,p: false,remove: false,right: false,rule: false,source: false,strike: false,title: false,u: false, unlink: false,
-    });
-	$("textarea#inspection_ku_trans_abstract").jqte({
-		b: false,br: false,center: false,color: false,fsize: false,format: false,i: false,indent: false,link: false,left: false,
-		outdent: false,p: false,remove: false,right: false,rule: false,source: false,strike: false,title: false,u: false, unlink: false,
-    });
-	$('.jqte_editor').css({ height: ($("#en-abstract").height()-60)+"px" });
+    });*/
+	
+	//$('.jqte_editor').css({ height: ($("#en-abstract").height())+"px" });
 	$('.jqte_editor').css({ direction: "rtl" });
-	$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height()-60)+"px");
+	//$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height())+"px");
 
 	$("[name='ku_trans_title']").keypress(function(event){
 		if (event.keyCode == 10 || event.keyCode == 13){
@@ -477,32 +483,24 @@ $(document).ready(function(){
 	
 	$("#cats_selected").chosen();
 	
-	$('button#inc_text_size_translate').click(function(event){
-		var fontSize = parseInt($("textarea#ku_trans_abstract").css("font-size")) + 1 + "px";
-		if(parseInt(fontSize) < 40)
-			$('textarea#ku_trans_abstract').css('font-size', fontSize);
-	});
-	
-	$('button#inc_text_size_engilsh').click(function(event){
-		var fontSize = parseInt($("#en-abstract").css("font-size")) + 1 + "px";
-		if(parseInt(fontSize) < 40)
+	$('button#inc_text_size').click(function(event){
+		var fontSize = parseInt($('.note-editable').css("font-size")) + 1 + "px";
+		if(parseInt(fontSize) < 40){
+			$('.note-editable').css('font-size',fontSize);
 			$('#en-abstract').css('font-size', fontSize);
+		}
 	});
 	
-	$('button#dec_text_size_translate').click(function(event){
-		var fontSize = parseInt($("textarea#ku_trans_abstract").css("font-size")) - 1 + "px";
-		if(parseInt(fontSize) > 10)
-			$('textarea#ku_trans_abstract').css('font-size', fontSize);
-	});
-	
-	$('button#dec_text_size_engilsh').click(function(event){
-		var fontSize = parseInt($("#en-abstract").css("font-size")) - 1 + "px";
-		if(parseInt(fontSize) > 10)
+	$('button#dec_text_size').click(function(event){
+		var fontSize = parseInt($('.note-editable').css("font-size")) - 1 + "px";
+		if(parseInt(fontSize) > 10){
+			$('.note-editable').css('font-size',fontSize);
 			$('#en-abstract').css('font-size', fontSize);
+		}
 	});
 	
-	$('button.reset_tex_size').click(function(event){
+	$('button#reset_tex_size').click(function(event){
 		$('#en-abstract').css('font-size', en_abstract_default_font_szie);
-		$('textarea#ku_trans_abstract').css('font-size', ku_translate_default_font_szie);
+		$('.note-editable').css('font-size',ku_translate_default_font_szie);
 	});
 });

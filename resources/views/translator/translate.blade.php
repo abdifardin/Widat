@@ -26,6 +26,13 @@
 					<input type="hidden" id="have_draft" value="{{ $draft_available }}" />
 				</div>
 				<br>
+				<div class="col-sm-12" style="margin-bottom:6px;">
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default" id="inc_text_size"><span class="fa fa-plus"></span></button>
+						<button type="button" class="btn btn-default" id="reset_tex_size"><span class="fa fa-repeat"></span></button>
+						<button type="button" class="btn btn-default" id="dec_text_size"><span class="fa fa-minus"></span></button>
+					</div>
+				</div>
 				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
 					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.english') }}</h3>
 					<div class="col-sm-12">
@@ -41,13 +48,7 @@
 						<br><br>
 						<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
 						<br />
-						<div class="col-sm-12" style="margin-bottom: 34px;">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default" id="inc_text_size_engilsh"><span class="fa fa-plus"></span></button>
-								<button type="button" class="btn btn-default reset_tex_size"><span class="fa fa-repeat"></span></button>
-								<button type="button" class="btn btn-default" id="dec_text_size_engilsh"><span class="fa fa-minus"></span></button>
-							</div>
-						</div>
+						<div class="clearfix"></div>
 						<p id="en-abstract">
 							{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}
 						</p>
@@ -97,13 +98,6 @@
 						</div>
 						
 						<div class="clearfix"></div>
-						<div class="col-sm-12 pull-right" style="margin: 4px;">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default" id="inc_text_size_translate"><span class="fa fa-plus"></span></button>
-								<button type="button" class="btn btn-default reset_tex_size"><span class="fa fa-repeat"></span></button>
-								<button type="button" class="btn btn-default" id="dec_text_size_translate"><span class="fa fa-minus"></span></button>
-							</div>
-						</div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
 									  name="ku_trans_abstract" placeholder="ئەبستراکت" @if(!$is_owner) disabled @endif>{{
