@@ -25,14 +25,12 @@
 					<div class="col-sm-12" id="retrieve_drafts_label" @if(!$draft_available)style="display:none;"@endif><a href="">Retrieve draft @if($draft_available){{ date('n/j/Y : H:i', $draft_time) }}@endif hrs to save</a></div>
 					<input type="hidden" id="have_draft" value="{{ $draft_available }}" />
 				</div>
-				<br>
-				<div class="col-sm-12" style="margin-bottom:6px;">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default" id="inc_text_size"><span class="fa fa-plus"></span></button>
-						<button type="button" class="btn btn-default" id="reset_tex_size"><span class="fa fa-repeat"></span></button>
-						<button type="button" class="btn btn-default" id="dec_text_size"><span class="fa fa-minus"></span></button>
-					</div>
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default" id="inc_text_size"><span class="fa fa-plus"></span></button>
+					<button type="button" class="btn btn-default" id="reset_tex_size"><span class="fa fa-repeat"></span></button>
+					<button type="button" class="btn btn-default" id="dec_text_size"><span class="fa fa-minus"></span></button>
 				</div>
+				<br><br>
 				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
 					<h3 class="lang-name navbar-left" style="width: 100%;">{{ trans('common.english') }}</h3>
 					<div class="col-sm-12">
@@ -47,7 +45,7 @@
 						</a>
 						<br><br>
 						<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
-						<br />
+						<br /><br /><br />
 						<div class="clearfix"></div>
 						<p id="en-abstract">
 							{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}
@@ -100,10 +98,17 @@
 						<div class="clearfix"></div>
 						<div class="form-group">
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
-									  name="ku_trans_abstract" placeholder="ئەبستراکت" @if(!$is_owner) disabled @endif>{{
+									  name="ku_trans_abstract" placeholder="ئەبستراکت">{{
 									  $ku_translation_abstract }}</textarea>
 							<input type="hidden" id="current_score" value="{{ $current_score }}" />
 						</div>
+						@if(!$is_owner)
+							<style type="text/css">
+							.note-editable {
+								display:none;
+							}
+							</style>
+						@endif
 					</form>
 					</div>
 				</div>

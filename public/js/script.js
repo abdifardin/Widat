@@ -381,25 +381,23 @@ function refreshCsrf()
 }
 
 $(document).ready(function(){
+	$("textarea#inspection_ku_trans_abstract").summernote({
+		height: ($("#en-abstract").height())+"px",
+		direction: 'rtl',
+		toolbar: [
+			['style', ['ul', 'ol', 'superscript', 'subscript']]
+		],
+	});
 	$("textarea#ku_trans_abstract").summernote({
 		height: ($("#en-abstract").height())+"px",
+		direction: 'rtl',
 		toolbar: [
 			['style', ['ul', 'ol', 'superscript', 'subscript']]
 		],
 	});
 	var ku_translate_default_font_szie = parseInt($('.note-editable').css("font-size")) + "px";
 	$('textarea#ku_trans_abstract').summernote('justifyRight');
-	$('textarea#ku_trans_abstract').summernote('fontSize', 25);
 	
-	/*$("textarea#ku_trans_abstract").jqte({
-		b: false,br: false,center: false,color: false,fsize: false,format: false,i: false,indent: false,link: false,left: false,
-		outdent: false,p: false,remove: false,right: false,rule: false,source: false,strike: false,title: false,u: false, unlink: false,
-    });*/
-	
-	//$('.jqte_editor').css({ height: ($("#en-abstract").height())+"px" });
-	$('.jqte_editor').css({ direction: "rtl" });
-	//$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height())+"px");
-
 	$("[name='ku_trans_title']").keypress(function(event){
 		if (event.keyCode == 10 || event.keyCode == 13){
 			event.preventDefault();
