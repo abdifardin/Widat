@@ -13,11 +13,6 @@ $('#retrieve_drafts_label').on('click', function (e) {
 	$.post(window.location.href, {retrieve: retrieve, _token: _token}, function(result, status){
 		if(result != 'empty'){
 			$('textarea#ku_trans_abstract').summernote('code', result.abstract);
-			
-			
-			
-			
-			$('textarea#ku_trans_abstract').val(result.abstract);
 			$('#ku_trans_title').val(result.topic);
 			
 			var abstract = $('textarea#ku_trans_abstract');
