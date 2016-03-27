@@ -50,6 +50,7 @@ function event() {
 		$.post(window.location.href, {ku_trans_topic: ku_trans_topic, ku_trans_abstract: ku_trans_abstract, autosave: autosave, _token: _token}, function(result, status){
 			$("#save_changes_label").hide();
 			$("#retrieve_drafts_label").show();
+			console.log(result);
 		});
 	}
 	previous_val = current_val;
