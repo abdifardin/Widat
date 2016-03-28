@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\Utilities;
+use DB;
 use App\KuTranslation;
 use App\Nocando;
 use App\ScoreHistory;
@@ -360,8 +361,7 @@ class TranslatorController extends Controller
 				$draft->save();
 			}
 			
-			//return response()->json('suc');
-			echo urldecode($request->input('ku_trans_abstract'));
+			return response()->json('suc');
 		}
 		else if($request->has('retrieve')) {
 			$draft = Draft::where('topic_id', $topic_id)->first();
@@ -525,14 +525,14 @@ class TranslatorController extends Controller
 		$data['topics_list'] = array();
 		$data['cat_keyword'] = '';
 		if($request->has('search') and strlen(trim($request->input('cat_keyword'))) > 1) {
-			$k = strtolower($request->input('cat_keyword'));
+			$k = $request->input('cat_keyword');
 			$data['cat_keyword'] = $k;
 			
 			if($request->has('firstchar')){
-				$first_chat = $request->input('firstchar');
-				$data['category_list'] = Categorylinks::where('cl_to', 'like', "$first_chat%")->whereRaw('LOWER(cl_to) LIKE ?', ["%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+				$first_char = $request->input('firstchar');
+				$data['category_list'] = Categorylinks::whereRaw("cl_to COLLATE UTF8_GENERAL_CI LIKE ? AND cl_to COLLATE UTF8_GENERAL_CI LIKE ?", ["$first_char%", "%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}else{
-				$data['category_list'] = Categorylinks::whereRaw('LOWER(cl_to) LIKE ?', ["%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+				$data['category_list'] = Categorylinks::whereRaw("cl_to COLLATE UTF8_GENERAL_CI LIKE ?", ["%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}
 		}
 		elseif($request->has('search_selected')) {
