@@ -525,14 +525,16 @@ class TranslatorController extends Controller
 		$data['topics_list'] = array();
 		$data['cat_keyword'] = '';
 		if($request->has('search') and strlen(trim($request->input('cat_keyword'))) > 1) {
-			$k = strtolower($request->input('cat_keyword'));
+			$k = $request->input('cat_keyword');
+			$ucf_k = ucfirst($k);
 			$data['cat_keyword'] = $k;
 			
 			if($request->has('firstchar')){
 				$first_char = strtolower($request->input('firstchar'));
-				$data['category_list'] = Categorylinks::whereRaw("LOWER(cl_to) LIKE ? AND LOWER(cl_to) LIKE ?", ["$first_char%", "%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+				$ucf_first_char = ucfirst(strtolower($request->input('firstchar')));
+				$data['category_list'] = Categorylinks::whereRaw("(cl_to LIKE ? OR cl_to LIKE ?) AND (cl_to LIKE ? OR cl_to LIKE ?)", ["%$k%", "%$ucf_k%", "$first_char%", "$ucf_first_char%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}else{
-				$data['category_list'] = Categorylinks::whereRaw("LOWER(cl_to) LIKE ?", ["%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+				$data['category_list'] = Categorylinks::whereRaw("(cl_to LIKE ? OR cl_to LIKE ?)", ["%$k%", "%$ucf_k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}
 		}
 		elseif($request->has('search_selected')) {
