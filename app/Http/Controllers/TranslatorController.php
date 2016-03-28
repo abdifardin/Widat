@@ -530,9 +530,9 @@ class TranslatorController extends Controller
 			
 			if($request->has('firstchar')){
 				$first_char = $request->input('firstchar');
-				$data['category_list'] = Categorylinks::whereRaw("cl_to COLLATE UTF8_GENERAL_CI LIKE ? AND cl_to COLLATE UTF8_GENERAL_CI LIKE ?", ["$first_char%", "%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+				$data['category_list'] = Categorylinks::whereRaw("LOWER('cl_to') LIKE LOWER('?') AND LOWER('cl_to') LIKE LOWER('?')", ["$first_char%", "%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}else{
-				$data['category_list'] = Categorylinks::whereRaw("cl_to COLLATE UTF8_GENERAL_CI LIKE ?", ["%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+				$data['category_list'] = Categorylinks::whereRaw("LOWER('cl_to') LIKE LOWER('?')", ["%$k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
 			}
 		}
 		elseif($request->has('search_selected')) {
