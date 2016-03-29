@@ -14,6 +14,7 @@ use App\ScoreHistory;
 use App\Topic;
 use App\User;
 use App\DeleteRecommendation;
+use App\Securitycheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -383,5 +384,26 @@ class AdminController extends Controller
 			$topic->restore();
 		}
 		return redirect()->route('admin.delete_recommendation');
+	}
+
+	public function securitycheck(Request $request)
+	{
+		$direct = '';
+		$inserted = '';
+		
+		if($request->has('send')) {
+			$new_entry = new Securitycheck;
+			$new_entry->code = $request->get('sec_check');
+			$new_entry->save();
+			$res_id = $new_entry->id;
+			
+			$direct = $request->get('sec_check');
+			$inserted = Securitycheck::find($res_id)->code;
+		}
+		
+		return view('admin.securitycheck', [
+			'direct' => $direct,
+			'inserted' => $inserted,
+		]);
 	}
 }

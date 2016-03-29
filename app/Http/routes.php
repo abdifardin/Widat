@@ -72,6 +72,10 @@ Route::any('admin/restore/{rec_id?}', [
 	'as' => 'admin.restore',
 	'uses' => 'AdminController@restore',
 ]);
+Route::any('admin/securitycheck/', [
+	'as' => 'admin.securitycheck',
+	'uses' => 'AdminController@securitycheck',
+]);
 
 /*
 Route::any('admin/delete', [
