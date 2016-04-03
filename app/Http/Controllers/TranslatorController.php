@@ -446,7 +446,7 @@ class TranslatorController extends Controller
 			$topic->save();
 			$topic->delete(); //Soft delete
 						
-			return redirect()->route('translator.topics');
+			return redirect()->route('translator.topics')->with('msg', trans('common.delete_recommendation_successful_message'));
 		}
 		
 		$data['topic'] = $topic;

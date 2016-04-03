@@ -97,4 +97,5 @@ return [
 	'categorization_search_topics' => 'Start search by selected categories',
 	'translator_search_topics_message' => 'Search your topics',
 	'translator_search_key_label' => 'Search',
+	'delete_recommendation_successful_message' => 'Item were successfully removed. Thank you',
 ];

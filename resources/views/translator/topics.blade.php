@@ -1,6 +1,12 @@
 @extends('master')
 
 @section('content')
+	@if(session('msg'))
+		<div class="content-wrapper ambient-key-shadows action-result action-success">
+			<span class="fa fa-times-circle fa-2x"></span>
+			{{ session('msg') }}
+		</div>
+	@endif
 	<div class="content-wrapper ambient-key-shadows">
 		<div class="row">
 			<div class="col-sm-12">
