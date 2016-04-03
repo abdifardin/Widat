@@ -109,7 +109,13 @@ class TranslatorController extends Controller
 		for($i; $i > 0; $i--) {
 			if($i == $first_flag){
 				$start_date = date('Y-m-1', time());
-				$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
+				
+				if(date('d', time()) >= 30){
+					$prev_month = date('Y-m-1', strtotime("first day of last month"));
+				}else{
+					$prev_month = date('Y-m-1', strtotime("-" . ($history_count - $i + 1) . " months"));
+				}
+				
 				$shp = ScoreHistory::where('user_id', $user_id)
 					->whereBetween('created_at', [ $prev_month, $start_date ])
 					->orderBy('created_at', 'DESC')

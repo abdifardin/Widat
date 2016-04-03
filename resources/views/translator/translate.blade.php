@@ -97,6 +97,11 @@
 						
 						<div class="clearfix"></div>
 						<div class="form-group">
+							<button type="button" class="btn btn-default editor_action" id="ol"><span class="fa fa-list-ol"></span></button>
+							<button type="button" class="btn btn-default editor_action" id="ul"><span class="fa fa-list-ul"></span></button>
+							<button type="button" class="btn btn-default editor_action" id="item"><span class="fa fa-sticky-note"></span></button>
+							<button type="button" class="btn btn-default editor_action" id="sup"><span class="fa fa-superscript"></span></button>
+							<button type="button" class="btn btn-default editor_action" id="sub"><span class="fa fa-subscript"></span></button>
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
 									  name="ku_trans_abstract" placeholder="ئەبستراکت">{{
 									  $ku_translation_abstract }}</textarea>

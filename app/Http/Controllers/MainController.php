@@ -198,6 +198,9 @@ class MainController extends Controller
 		if($topic->user_id === NULL AND $topic->delete_recommended == 0){
 			$delete_recomend = '<a href="'. route('translator.delete_recommendation', ['topic_id' => $topic->id]). '" class="deletion-rec btn btn-warning" style="margin-left: 4px;">Recommend for Deletion</a>';
 		}
+		
+		$search  = array('[ol]', '[/ol]', '[ul]', '[/ul]', '[item]', '[/item]', '[sup]', '[/sup]', '[sub]', '[/sub]');
+		$replace = array('<ol>', '</ol>', '<ul>', '</ul>', '<li>', '</li>', '<sup>', '</sup>', '<sub>', '</sub>');
 
 		return response()->json([
 			'error' => false,
@@ -206,7 +209,7 @@ class MainController extends Controller
 			'abstract' => nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)),
 			'abstract_len' => strlen($topic->abstract),
 			'ku_topic' => $ku_title,
-			'ku_abstract' => nl2br($ku_abstract),
+			'ku_abstract' => nl2br(str_replace($search, $replace, $ku_abstract)),
 			'delete_recomend' => $delete_recomend,
 			'user_type' => $current_user->user_type,
 		]);

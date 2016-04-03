@@ -17,6 +17,8 @@
 						<strong>Input:</strong>
 						<br>
 						<?php echo $direct;?>
+						<br>
+						{{ $direct}}
 						<div class="clearfix"></div>
 						<strong>Database:</strong>
 						<br>
