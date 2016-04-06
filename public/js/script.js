@@ -9,58 +9,6 @@ if(document.getElementById("ku_trans_abstract")){
 	var prior_ku_trans = $('textarea#ku_trans_abstract').val().trim();
 }
 
-function insertAtCaret(areaId,text) {
-    var txtarea = document.getElementById(areaId);
-    var scrollPos = txtarea.scrollTop;
-    var strPos = 0;
-    var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ? 
-        "ff" : (document.selection ? "ie" : false ) );
-    if (br == "ie") { 
-        txtarea.focus();
-        var range = document.selection.createRange();
-        range.moveStart ('character', -txtarea.value.length);
-        strPos = range.text.length;
-    }
-    else if (br == "ff") strPos = txtarea.selectionStart;
-
-    var front = (txtarea.value).substring(0,strPos);  
-    var back = (txtarea.value).substring(strPos,txtarea.value.length); 
-    txtarea.value=front+text+back;
-    strPos = strPos + text.length;
-    if (br == "ie") { 
-        txtarea.focus();
-        var range = document.selection.createRange();
-        range.moveStart ('character', -txtarea.value.length);
-        range.moveStart ('character', strPos);
-        range.moveEnd ('character', 0);
-        range.select();
-    }
-    else if (br == "ff") {
-        txtarea.selectionStart = strPos;
-        txtarea.selectionEnd = strPos;
-        txtarea.focus();
-    }
-    txtarea.scrollTop = scrollPos;
-}
-
-function setSelectionRange(input, selectionStart, selectionEnd) {
-  if (input.setSelectionRange) {
-    input.focus();
-    input.setSelectionRange(selectionStart, selectionEnd);
-  }
-  else if (input.createTextRange) {
-    var range = input.createTextRange();
-    range.collapse(true);
-    range.moveEnd('character', selectionEnd);
-    range.moveStart('character', selectionStart);
-    range.select();
-  }
-}
-
-function setCaretToPos (input, pos) {
-  setSelectionRange(input, pos, pos);
-}
-
 $(function() {
     $('#search-form').submit(function() {
         suggestions();
@@ -86,7 +34,12 @@ $(function() {
     });
 
     $("input#ku_trans_title").change(updateTranslationScore).keyup(updateTranslationScore);
-    $("textarea#ku_trans_abstract").change(updateTranslationScore).keyup(updateTranslationScore);
+	$('textarea#ku_trans_abstract').on('summernote.keyup', function(we, e) {
+		updateTranslationScore();
+	});
+	$('textarea#ku_trans_abstract').on('summernote.change', function(we, contents, $editable) {
+		updateTranslationScore();
+	});
     updateTranslationScore();
 
     setTimeout(function() {
@@ -153,6 +106,10 @@ $(function() {
         return confirm("Are you sure?");
     });
 });
+
+function htmlToPlaintext(text) {
+  return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+}
 
 function suggestions()
 {
@@ -328,6 +285,7 @@ function updateTranslationScore()
     $('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
 }
 */
+
 function updateTranslationScore()
 {
     var abstract = $('textarea#ku_trans_abstract');
@@ -335,11 +293,11 @@ function updateTranslationScore()
     if(!abstract.length && !topic.length) {
         return;
     }
-    var plaintext = abstract.val().trim();
+    var plaintext = htmlToPlaintext(abstract.val().trim().replace(new RegExp("<br>", "g"), ' ').replace(new RegExp("<p>", "g"), ' ').replace(new RegExp("<li>", "g"), ' ').replace(new RegExp("&nbsp;", "g"), ' '));
     var words = plaintext.split(" ");
     var abstractwordcount = 0;
     for(var i = 0; i < words.length; i++) {
-        if(words[i].trim().length > 0) {
+		if(words[i].trim().length > 0) {
             abstractwordcount++;
         }
     }
@@ -434,8 +392,6 @@ function refreshCsrf()
 }
 
 $(document).ready(function(){
-	$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height())+"px");
-	
 	$("textarea#inspection_ku_trans_abstract").summernote({
 		height: ($("#en-abstract").height())+"px",
 		direction: 'rtl',
@@ -443,9 +399,17 @@ $(document).ready(function(){
 			['style', ['ul', 'ol', 'superscript', 'subscript']]
 		],
 	});
-	
+	$("textarea#ku_trans_abstract").summernote({
+		height: ($("#en-abstract").height())+"px",
+		direction: 'rtl',
+		toolbar: [
+			['style', ['ul', 'ol', 'superscript', 'subscript']]
+		],
+	});
+	$('#inspection_ku_trans_abstract').summernote('justifyRight');
+	$('#ku_trans_abstract').summernote('justifyRight');
 	var ku_translate_default_font_szie = parseInt($('textarea#ku_trans_abstract').css("font-size")) + "px";
-	
+		
 	$("[name='ku_trans_title']").keypress(function(event){
 		if (event.keyCode == 10 || event.keyCode == 13){
 			event.preventDefault();
@@ -530,33 +494,26 @@ $(document).ready(function(){
 	$("#cats_selected").chosen();
 	
 	$('button#inc_text_size').click(function(event){
-		var fontSize = parseInt($('textarea#ku_trans_abstract').css("font-size")) + 1 + "px";
+		var fontSize = parseInt($('.note-editable').css("font-size")) + 1 + "px";
 		if(parseInt(fontSize) < 40){
-			$('textarea#ku_trans_abstract').css('font-size',fontSize);
+			$('.note-editable').css('font-size',fontSize);
 			$('#en-abstract').css('font-size', fontSize);
 		}
-		$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height())+"px");
+		$('.note-editable').css('height',($("#en-abstract").height())+"px");
 	});
 	
 	$('button#dec_text_size').click(function(event){
-		var fontSize = parseInt($('textarea#ku_trans_abstract').css("font-size")) - 1 + "px";
+		var fontSize = parseInt($('.note-editable').css("font-size")) - 1 + "px";
 		if(parseInt(fontSize) > 10){
-			$('textarea#ku_trans_abstract').css('font-size',fontSize);
+			$('.note-editable').css('font-size',fontSize);
 			$('#en-abstract').css('font-size', fontSize);
 		}
-		$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height())+"px");
+		$('.note-editable').css('height',($("#en-abstract").height())+"px");
 	});
 	
 	$('button#reset_tex_size').click(function(event){
 		$('#en-abstract').css('font-size', en_abstract_default_font_szie);
-		$('textarea#ku_trans_abstract').css('font-size',ku_translate_default_font_szie);
-		$("textarea#ku_trans_abstract").css("min-height", ($("#en-abstract").height())+"px");
-	});
-	
-	$('button.editor_action').click(function(event){
-		var val = $(this).attr('id');
-		insertAtCaret('ku_trans_abstract', '['+val+'][/'+val+']');
-		var startPos = document.getElementById('ku_trans_abstract').selectionStart;
-		setCaretToPos(document.getElementById("ku_trans_abstract"), startPos-(val.length + 3));
+		$('.note-editable').css('font-size',ku_translate_default_font_szie);
+		$('.note-editable').css('height',($("#en-abstract").height())+"px");
 	});
 });

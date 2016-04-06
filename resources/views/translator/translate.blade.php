@@ -47,7 +47,7 @@
 						<h3 class="title">{{ urldecode(str_replace('_', ' ', $topic->topic)) }}</h3>
 						<br /><br /><br />
 						<div class="clearfix"></div>
-						<p id="en-abstract">
+						<p id="en-abstract" style="margin-top:9px;">
 							{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}
 						</p>
 						<textarea id="hidden-en-abstract" class="hidden">{{ nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) }}</textarea>
@@ -97,11 +97,6 @@
 						
 						<div class="clearfix"></div>
 						<div class="form-group">
-							<button type="button" class="btn btn-default editor_action" id="ol"><span class="fa fa-list-ol"></span></button>
-							<button type="button" class="btn btn-default editor_action" id="ul"><span class="fa fa-list-ul"></span></button>
-							<button type="button" class="btn btn-default editor_action" id="item"><span class="fa fa-sticky-note"></span></button>
-							<button type="button" class="btn btn-default editor_action" id="sup"><span class="fa fa-superscript"></span></button>
-							<button type="button" class="btn btn-default editor_action" id="sub"><span class="fa fa-subscript"></span></button>
 							<textarea class="form-control abstract-trans rtl-text register-keystroke" id="ku_trans_abstract"
 									  name="ku_trans_abstract" placeholder="ئەبستراکت">{{
 									  $ku_translation_abstract }}</textarea>
@@ -109,7 +104,7 @@
 						</div>
 						@if(!$is_owner)
 							<style type="text/css">
-							.note-editable {
+							.note-editor {
 								display:none;
 							}
 							</style>

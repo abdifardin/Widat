@@ -301,41 +301,47 @@ class TranslatorController extends Controller
 			return redirect()->route('translator.topics', ['filter' => 'my']);
 		}
 		else if($request->has('save')) {
+			$allowed_tags = '<p><br><ul><ol><li><sup><sub>';
+			
 			$ku_trans_title = $request->get('ku_trans_title', '');
-			$ku_trans_abstract = $request->get('ku_trans_abstract', '');
-
-			if((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) > Config::get('custom.translation_length_max')
-				OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) > Config::get('custom.translation_length_max')){
-				$msg = '<div class="alert alert-danger" role="alert">Kurdish text seems to be too long for the English text.</div>';
-			}
-			elseif((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) < Config::get('custom.translation_length_min')
-				OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) < Config::get('custom.translation_length_min')){
-				$msg = '<div class="alert alert-danger" role="alert">Kurdish text seems to be too short for the English text.</div>';
-			}
-			else{
-				if(!$ku_translation) {
-					$ku_translation = new KuTranslation();
-					$ku_translation->topic_id = $topic_id;
+			$ku_trans_abstract = strip_tags($request->get('ku_trans_abstract', ''), $allowed_tags);
+			
+			if(strcasecmp($ku_trans_abstract, $request->get('ku_trans_abstract', '')) == 0){
+				if((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) > Config::get('custom.translation_length_max')
+					OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) > Config::get('custom.translation_length_max')){
+					$msg = '<div class="alert alert-danger" role="alert">Kurdish text seems to be too long for the English text.</div>';
 				}
+				elseif((mb_strlen($ku_trans_abstract) / mb_strlen($topic->abstract)) < Config::get('custom.translation_length_min')
+					OR (mb_strlen($ku_trans_title) / mb_strlen($topic->topic)) < Config::get('custom.translation_length_min')){
+					$msg = '<div class="alert alert-danger" role="alert">Kurdish text seems to be too short for the English text.</div>';
+				}
+				else{
+					if(!$ku_translation) {
+						$ku_translation = new KuTranslation();
+						$ku_translation->topic_id = $topic_id;
+					}
 
-				$new_score = $this->calculateTranslationScore($ku_trans_abstract) + $this->calculateTranslationScore($ku_trans_title);
-				$delta_score = $new_score - $current_score;
+					$new_score = $this->calculateTranslationScore($ku_trans_abstract) + $this->calculateTranslationScore($ku_trans_title);
+					$delta_score = $new_score - $current_score;
 
-				$ku_translation->topic = $ku_trans_title;
-				$ku_translation->abstract = $ku_trans_abstract;
-				$ku_translation->save();
-				
-				$topic->edited_at = time();
-				$topic->save();
+					$ku_translation->topic = $ku_trans_title;
+					$ku_translation->abstract = $ku_trans_abstract;
+					$ku_translation->save();
+					
+					$topic->edited_at = time();
+					$topic->save();
 
-				$current_score = $this->calculateTranslationScore($ku_translation->topic) + $this->calculateTranslationScore($ku_translation->abstract);
+					$current_score = $this->calculateTranslationScore($ku_translation->topic) + $this->calculateTranslationScore($ku_translation->abstract);
 
-				$user->score = $user->score + $delta_score;
-				$user->save();
-				
-				$draft = Draft::where('topic_id', $topic_id)->first();
-				if(!empty($draft))
-					$draft->delete();
+					$user->score = $user->score + $delta_score;
+					$user->save();
+					
+					$draft = Draft::where('topic_id', $topic_id)->first();
+					if(!empty($draft))
+						$draft->delete();
+				}
+			}else{
+				$msg = '<div class="alert alert-danger" role="alert">'.trans('common.hml_tags_error').'</div>';
 			}
 		}
 		else if($request->has('inspection')) {
@@ -511,6 +517,11 @@ class TranslatorController extends Controller
 
 	private function calculateTranslationScore($translation)
 	{
+		$search  = array('<br>', '<p>', '<li>', '&nbsp;');
+		$replace = array(' ', ' ', ' ', ' ');
+		
+		$translation = strip_tags(str_replace($search, $replace, $translation));
+		
 		if(!$translation) {
 			return 0;
 		}

@@ -98,4 +98,5 @@ return [
 	'translator_search_topics_message' => 'Search your topics',
 	'translator_search_key_label' => 'Search',
 	'delete_recommendation_successful_message' => 'Item were successfully removed. Thank you',
+	'hml_tags_error' => 'You cant use HTML tags in your translation text.',
 ];
