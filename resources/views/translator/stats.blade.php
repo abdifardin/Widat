@@ -83,6 +83,7 @@
 								<br />
 								<div class="translation-group">
 									<h3 class="lang-name navbar-left">{{ trans('common.translator_search_topics_message') }}</h3>
+									<div class="clearfix"></div>
 									<form action="{{ route('translator.topics', ['filter' => 'my']) }}" method="post">
 										{!! csrf_field() !!}
 										<div class="form-group">
@@ -97,6 +98,12 @@
 								@endif
 								<br /><br />
 							</div>
+							<ul class="nav nav-tabs">
+								<li role="presentation" class="{{ $activetab_incomplete }}"><a href="?">Incomplete</a></li>
+								<li role="presentation" class="{{ $activetab_completed }}"><a href="?type=completed">Completed</a></li>
+								<li role="presentation" class="{{ $activetab_rejected }}"><a href="?type=rejected">Rejected</a></li>
+							</ul>
+							<br /><br />
 							@foreach($translated as $t)
 							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 								@if($t->finished == 1 AND $t->inspection_result == 1)

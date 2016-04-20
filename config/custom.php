@@ -11,5 +11,6 @@ return [
 	'reservation_score' => 0,
 	'translation_length_max' => 10,
 	'translation_length_min' => 0,
+	'max_incomplete_topics' => 5,
 	'app_version' => env('APP_VERSION', '2.0.0'),
 ];

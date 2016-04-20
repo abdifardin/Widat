@@ -56,7 +56,7 @@ class TranslatorController extends Controller
 		]);
 	}
 
-	public function stats($user_id)
+	public function stats(Request $request, $user_id)
 	{
 		$translator = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
@@ -71,16 +71,47 @@ class TranslatorController extends Controller
 			->first();
 		
 		$this_month_score = $translator->score - ($last_month_history ? $last_month_history->score : 0);
-		
-		$translated = Topic::where('user_id', $user_id)
-			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
-			->whereNotNull('ku_translations.abstract')
-			->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
-			->orderBy('edited_at', 'desc')
-			//->get();
-			->paginate($this->topics_per_page);
 
+		$activetab_completed = '';
+		$activetab_rejected = '';
+		$activetab_incomplete = '';
+		
+		if($request->input('type') == 'completed'){
+			$activetab_completed = 'active';
+			
+			$translated = Topic::where('user_id', $user_id)
+				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+				->whereRaw("(ku_translations.finished = ? AND ku_translations.inspection_result <> ? AND topics.edited_at IS NOT NULL)", ["1", "-1"])
+				->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+				->orderBy('edited_at', 'desc')
+				//->get();
+				->paginate($this->topics_per_page);
+		}elseif($request->input('type') == 'rejected'){
+			$activetab_rejected = 'active';
+			
+			$translated = Topic::where('user_id', $user_id)
+				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+				//->whereNotNull('ku_translations.abstract')
+				->where('ku_translations.inspection_result' ,-1)
+				->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+				->orderBy('edited_at', 'desc')
+				//->get();
+				->paginate($this->topics_per_page);
+		}else{
+			$activetab_incomplete = 'active';
+			
+			$translated = Topic::where('user_id', $user_id)
+				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+				->whereRaw("(ku_translations.finished <> ? OR ku_translations.finished IS NULL)", ["1"])
+				->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+				->orderBy('edited_at', 'desc')
+				//->get();
+				->paginate($this->topics_per_page);
+		}
 		return view('translator.stats', [
+			'activetab_completed' => $activetab_completed,
+			'activetab_rejected' => $activetab_rejected,
+			'activetab_incomplete' => $activetab_incomplete,
 			'translator' => $translator,
 			'last_score' => ($last_score) ? $last_score->score : 0,
 			'this_month_score' => $this_month_score,
@@ -274,11 +305,17 @@ class TranslatorController extends Controller
 		$current_score += $this->calculateTranslationScore($ku_translation ? $ku_translation->topic : null);
 
 		if($request->has('reserve') && !$topic->user_id) {
-			$topic->user_id = $user->id;
-			$topic->save();
+			$reserved_num = Topic::where('user_id', $user->id)
+				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+				->whereRaw("(ku_translations.finished = ? OR ku_translations.inspection_result = ? OR topics.edited_at IS NULL)", ["0", "-1"])
+				->count();
 
-			//$user->score = $user->score + Config::get('custom.reservation_score');
-			//$user->save();
+			if($reserved_num > Config::get('custom.max_incomplete_topics')){
+				$msg = '<div class="alert alert-danger" role="alert">'.trans('common.max_incomplete_topics_msg').'</div>';
+			}else{
+				$topic->user_id = $user->id;
+				$topic->save();
+			}
 		}
 		else if($request->has('unreserve') && $topic->user_id == $user->id) {
 			$topic->user_id = NULL;
@@ -301,7 +338,7 @@ class TranslatorController extends Controller
 			return redirect()->route('translator.topics', ['filter' => 'my']);
 		}
 		else if($request->has('save')) {
-			$allowed_tags = '<p><br><ul><ol><li><sup><sub>';
+			$allowed_tags = '<p><br><ul><ol><li><sup><sub><div>';
 			
 			$ku_trans_title = $request->get('ku_trans_title', '');
 			$ku_trans_abstract = strip_tags($request->get('ku_trans_abstract', ''), $allowed_tags);
