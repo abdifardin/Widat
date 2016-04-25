@@ -41,7 +41,6 @@
         <div class="container">
             <div class="content">
                 <div class="title">Token Mismatch Exception.</div>
-				<a href="http://localhost/Widat/public/translate/4">ccc</a>
             </div>
         </div>
     </body>
