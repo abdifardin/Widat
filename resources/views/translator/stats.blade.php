@@ -99,9 +99,9 @@
 								<br /><br />
 							</div>
 							<ul class="nav nav-tabs">
-								<li role="presentation" class="{{ $activetab_incomplete }}"><a href="?">Incomplete</a></li>
-								<li role="presentation" class="{{ $activetab_completed }}"><a href="?type=completed">Completed</a></li>
-								<li role="presentation" class="{{ $activetab_rejected }}"><a href="?type=rejected">Rejected</a></li>
+								<li role="presentation" class="{{ $activetab_incomplete }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id]) }}">Incomplete</a></li>
+								<li role="presentation" class="{{ $activetab_completed }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id, 'type' =>'completed']) }}">Completed</a></li>
+								<li role="presentation" class="{{ $activetab_rejected }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id, 'type' =>'rejected']) }}">Rejected</a></li>
 							</ul>
 							<br /><br />
 							@foreach($translated as $t)

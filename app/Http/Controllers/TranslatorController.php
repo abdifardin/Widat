@@ -59,8 +59,8 @@ class TranslatorController extends Controller
 		]);
 	}
 
-	public function stats(Request $request, $user_id)
-	{		
+	public function stats(Request $request, $user_id, $type='incomplete')
+	{	
 		$translator = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
 		
@@ -79,7 +79,7 @@ class TranslatorController extends Controller
 		$activetab_rejected = '';
 		$activetab_incomplete = '';
 		
-		if($request->input('type') == 'completed'){
+		if($type == 'completed'){
 			$activetab_completed = 'active';
 			
 			$translated = Topic::where('user_id', $user_id)
@@ -89,7 +89,7 @@ class TranslatorController extends Controller
 				->orderBy('edited_at', 'desc')
 				//->get();
 				->paginate($this->topics_per_page);
-		}elseif($request->input('type') == 'rejected'){
+		}elseif($type == 'rejected'){
 			$activetab_rejected = 'active';
 			
 			$translated = Topic::where('user_id', $user_id)
@@ -200,8 +200,13 @@ class TranslatorController extends Controller
 		]);
 	}
 
-	public function topics(Request $request, $filter = null)
+	public function topics(Request $request, $filter = null, $type='incomplete')
 	{
+		
+		$activetab_completed = '';
+		$activetab_rejected = '';
+		$activetab_incomplete = '';
+		
 		$filter_all = false;
 		$filter_my = false;
 		$filter_untranslated_changed = false;
@@ -246,11 +251,42 @@ class TranslatorController extends Controller
 					->paginate($this->topics_per_page);
 			}
 			else{
-				$topics = Topic::where('topics.user_id', Auth::user()->id)
-					->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
-					->orderBy('edited_at', 'desc')
-					->select("topics.*", "ku_translations.finished", "ku_translations.inspection_result", "ku_translations.inspector_id")
-					->paginate($this->topics_per_page);
+				if($type == 'completed'){
+					$activetab_completed = 'active';
+					
+					$topics = Topic::where('user_id', Auth::user()->id)
+						->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+						->whereRaw("(ku_translations.finished = ? AND ku_translations.inspection_result <> ? AND topics.edited_at IS NOT NULL)", ["1", "-1"])
+						->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+						->orderBy('edited_at', 'desc')
+						//->get();
+						->paginate($this->topics_per_page);
+					
+				}elseif($type == 'rejected'){
+					$activetab_rejected = 'active';
+					
+					$topics = Topic::where('user_id', Auth::user()->id)
+						->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+						//->whereNotNull('ku_translations.abstract')
+						->where('ku_translations.inspection_result' ,-1)
+						->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+						->orderBy('edited_at', 'desc')
+						//->get();
+						->paginate($this->topics_per_page);
+					
+				}else{
+					$activetab_incomplete = 'active';
+					
+					
+					$topics = Topic::where('user_id', Auth::user()->id)
+						->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+						->whereRaw("(ku_translations.finished <> ? OR ku_translations.finished IS NULL)", ["1"])
+						->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+						->orderBy('edited_at', 'desc')
+						//->get();
+						->paginate($this->topics_per_page);
+						
+				}
 			}
 		}
 		else if($filter_untranslated) {
@@ -272,6 +308,9 @@ class TranslatorController extends Controller
 		}
 
 		return view('translator.topics', [
+			'activetab_completed' => $activetab_completed,
+			'activetab_rejected' => $activetab_rejected,
+			'activetab_incomplete' => $activetab_incomplete,
 			'topics' => $topics,
 			'filter_all' => $filter_all,
 			'filter_my' => $filter_my,

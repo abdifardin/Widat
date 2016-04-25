@@ -81,6 +81,12 @@
 							</form>
 						</div>
 						<br /><br />
+						<ul class="nav nav-tabs">
+							<li role="presentation" class="{{ $activetab_incomplete }}"><a href="{{ route('translator.topics', ['filter' =>'my']) }}">Incomplete</a></li>
+							<li role="presentation" class="{{ $activetab_completed }}"><a href="{{ route('translator.topics', ['filter' =>'my', 'type' =>'completed']) }}">Completed</a></li>
+							<li role="presentation" class="{{ $activetab_rejected }}"><a href="{{ route('translator.topics', ['filter' =>'my', 'type' =>'rejected']) }}">Rejected</a></li>
+						</ul>
+						<br />
 					</div>
 					@endif
 					@foreach($topics as $t)

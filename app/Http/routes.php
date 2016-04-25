@@ -93,7 +93,7 @@ Route::get('translator', [
 	'as' => 'translator.home',
 	'uses' => 'TranslatorController@home',
 ]);
-Route::get('translator/{user_id}/stats', [
+Route::get('translator/{user_id}/stats/{type?}', [
 	'as' => 'translator.stats',
 	'uses' => 'TranslatorController@stats',
 ]);
@@ -101,7 +101,7 @@ Route::get('translator/{user_id}/score-history', [
 	'as' => 'translator.score_history',
 	'uses' => 'TranslatorController@scoreHistory',
 ]);
-Route::any('topics/{filter?}', [
+Route::any('topics/{filter?}/{type?}', [
 	'as' => 'translator.topics',
 	'uses' => 'TranslatorController@topics',
 ]);
