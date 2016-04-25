@@ -285,7 +285,6 @@ class TranslatorController extends Controller
 						->orderBy('edited_at', 'desc')
 						//->get();
 						->paginate($this->topics_per_page);
-						
 				}
 			}
 		}
@@ -356,6 +355,7 @@ class TranslatorController extends Controller
 				$msg = '<div class="alert alert-danger" role="alert">'.trans('common.max_incomplete_topics_msg').'</div>';
 			}else{
 				$topic->user_id = $user->id;
+				$topic->edited_at = time();
 				$topic->save();
 			}
 		}
