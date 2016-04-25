@@ -15,6 +15,7 @@ use App\KuTranslation;
 use App\Topic;
 use App\User;
 use App\DeleteRecommendation;
+use App\PasswordCahnges;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,8 @@ class MainController extends Controller
 	 
 	public function __construct()
 	{
+		//$this->middleware('PasswordChange', ['except' => 'editAccount']);
+		
 		view()->share('delete_recommendations_num', 
 			DeleteRecommendation::where('viewed', 0)
 			->select('delete_recommendations.id', 'topics.topic')
@@ -121,6 +124,12 @@ class MainController extends Controller
 					$user->password = bcrypt($request->get('password'));
 					
 					$user->save();
+					
+					$passwordchange = new PasswordCahnges();
+					$passwordchange->user_id = $current_user->id;
+					$passwordchange->password = bcrypt($request->get('password'));
+					$passwordchange->save();
+					
 					$action_result = trans('common.account_info_saved');
 				}
 			}

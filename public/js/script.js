@@ -393,7 +393,7 @@ function refreshCsrf()
 
 $(document).ready(function(){
 	$("textarea#inspection_ku_trans_abstract").summernote({
-		height: ($("#en-abstract").height())+"px",
+		height: ($("#inspec-en-abstract").height())+"px",
 		direction: 'rtl',
 		toolbar: [
 			['style', ['ul', 'ol', 'superscript', 'subscript']]
@@ -418,6 +418,7 @@ $(document).ready(function(){
 	});
 	$("#inspection_edit_key").click(function(event){
 		event.preventDefault();
+		$("#inspec-en-abstract").css("margin-top", "25px");
 		$(".inspection_viewtranslate").hide();
 		$(".inspection_edittranslate").show();
 	});
@@ -517,10 +518,9 @@ $(document).ready(function(){
 		$('.note-editable').css('height',($("#en-abstract").height())+"px");
 	});
 	
-	if(($("#ku-abstract").height()) > ($("#en-abstract").height())){
-		$('#en-abstract').css('height',($("#ku-abstract").height())+"px");
+	if(($("#inspec-ku-abstract").height()) > ($("#inspec-en-abstract").height())){
+		$('#inspec-en-abstract').css('height',($("#inspec-ku-abstract").height())+"px");
 	}else{
-		$('#ku-abstract').css('height',($("#en-abstract").height())+"px");
+		$('#inspec-ku-abstract').css('height',($("#inspec-en-abstract").height()+32)+"px");
 	}
-	
 });

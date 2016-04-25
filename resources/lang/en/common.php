@@ -100,4 +100,5 @@ return [
 	'delete_recommendation_successful_message' => 'Item were successfully removed. Thank you',
 	'hml_tags_error' => 'You cant use HTML tags in your translation text.',
 	'max_incomplete_topics_msg' => 'Please first complete your current topics.',
+	'change_password_firsttime' => 'Please change your password.',
 ];

@@ -8,7 +8,7 @@
 				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
 					<h3 class="title">{{ str_replace('_', ' ', $topic->topic) }}</h3>
 					<div class="abstract-wrapper">
-						<p id="en-abstract">
+						<p id="inspec-en-abstract">
 							{!! nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) !!}
 						</p>
 					</div>
@@ -17,7 +17,7 @@
 					<h3 class="title rtl-text inspection_viewtranslate">
 						&nbsp; {{ str_replace('_', ' ', $ku_trans->topic) }}
 					</h3>
-					<div class="abstract-wrapper inspection_viewtranslate" id="ku-abstract">
+					<div class="abstract-wrapper inspection_viewtranslate" id="inspec-ku-abstract">
 						<div class="rtl-text">
 							{!! ($ku_trans->abstract) !!}
 						</div>

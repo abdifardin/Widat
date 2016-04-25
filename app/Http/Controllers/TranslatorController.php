@@ -20,6 +20,7 @@ use App\DeleteRecommendation;
 use App\Draft;
 use App\Category;
 use App\Categorylinks;
+use App\PasswordCahnges;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -40,6 +41,8 @@ class TranslatorController extends Controller
 			$user->save();
 		}
 		
+		$this->middleware('PasswordChange');
+		
 		view()->share('delete_recommendations_num', 
 			DeleteRecommendation::where('viewed', 0)
 			->select('delete_recommendations.topic_id', 'topics.topic')
@@ -57,7 +60,7 @@ class TranslatorController extends Controller
 	}
 
 	public function stats(Request $request, $user_id)
-	{
+	{		
 		$translator = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
 		
