@@ -24,7 +24,7 @@
 					<div class="alert alert-warning" role="alert">{{ trans('common.change_password_firsttime') }}</div>
 				@endif
 				<form action="" method="post">
-					{!! csrf_field() !!}
+					<input type="hidden" name="_token" value="{!! csrf_token() !!}">
 					<div class="row">
 						@if(\Illuminate\Support\Facades\Auth::user()->user_type=='admin')
 							<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
