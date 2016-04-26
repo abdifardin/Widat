@@ -20,7 +20,8 @@
 					<span class="fa fa-pencil"></span>
 					{{ trans('common.edit_account') }}
 				</h2>
-				@if(session('password_change') == 1)
+				
+				@if(isset($_GET['c']))
 					<div class="alert alert-warning" role="alert">{{ trans('common.change_password_firsttime') }}</div>
 				@endif
 				<form action="" method="post">

@@ -22,7 +22,8 @@ class PasswordChange
 		if($password_changes < 1){
 			return redirect()->route('main.edit_account', [
 				'user_id' => Auth::user()->id,
-			])->with('password_change', '1');;
+				'c' => '',
+			])->with('password_change', '1');
 		}
 		
 		return $next($request);
