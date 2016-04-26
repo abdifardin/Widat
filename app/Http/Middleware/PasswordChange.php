@@ -20,9 +20,7 @@ class PasswordChange
     {
 		$password_changes = PasswordCahnges::where('user_id', Auth::user()->id)->count();
 		if($password_changes < 1){
-			return redirect()->route('main.edit_account', [
-				'user_id' => Auth::user()->id,
-			])->with('password_change', '1');;
+			return view('changepassword_message');
 		}
 		
 		return $next($request);
