@@ -76,7 +76,7 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<h3 class="text-center">{{ trans('common.translated_topics') }}</h3>
+						<h3 class="text-center">{{ trans('common.my_topics') }}</h3>
 						<div class="row">
 							<div class="col-sm-12">
 								@if(\Illuminate\Support\Facades\Auth::user()->user_type=='translator')
