@@ -6,7 +6,7 @@
 			<div class="col-sm-12">
 				<h3 class="text-center">{{ trans('common.inspection') }}</h3>
 				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
-					<h3 class="title">{{ str_replace('_', ' ', $topic->topic) }}</h3>
+					<h3 class="title" id="en-title">{{ str_replace('_', ' ', $topic->topic) }}</h3>
 					<div class="abstract-wrapper">
 						<p id="inspec-en-abstract">
 							{!! nl2br(preg_replace('(\[[0-9]*\])', '', $topic->abstract)) !!}
@@ -14,7 +14,7 @@
 					</div>
 				</div>
 				<div class="translation-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
-					<h3 class="title rtl-text inspection_viewtranslate">
+					<h3 class="title rtl-text inspection_viewtranslate" id="ku-title">
 						&nbsp; {{ str_replace('_', ' ', $ku_trans->topic) }}
 					</h3>
 					<div class="abstract-wrapper inspection_viewtranslate" id="inspec-ku-abstract">
@@ -25,7 +25,7 @@
 					
 			<form action="" method="post" id="translation-form">
 				<div class="inspection_edittranslate" style="display:none;">
-					<h3 class="title">
+					<h3 class="title" id="edit-ku-title">
 						<div class="form-group">
 							<input type="text" name="inspection_ku_trans_title" class="form-control rtl-text register-keystroke" value="{{ str_replace('_', ' ', $ku_trans->topic) }}" autofocus/>
 						</div>

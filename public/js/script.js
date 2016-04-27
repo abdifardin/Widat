@@ -523,4 +523,12 @@ $(document).ready(function(){
 	}else{
 		$('#inspec-ku-abstract').css('height',($("#inspec-en-abstract").height()+32)+"px");
 	}
+	
+	if(($("#ku-title").height()) > ($("#en-title").height())){
+		$('#en-title').css('height',($("#ku-title").height()+22)+"px");
+		$('#edit-ku-title').css('height',($("#ku-title").height()+13)+"px");
+	}else if(($("#ku-title").height()) < ($("#en-title").height())){
+		$('#ku-title').css('height',($("#en-title").height()+22)+"px");
+		$('#edit-ku-title').css('height',($("#en-title").height()+13)+"px");
+	}
 });
