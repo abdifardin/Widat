@@ -41,7 +41,7 @@ class TranslatorController extends Controller
 			$user->save();
 		}
 		
-		$this->middleware('PasswordChange');
+		$this->middleware('PasswordChange', ['except' => ['getNewCsrf']]);
 		
 		view()->share('delete_recommendations_num', 
 			DeleteRecommendation::where('viewed', 0)
