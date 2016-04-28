@@ -57,7 +57,8 @@
 							</div>
 							<br />
 						</div>
-
+						
+						<!--
 						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
 							<div class="input-group">
 								<label for="password" class="input-group-addon">
@@ -85,7 +86,7 @@
 							</div>
 							<br />
 						</div>
-
+						-->
 						<div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4">
 							<button name="create" value="1" class="btn btn-success btn-block">
 								<span class="fa fa-plus"></span>

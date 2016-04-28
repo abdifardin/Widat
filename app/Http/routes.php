@@ -27,6 +27,10 @@ Route::any('suggestions', [
 	'as' => 'main.suggestions',
 	'uses' => 'MainController@suggestions',
 ]);
+Route::any('firsttime/{one_time_string}', [
+	'as' => 'main.firsttime',
+	'uses' => 'MainController@setPassword',
+]);
 
 // Authentication routes...
 Route::get('auth/login', [

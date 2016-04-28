@@ -15,7 +15,6 @@ use App\KuTranslation;
 use App\Topic;
 use App\User;
 use App\DeleteRecommendation;
-use App\PasswordCahnges;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -122,13 +121,7 @@ class MainController extends Controller
 							$user->email = $request->get('email');
 					}
 					$user->password = bcrypt($request->get('password'));
-					
 					$user->save();
-					
-					$passwordchange = new PasswordCahnges();
-					$passwordchange->user_id = $current_user->id;
-					$passwordchange->password = bcrypt($request->get('password'));
-					$passwordchange->save();
 					
 					$action_result = trans('common.account_info_saved');
 				}
@@ -154,6 +147,63 @@ class MainController extends Controller
 			'action_result' => $action_result,
 			'action_error' 	=> $action_error,
 		]);
+	}
+
+	public function setPassword(Request $request, $one_time_string)
+	{
+		if(Auth::check()) {
+			abort(403, 'Logged in users cant access this area.');
+			return null;
+		}
+		$action_error = false;
+		$action_result = null;
+		
+		if($request->has('save')) {
+			$user = User::where('one_time_string', '-' . $one_time_string)->first();
+			if($user){
+				$password = $request->get('password', '');
+				$cpassword = $request->get('cpassword', '');
+				
+				if(strlen($password) < 8) {
+					$action_error = true;
+					$action_result = trans('common.password_too_short');
+				}
+				elseif(strcmp($password, $cpassword) != 0){
+					$action_error = true;
+					$action_result = trans('common.passwords_not_match');
+				}
+				else {
+					$user->password = bcrypt($password);
+					$user->one_time_string = NULL;
+					$user->save();
+					
+					return redirect()->route('auth.login');
+				}
+				return view('setpassword', [
+					'user' 			=> $user,
+					'action_result' => $action_result,
+					'action_error' 	=> $action_error,
+				]);
+			}else{
+				abort(401, 'You cannot access this area.');
+				return null;
+			}
+		}else{
+			$user = User::where('one_time_string', $one_time_string)->first();
+			
+			if($user){
+				$user->one_time_string = "-" . $user->one_time_string;
+				$user->save();
+				return view('setpassword', [
+					'user' 			=> $user,
+					'action_result' => $action_result,
+					'action_error' 	=> $action_error,
+				]);
+			}else{
+				abort(401, 'You cannot access this area.');
+				return null;
+			}
+		}
 	}
 
 	public function suggestions(Request $request)

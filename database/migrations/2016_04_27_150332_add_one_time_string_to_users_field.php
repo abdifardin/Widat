@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordCahngesTable extends Migration
+class AddOneTimeStringToUsersField extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,7 @@ class CreatePasswordCahngesTable extends Migration
      */
     public function up()
     {
-        Schema::create('password_cahnges', function (Blueprint $table) {
-			$table->integer('user_id');
-			$table->string('password', 60);
-			$table->timestamps();
-		});
+        DB::statement("ALTER TABLE `users` ADD `one_time_string` VARCHAR(32) NULL AFTER `remember_token`;");
     }
 
     /**

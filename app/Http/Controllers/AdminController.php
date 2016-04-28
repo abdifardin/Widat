@@ -204,24 +204,31 @@ class AdminController extends Controller
 			}
 		}
 		else if($request->has('create')) {
+			$one_time_string = str_random(30);
+			$password = str_random(8);
+			
 			$current_email = User::where('email', $request->get('email'))->first();
 			if($current_email) {
 				$action_error = true;
 				$action_result = trans('common.email_exists');
 			}
+			/*
 			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
 				$action_error = true;
 				$action_result = trans('common.passwords_not_match');
 			}
+			*/
 			else {
 				$new_admin = new User;
 				$new_admin->email = $request->get('email');
 				$new_admin->name = $request->get('name');
 				$new_admin->surname = $request->get('surname');
-				$new_admin->password = bcrypt($request->get('password'));
+				$new_admin->password = bcrypt($password/*$request->get('password')*/);
 				$new_admin->user_type = 'translator';
+				$new_admin->one_time_string = $one_time_string;
 				$new_admin->save();
-				$action_result = trans('common.user_created');
+				$action_result = trans('common.user_created') . ' Password Set link: 
+				'. route('main.firsttime', ['one_time_string' => $one_time_string]);
 			}
 		}
 
