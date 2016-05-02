@@ -185,7 +185,7 @@ class MainController extends Controller
 					'action_error' 	=> $action_error,
 				]);
 			}else{
-				abort(401, 'You cannot access this area.');
+				abort(403, 'You cannot access this area.');
 				return null;
 			}
 		}else{
@@ -200,7 +200,7 @@ class MainController extends Controller
 					'action_error' 	=> $action_error,
 				]);
 			}else{
-				abort(401, 'You cannot access this area.');
+				abort(403, 'You cannot access this area.');
 				return null;
 			}
 		}

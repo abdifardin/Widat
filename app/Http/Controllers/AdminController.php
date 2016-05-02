@@ -144,53 +144,7 @@ class AdminController extends Controller
 	{
 		$action_error = false;
 		$action_result = null;
-
-		if($request->has('delete')) {
-			$user_id = $request->get('user_id');
-			if($user_id <= 1) {
-				$action_error = true;
-				$action_result = trans('common.cannot_delete_user');
-			}
-			else {
-				User::where('id', $user_id)->delete();
-				$action_result = trans('common.user_deleted');
-			}
-		}
-		else if($request->has('create')) {
-			$current_email = User::where('email', $request->get('email'))->first();
-			if($current_email) {
-				$action_error = true;
-				$action_result = trans('common.email_exists');
-			}
-			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
-				$action_error = true;
-				$action_result = trans('common.passwords_not_match');
-			}
-			else {
-				$new_inspector = new User;
-				$new_inspector->email = $request->get('email');
-				$new_inspector->name = $request->get('name');
-				$new_inspector->surname = $request->get('surname');
-				$new_inspector->password = bcrypt($request->get('password'));
-				$new_inspector->user_type = 'inspector';
-				$new_inspector->save();
-				$action_result = trans('common.user_created');
-			}
-		}
-
-		$inspectors = User::where('user_type', 'inspector')->get();
-
-		return view('admin.inspectors', [
-			'inspectors' => $inspectors,
-			'action_error' => $action_error,
-			'action_result' => $action_result,
-		]);
-	}
-
-	public function translators(Request $request)
-	{
-		$action_error = false;
-		$action_result = null;
+		$have_one_time_link = false;
 
 		if($request->has('delete')) {
 			$user_id = $request->get('user_id');
@@ -212,23 +166,97 @@ class AdminController extends Controller
 				$action_error = true;
 				$action_result = trans('common.email_exists');
 			}
-			/*
-			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
-				$action_error = true;
-				$action_result = trans('common.passwords_not_match');
+			else {
+				$new_inspector = new User;
+				$new_inspector->email = $request->get('email');
+				$new_inspector->name = $request->get('name');
+				$new_inspector->surname = $request->get('surname');
+				$new_inspector->password = bcrypt($password);
+				$new_inspector->user_type = 'inspector';
+				$new_inspector->one_time_string = $one_time_string;
+				$new_inspector->save();
+				$action_result = trans('common.user_created');
+				
+				$have_one_time_link = "Password Set link: <strong>" . route('main.firsttime', ['one_time_string' => $one_time_string]) . "</strong>";
 			}
-			*/
+		}
+		else if($request->has('set_password')) {
+			$one_time_string = str_random(30);
+			
+			$user = User::where('id', $request->input('set_password'))->first();
+			if(!$user) {
+				$action_error = true;
+				$action_result = 'User is invalid';
+			}
+			else {
+				$user->one_time_string = $one_time_string;
+				$user->save();
+				$have_one_time_link = "Password Set link: <strong>" . route('main.firsttime', ['one_time_string' => $one_time_string]) . "</strong>";
+			}
+		}
+
+		$inspectors = User::where('user_type', 'inspector')->get();
+
+		return view('admin.inspectors', [
+			'inspectors' => $inspectors,
+			'action_error' => $action_error,
+			'action_result' => $action_result,
+			'have_one_time_link' => $have_one_time_link,
+		]);
+	}
+
+	public function translators(Request $request)
+	{
+		$action_error = false;
+		$action_result = null;
+		$have_one_time_link = false;
+
+		if($request->has('delete')) {
+			$user_id = $request->get('user_id');
+			if($user_id <= 1) {
+				$action_error = true;
+				$action_result = trans('common.cannot_delete_user');
+			}
+			else {
+				User::where('id', $user_id)->delete();
+				$action_result = trans('common.user_deleted');
+			}
+		}
+		else if($request->has('create')) {
+			$one_time_string = str_random(30);
+			$password = str_random(8);
+			
+			$current_email = User::where('email', $request->get('email'))->first();
+			if($current_email) {
+				$action_error = true;
+				$action_result = trans('common.email_exists');
+			}
 			else {
 				$new_admin = new User;
 				$new_admin->email = $request->get('email');
 				$new_admin->name = $request->get('name');
 				$new_admin->surname = $request->get('surname');
-				$new_admin->password = bcrypt($password/*$request->get('password')*/);
+				$new_admin->password = bcrypt($password);
 				$new_admin->user_type = 'translator';
 				$new_admin->one_time_string = $one_time_string;
 				$new_admin->save();
-				$action_result = trans('common.user_created') . ' Password Set link: 
-				'. route('main.firsttime', ['one_time_string' => $one_time_string]);
+				$action_result = trans('common.user_created');
+				
+				$have_one_time_link = "Password Set link: " . route('main.firsttime', ['one_time_string' => $one_time_string]);
+			}
+		}
+		else if($request->has('set_password')) {
+			$one_time_string = str_random(30);
+			
+			$user = User::where('id', $request->input('set_password'))->first();
+			if(!$user) {
+				$action_error = true;
+				$action_result = 'User is invalid';
+			}
+			else {
+				$user->one_time_string = $one_time_string;
+				$user->save();
+				$have_one_time_link = "Password Set link: <strong>" . route('main.firsttime', ['one_time_string' => $one_time_string]) . "</strong>";
 			}
 		}
 
@@ -238,6 +266,7 @@ class AdminController extends Controller
 			'translators' => $translators,
 			'action_error' => $action_error,
 			'action_result' => $action_result,
+			'have_one_time_link' => $have_one_time_link,
 		]);
 	}
 

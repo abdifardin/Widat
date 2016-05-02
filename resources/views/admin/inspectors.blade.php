@@ -11,7 +11,9 @@
 			{{ $action_result }}
 		</div>
 	@endif
-
+	@if($have_one_time_link)
+	<div class="alert alert-info" role="alert">{!! $have_one_time_link !!}</div>
+	@endif
 	<div class="content-wrapper ambient-key-shadows">
 		<div class="row">
 			<div class="col-sm-12">
@@ -56,35 +58,6 @@
 							</div>
 							<br />
 						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6">
-							<div class="input-group">
-								<label for="password" class="input-group-addon">
-									{{ trans('common.password') }}
-								</label>
-								<input type="password" class="form-control" name="password"
-									   id="password" value="{{ old('password') }}" />
-								<div class="input-group-addon toggle-password">
-									<span class="fa fa-eye-slash"></span>
-								</div>
-							</div>
-							<br />
-						</div>
-						
-						<div class="col-xs-12 col-sm-12 col-md-6 col-md-6 col-lg-6 pull-right">
-							<div class="input-group">
-								<label for="password" class="input-group-addon">
-									{{ trans('common.password_confirm') }}
-								</label>
-								<input type="password" class="form-control" name="cpassword"
-									   id="cpassword" />
-								<div class="input-group-addon toggle-password">
-									<span class="fa fa-eye-slash"></span>
-								</div>
-							</div>
-							<br />
-						</div>
-
 						<div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4">
 							<button name="create" value="1" class="btn btn-success btn-block">
 								<span class="fa fa-plus"></span>
@@ -94,7 +67,6 @@
 							</button>
 						</div>
 					</div>
-
 				</form>
 			</div>
 		</div>
@@ -130,18 +102,19 @@
 									@endif
 								</td>
 								<td class="text-right">
+									<a href="{{ route('admin.inspectors', ['set_password'=>$inspector->id]) }}" class="btn btn-info">
+										<span class="fa fa-refresh"></span>
+									</a>
 									<a href="javascript:;" class="btn btn-danger delete-user">
 										<span class="fa fa-trash"></span>
 										{{ trans('common.delete') }}
 										<input type="hidden" name="user_id" value="{{ $inspector->id }}" />
 									</a>
-									&nbsp;&nbsp;&nbsp;&nbsp;
 									<a href="{{ route('inspector.stats', ['user_id' => $inspector->id]) }}"
 										class="btn btn-primary">
 										<span class="fa fa-bar-chart"></span>
 										{{ trans('common.stats') }}
 									</a>
-									&nbsp;&nbsp;&nbsp;&nbsp;
 									<a href="{{ route('main.edit_account', ['user_id'=>$inspector->id]) }}"
 									   class="btn btn-default">
 										<span class="fa fa-pencil"></span>

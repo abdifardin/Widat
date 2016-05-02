@@ -195,6 +195,7 @@ class TranslatorController extends Controller
 		return view('translator.score-history', [
 			'score_history' => $score_history,
 			'month_num' => $first_flag,
+			'user_info' => $user_info,
 		]);
 	}
 

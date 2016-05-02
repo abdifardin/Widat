@@ -4,7 +4,9 @@
 	<div class="content-wrapper ambient-key-shadows">
 		<div class="row">
 			<div class="col-sm-12">
-				<h3 class="text-center">{{ trans('common.stats') }}</h3>
+				<h3 class="text-center">{{ trans('common.stats') }}
+					<small>{{ $user_info->name . ' ' . $user_info->surname }}</small></h3>
+				
 				<form method="GET" class="form-inline">
 					<input type="number" class="form-control" name="number" id="number" min="1" max="24" value="{{ $month_num }}">
 					<button type="submit" class="btn btn-default">{{ trans('common.scorehistory_number_option_key') }}</button>
