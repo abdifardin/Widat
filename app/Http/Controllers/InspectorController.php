@@ -194,7 +194,7 @@ class InspectorController extends Controller
 			->orderBy('id', 'DESC')
 			->first();
 		
-		$this_month_score = $inspector->score - ($last_month_history ? $last_month_history->score : 0);
+		$this_month_score = $inspector->score - ($last_month_history ? $last_month_history->new_score : 0);
 		
 		if($current_user->user_type == 'admin'){
 			$inspected = KuTranslation::where('inspector_id', $user_id)
@@ -248,10 +248,10 @@ class InspectorController extends Controller
 					->orderBy('created_at', 'DESC')
 					->first();
 					
-				if(!isset($shp->score)){
+				if(!isset($shp->new_score)){
 					$shpc = 0;
 				}else{
-					$shpc = $shp->score;
+					$shpc = $shp->new_score;
 				}
 				
 				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = $user_info->score - $shpc . ':' . $user_info->score;
@@ -269,14 +269,14 @@ class InspectorController extends Controller
 					->orderBy('created_at', 'DESC')
 					->first();
 				
-				if(!isset($shp->score)){
+				if(!isset($shp->new_score)){
 					$shpc = 0;
 				}else{
-					$shpc = $shp->score;
+					$shpc = $shp->new_score;
 				}
 				
-				if(isset($sh->score)){
-					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->score) - $shpc . ':' . $sh->score;
+				if(isset($sh->new_score)){
+					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->new_score) - $shpc . ':' . $sh->new_score;
 				}else{
 					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = 0 . ':' . $shpc;
 				}
@@ -287,9 +287,10 @@ class InspectorController extends Controller
 			}
 		}
 
-		return view('translator.score-history', [
+		return view('inspector.score-history', [
 			'score_history' => $score_history,
 			'month_num' => $first_flag,
+			'user_info' => $user_info,
 		]);
 	}
 	

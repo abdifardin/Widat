@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersBupdTrigger extends Migration
+class AddNewScoreFieldToScoreHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,7 @@ class CreateUsersBupdTrigger extends Migration
      */
     public function up()
     {
-		DB::getPdo()->exec('
-			CREATE TRIGGER `users_BUPD` BEFORE UPDATE ON `users` FOR EACH ROW
-			BEGIN
-				IF (NEW.score <> OLD.score)
-				THEN
-					INSERT INTO `score_history` VALUES(NULL, OLD.id, OLD.score, NEW.score, CURRENT_TIMESTAMP);
-				END IF;
-			END
-		');
+        DB::statement("ALTER TABLE `score_history` ADD `new_score` int(11) NOT NULL AFTER `score`;");
     }
 
     /**

@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('curl/{topic}', [
+	'as' => 'main.curl',
+	'uses' => 'MainController@TestCURL',
+]);
 Route::get('/', [
 	'as' => 'main.root',
 	'uses' => 'MainController@index',

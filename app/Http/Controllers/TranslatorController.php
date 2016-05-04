@@ -58,7 +58,7 @@ class TranslatorController extends Controller
 	}
 
 	public function stats(Request $request, $user_id, $type='incomplete')
-	{	
+	{
 		$translator = User::where('id', $user_id)->first();
 		$last_score = ScoreHistory::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
 		
@@ -71,7 +71,7 @@ class TranslatorController extends Controller
 			->orderBy('id', 'DESC')
 			->first();
 		
-		$this_month_score = $translator->score - ($last_month_history ? $last_month_history->score : 0);
+		$this_month_score = $translator->score - ($last_month_history ? $last_month_history->new_score : 0);
 
 		$activetab_completed = '';
 		$activetab_rejected = '';
@@ -139,8 +139,8 @@ class TranslatorController extends Controller
 		}
 		
 		for($i; $i > 0; $i--) {
-			if($i == $first_flag){
-				$start_date = date('Y-m-1', time());
+			if($i == $first_flag){ //Last month
+				$start_date = date('Y-m-1', time()); //First day of currnet month
 				
 				if(date('d', time()) >= 30){
 					$prev_month = date('Y-m-1', strtotime("first day of last month"));
@@ -153,10 +153,10 @@ class TranslatorController extends Controller
 					->orderBy('created_at', 'DESC')
 					->first();
 					
-				if(!isset($shp->score)){
+				if(!isset($shp->new_score)){
 					$shpc = 0;
 				}else{
-					$shpc = $shp->score;
+					$shpc = $shp->new_score;
 				}
 				
 				$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = $user_info->score - $shpc . ':' . $user_info->score;
@@ -174,14 +174,14 @@ class TranslatorController extends Controller
 					->orderBy('created_at', 'DESC')
 					->first();
 				
-				if(!isset($shp->score)){
+				if(!isset($shp->new_score)){
 					$shpc = 0;
 				}else{
-					$shpc = $shp->score;
+					$shpc = $shp->new_score;
 				}
 				
-				if(isset($sh->score)){
-					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->score) - $shpc . ':' . $sh->score;
+				if(isset($sh->new_score)){
+					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->new_score) - $shpc . ':' . $sh->new_score;
 				}else{
 					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = 0 . ':' . $shpc;
 				}
