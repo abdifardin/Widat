@@ -195,9 +195,9 @@ class InspectorController extends Controller
 			->first();
 		
 		if(isset($last_month_history->new_score)){
-			$this_month_score = $translator->score - ($last_month_history ? $last_month_history->new_score : 0);
+			$this_month_score = $inspector->score - ($last_month_history ? $last_month_history->new_score : 0);
 		}else{
-			$this_month_score = $translator->score - ($last_month_history ? $last_month_history->score : 0);
+			$this_month_score = $inspector->score - ($last_month_history ? $last_month_history->score : 0);
 		}
 		
 		
