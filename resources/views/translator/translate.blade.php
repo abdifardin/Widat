@@ -11,7 +11,7 @@
 				{!! $msg !!}
 				@if($is_translated)
 						@if($translation_status == 'accepted')
-							<div class="alert alert-warning" role="alert">{{ trans('common.accepted_translation_message') }}</div>
+							<div class="alert alert-success" role="alert">{{ trans('common.accepted_translation_message') }}</div>
 						@elseif($translation_status == 'denied')
 							<div class="alert alert-warning" role="alert">{{ trans('common.rejected_translation_message') }}
 								<br><br>The proofreader sent you the following message:<br><strong>{{ $inspector_message }}</strong>

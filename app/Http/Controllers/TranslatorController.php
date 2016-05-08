@@ -71,7 +71,12 @@ class TranslatorController extends Controller
 			->orderBy('id', 'DESC')
 			->first();
 		
-		$this_month_score = $translator->score - ($last_month_history ? $last_month_history->new_score : 0);
+		if(isset($last_month_history->new_score)){
+			$this_month_score = $translator->score - ($last_month_history ? $last_month_history->new_score : 0);
+		}else{
+			$this_month_score = $translator->score - ($last_month_history ? $last_month_history->score : 0);
+		}
+		
 
 		$activetab_completed = '';
 		$activetab_rejected = '';
@@ -154,7 +159,11 @@ class TranslatorController extends Controller
 					->first();
 					
 				if(!isset($shp->new_score)){
-					$shpc = 0;
+					if(isset($shp->score)){
+						$shpc = $shp->score;
+					}else{
+						$shpc = 0;
+					}
 				}else{
 					$shpc = $shp->new_score;
 				}
@@ -175,7 +184,11 @@ class TranslatorController extends Controller
 					->first();
 				
 				if(!isset($shp->new_score)){
-					$shpc = 0;
+					if(isset($shp->score)){
+						$shpc = $shp->score;
+					}else{
+						$shpc = 0;
+					}
 				}else{
 					$shpc = $shp->new_score;
 				}
@@ -183,7 +196,11 @@ class TranslatorController extends Controller
 				if(isset($sh->new_score)){
 					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->new_score) - $shpc . ':' . $sh->new_score;
 				}else{
-					$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = 0 . ':' . $shpc;
+					if(isset($sh->score)){
+						$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = ($sh->score) - $shpc . ':' . $sh->score;
+					}else{
+						$score_history[date("F Y", strtotime('-' . ( $history_count - $i ) . ' month'))] = 0 . ':' . $shpc;
+					}
 				}
 			}
 			
