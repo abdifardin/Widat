@@ -12,7 +12,7 @@ class AddNewScoreFieldToScoreHistoryTable extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE `score_history` ADD `new_score` int(11) NOT NULL AFTER `score`;");
+        DB::statement("ALTER TABLE `score_history` ADD `new_score` int(11) NULL AFTER `score`;");
     }
 
     /**
