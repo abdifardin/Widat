@@ -5,7 +5,8 @@ if($("#ku_trans_abstract").length){
 	var save_changes_label = $("#save_changes_label").html();
 	var current_val;
 	var current_title;
-	var autosave_status = false;
+	//var autosave_status = false;
+	var retrieve_status = false;
 	var first_time = true;
 	var have_draft = $("#have_draft").val();
 
@@ -18,25 +19,7 @@ if($("#ku_trans_abstract").length){
 			if(result != 'empty'){
 				$('textarea#ku_trans_abstract').summernote('code', result.abstract);
 				$('#ku_trans_title').val(result.topic);
-				
-				/*
-				var abstract = $('textarea#ku_trans_abstract');
-				if(!abstract.length) {
-					return;
-				}
-				var plaintext = htmlToPlaintext(abstract.val().trim());
-				var words = plaintext.split(" ");
-				var wordcount = 0;
-				for(var i = 0; i < words.length; i++) {
-					if(words[i].trim().length > 1) {
-						wordcount++;
-					}
-				}
-
-				wordcount -= $('#current_score').val();
-				*/
 				updateTranslationScore();
-				//$('button[name=save] span.badge').html(wordcount > 0 ? "+" + wordcount : wordcount);
 			}
 		});
 	});
@@ -50,14 +33,24 @@ if($("#ku_trans_abstract").length){
 			
 			if(first_time){
 				if(have_draft){
-					autosave_status = confirm("Do you want to overwrite your draft or not?");
-				}else{
-					autosave_status = true;
+					retrieve_status = confirm("Do you want to retrieve your draft or not?");
+				}
+				
+				if(retrieve_status){
+					var retrieve = 1;
+					var _token = $('input[name=_token]').val();
+					$.post(window.location.href, {retrieve: retrieve, _token: _token}, function(result, status){
+						if(result != 'empty'){
+							$('textarea#ku_trans_abstract').summernote('code', result.abstract);
+							$('#ku_trans_title').val(result.topic);
+							updateTranslationScore();
+						}
+					});
 				}
 				first_time = false;
 			}
 			
-			if(autosave_status){
+			//if(autosave_status){
 				$("#save_changes_label").show();
 				$("#retrieve_drafts_label").html('<a href="">Draft saved 5 seconds ago, click here to retrieve and click "Save changes".</a>');
 				$("#retrieve_drafts_label").hide();
@@ -69,7 +62,7 @@ if($("#ku_trans_abstract").length){
 					$("#save_changes_label").hide();
 					$("#retrieve_drafts_label").show();
 				});
-			}
+			//}
 		}
 		previous_val = current_val;
 		previous_title = current_title;
