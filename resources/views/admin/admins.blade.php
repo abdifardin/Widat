@@ -76,8 +76,8 @@
 								<label for="password" class="input-group-addon">
 									{{ trans('common.password_confirm') }}
 								</label>
-								<input type="password" class="form-control" name="cpassword"
-									   id="cpassword" />
+								<input type="password" class="form-control" name="password_confirmation"
+									   id="password_confirmation" />
 								<div class="input-group-addon toggle-password">
 									<span class="fa fa-eye-slash"></span>
 								</div>

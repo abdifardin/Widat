@@ -102,4 +102,5 @@ return [
 	'max_incomplete_topics_msg' => 'Please first complete your current topics.',
 	'change_password_firsttime' => 'Please change your password.',
 	'set_password' => 'Set Password',
+	'invalid_form' => 'Form is invalid',
 ];

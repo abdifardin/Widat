@@ -18,6 +18,7 @@ use App\Securitycheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Validator;
 
 class AdminController extends Controller
 {
@@ -110,16 +111,17 @@ class AdminController extends Controller
 			}
 		}
 		else if($request->has('create')) {
-			$current_email = User::where('email', $request->get('email'))->first();
-			if($current_email) {
+			$validator = Validator::make($request->all(), [
+				'name' => 'required|min:3',
+				'surname' => 'required|min:3',
+				'email' => 'required|email|unique:users',
+				'password' => 'required|confirmed|min:6',
+			]);
+			
+			if($validator->fails()){
 				$action_error = true;
-				$action_result = trans('common.email_exists');
-			}
-			elseif(strcmp($request->get('password'), $request->get('cpassword')) != 0){
-				$action_error = true;
-				$action_result = trans('common.passwords_not_match');
-			}
-			else {
+				$action_result = trans('common.invalid_form');
+			}else{
 				$new_admin = new User;
 				$new_admin->email = $request->get('email');
 				$new_admin->name = $request->get('name');
@@ -158,15 +160,19 @@ class AdminController extends Controller
 			}
 		}
 		else if($request->has('create')) {
-			$one_time_string = str_random(30);
-			$password = str_random(8);
+			$validator = Validator::make($request->all(), [
+				'name' => 'required|min:3',
+				'surname' => 'required|min:3',
+				'email' => 'required|email|unique:users',
+			]);
 			
-			$current_email = User::where('email', $request->get('email'))->first();
-			if($current_email) {
+			if($validator->fails()){
 				$action_error = true;
-				$action_result = trans('common.email_exists');
-			}
-			else {
+				$action_result = trans('common.invalid_form');
+			}else{
+				$one_time_string = str_random(30);
+				$password = str_random(8);
+				
 				$new_inspector = new User;
 				$new_inspector->email = $request->get('email');
 				$new_inspector->name = $request->get('name');
@@ -176,7 +182,7 @@ class AdminController extends Controller
 				$new_inspector->one_time_string = $one_time_string;
 				$new_inspector->save();
 				$action_result = trans('common.user_created');
-				
+					
 				$have_one_time_link = "Password Set link: <strong>" . route('main.firsttime', ['one_time_string' => $one_time_string]) . "</strong>";
 			}
 		}
@@ -223,15 +229,19 @@ class AdminController extends Controller
 			}
 		}
 		else if($request->has('create')) {
-			$one_time_string = str_random(30);
-			$password = str_random(8);
+			$validator = Validator::make($request->all(), [
+				'name' => 'required|min:3',
+				'surname' => 'required|min:3',
+				'email' => 'required|email|unique:users',
+			]);
 			
-			$current_email = User::where('email', $request->get('email'))->first();
-			if($current_email) {
+			if($validator->fails()){
 				$action_error = true;
-				$action_result = trans('common.email_exists');
-			}
-			else {
+				$action_result = trans('common.invalid_form');
+			}else{
+				$one_time_string = str_random(30);
+				$password = str_random(8);
+				
 				$new_admin = new User;
 				$new_admin->email = $request->get('email');
 				$new_admin->name = $request->get('name');
@@ -241,7 +251,7 @@ class AdminController extends Controller
 				$new_admin->one_time_string = $one_time_string;
 				$new_admin->save();
 				$action_result = trans('common.user_created');
-				
+					
 				$have_one_time_link = "Password Set link: " . route('main.firsttime', ['one_time_string' => $one_time_string]);
 			}
 		}
