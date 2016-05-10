@@ -48,7 +48,8 @@ function numCounter(&$chars_arr, $char='') {
 	}else{
 		foreach($chars_arr as $k => $v){
 			if($v > 0){
-				$result_string .= "<li><a href='currentUrl()&firstchar=$k'>$k ($v)</a></li>";
+				$cururl = currentUrl();
+				$result_string .= "<li><a href='$cururl&firstchar=$k'>$k ($v)</a></li>";
 			}
 		}
 		return $result_string;
