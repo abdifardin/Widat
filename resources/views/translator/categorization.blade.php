@@ -42,7 +42,9 @@ function numCounter(&$chars_arr, $char='') {
 	$result_string = '';
 	
 	if($char != ''){
-		$chars_arr[$char] = $chars_arr[$char] + 1;
+		if(array_key_exists($char, $chars_arr)){	
+			$chars_arr[$char] = $chars_arr[$char] + 1;
+		}
 	}else{
 		foreach($chars_arr as $k => $v){
 			if($v > 0){
