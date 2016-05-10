@@ -21,6 +21,7 @@ use App\Draft;
 use App\Category;
 use App\Categorylinks;
 use App\PasswordCahnges;
+use App\SavedTopics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -651,12 +652,23 @@ class TranslatorController extends Controller
 			}
 		}
 		elseif($request->has('search_selected')) {
-			foreach($request->input('cats_selected') as $c){
-				$data['topics_list'] = Topic::whereNull('user_id')
-					->Join('categorylinks', 'topics.id', '=', 'categorylinks.cl_from')
-					->where('categorylinks.cl_to', $c)
-					->select("*")
-					->get();					
+			$user = Auth::user();
+			
+			$data['topics_list'] = Topic::whereNull('user_id')
+				->groupBy('topics.id')
+				->Join('categorylinks', 'topics.id', '=', 'categorylinks.cl_from')
+				->whereIn('categorylinks.cl_to', $request->input('cats_selected'))
+				->select("*")
+				->get();
+			
+			foreach($data['topics_list'] as $ti){
+				$saved_num = SavedTopics::where('topicid', $ti['id'])->where('userid', $user->id)->count();
+				if($saved_num < 1){
+					$SavedTopics = new SavedTopics();
+					$SavedTopics->topicid = $ti['id'];
+					$SavedTopics->userid = $user->id;
+					$SavedTopics->save();
+				}
 			}
 		}
 		

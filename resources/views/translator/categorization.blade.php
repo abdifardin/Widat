@@ -1,6 +1,56 @@
 <?php
+$chars = array(
+	'A' => 0,
+	'B' => 0,
+	'C' => 0,
+	'D' => 0,
+	'E' => 0,
+	'F' => 0,
+	'G' => 0,
+	'H' => 0,
+	'I' => 0,
+	'J' => 0,
+	'K' => 0,
+	'L' => 0,
+	'M' => 0,
+	'N' => 0,
+	'O' => 0,
+	'P' => 0,
+	'Q' => 0,
+	'R' => 0,
+	'S' => 0,
+	'T' => 0,
+	'U' => 0,
+	'V' => 0,
+	'W' => 0,
+	'X' => 0,
+	'Y' => 0,
+	'Z' => 0
+);
+
+$select_options_list = '';
+foreach($category_list as $c){
+	numCounter($chars, ucfirst($c['cl_to'][0]));
+	$select_options_list .= "<option value='$c[cl_to]'>$c[cl_to]</option>";
+}
+	
 function currentUrl() {
 	return $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+}
+
+function numCounter(&$chars_arr, $char='') {
+	$result_string = '';
+	
+	if($char != ''){
+		$chars_arr[$char] = $chars_arr[$char] + 1;
+	}else{
+		foreach($chars_arr as $k => $v){
+			if($v > 0){
+				$result_string .= "<li><a href='currentUrl()&firstchar=$k'>$k ($v)</a></li>";
+			}
+		}
+		return $result_string;
+	}
 }
 ?>
 @extends('master')
@@ -13,7 +63,7 @@ function currentUrl() {
 					{{ trans('common.categorization') }} <strong>(TEST)</strong>
 				</h3>
 				<br />
-				
+
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">{{ trans('common.categorization_message') }}</h3>
 					<form action="" method="get" id="translation-form">
@@ -31,69 +81,22 @@ function currentUrl() {
 				<br>
 				<div class="translation-group">
 					<h3 class="lang-name navbar-left">Filter by first character</h3>
+					<span class="clearfix"></span>
 					<ul class="pagination">
-						<li><a href="<?php echo currentUrl().'&firstchar=A'?>">A</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=B'?>">B</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=C'?>">C</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=D'?>">D</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=E'?>">E</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=F'?>">F</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=G'?>">G</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=H'?>">H</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=I'?>">I</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=J'?>">J</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=K'?>">K</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=L'?>">L</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=M'?>">M</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=N'?>">N</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=O'?>">O</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=P'?>">P</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=Q'?>">Q</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=R'?>">R</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=S'?>">S</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=T'?>">T</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=U'?>">U</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=V'?>">V</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=W'?>">W</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=X'?>">X</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=Y'?>">Y</a></li>
-						<li><a href="<?php echo currentUrl().'&firstchar=Z'?>">Z</a></li>
+						<?php echo numCounter($chars)?>
 					</ul>
 				</div>
 				<br><br>
 				<form method="get">
 					<div class="form-group">
 						<select name="cats_selected[]" id="cats_selected" size="1" multiple="multiple" class="form-control">
-							@foreach($category_list as $c)
-							<option value="{{ $c['cl_to'] }}">{{ $c['cl_to'] }}</option>
-							@endforeach
+							{!! $select_options_list !!}
 						</select>
 						<br><br>
 						<button type="submit" name="search_selected" value="1" class="btn btn-primary">
 							{{ trans('common.categorization_search_topics') }}
 						</button>
 					</div>
-					<!--
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<th width="1px;"></th>
-								<th>Category Title</th>
-							</thead>
-							<tbody>
-								@foreach($category_list as $c)
-								<tr>
-									<td><input type="checkbox" name="cats_selected[]" class="cats_selected" value="{{ $c['cl_to'] }}"></td>
-									<td>{{ $c['cl_to'] }}</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
-						<button type="submit" name="search_selected" value="1" class="btn btn-primary">
-							{{ trans('common.categorization_search_topics') }}
-						</button>
-					</div>
-					-->
 					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 				</form>
 				
