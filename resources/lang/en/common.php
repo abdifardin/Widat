@@ -65,6 +65,7 @@ return [
 	'topic_not_found' => 'The topic was not found. Try using copy and paste instead of typing.',
 	'no_trans' => 'No translation has been added for this topic yet.',
 	'my_topics' => 'My Topics',
+	'saved_topics' => 'Saved Topics',
 	'translated_topics' => 'Translated Topics',
 	'proofrede_topics' => 'Proofread Topics',
 	'delete_recommendation' => 'Recommend for Deletion',

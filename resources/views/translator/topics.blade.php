@@ -33,6 +33,16 @@
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 
+					<a href="{{ route('translator.topics', ['filter' => 'saved']) }}"
+					   class="btn btn-primary">
+						@if(isset($filter_saved) && $filter_saved)
+							<span class="fa fa-check"></span>
+						@endif
+						{{ trans('common.saved_topics') }}
+					</a>
+
+					&nbsp;&nbsp;&nbsp;&nbsp;
+
 					<a href="{{ route('translator.topics') }}" class="btn btn-primary">
 						@if(isset($filter_untranslated_changed) && $filter_untranslated_changed)
 							<span class="fa fa-check"></span>

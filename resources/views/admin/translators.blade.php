@@ -122,15 +122,19 @@
 									<a href="{{ route('admin.translators', ['set_password'=>$translator->id]) }}" class="btn btn-info">
 										<span class="fa fa-refresh"></span>
 									</a>
-									<a href="javascript:;" class="btn btn-danger delete-user">
-										<span class="fa fa-trash"></span>
-										{{ trans('common.delete') }}
-										<input type="hidden" name="user_id" value="{{ $translator->id }}" />
-									</a>
 									<a href="{{ route('translator.stats', ['user_id' => $translator->id]) }}"
 									   class="btn btn-primary">
 										<span class="fa fa-bar-chart"></span>
-										{{ trans('common.stats') }}
+										<input type="hidden" name="user_id" value="{{ $translator->id }}" />
+									</a>
+									<a href="{{ route('admin.directcategory', ['user_id' => $translator->id]) }}"
+									   class="btn btn-primary">
+										<span class="fa fa-share"></span>
+										<input type="hidden" name="user_id" value="{{ $translator->id }}" />
+									</a>
+									<a href="javascript:;" class="btn btn-danger delete-user">
+										<span class="fa fa-trash"></span>
+										{{ trans('common.delete') }}
 										<input type="hidden" name="user_id" value="{{ $translator->id }}" />
 									</a>
 									<a href="{{ route('main.edit_account', ['user_id'=>$translator->id]) }}"

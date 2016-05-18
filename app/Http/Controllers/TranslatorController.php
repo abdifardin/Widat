@@ -226,6 +226,7 @@ class TranslatorController extends Controller
 		
 		$filter_all = false;
 		$filter_my = false;
+		$filter_saved = false;
 		$filter_untranslated_changed = false;
 		$filter_untranslated = false;
 		$filter_changed = false;
@@ -238,6 +239,9 @@ class TranslatorController extends Controller
 				break;
 			case 'my':
 				$filter_my = true;
+				break;
+			case 'saved':
+				$filter_saved = true;
 				break;
 			case 'untranslated':
 				$filter_untranslated = true;
@@ -305,6 +309,14 @@ class TranslatorController extends Controller
 				}
 			}
 		}
+		else if($filter_saved) {
+			$topics = Topic::whereNull('topics.user_id')
+				->Join('saved_topics', 'topics.id', '=', 'saved_topics.topicid')
+				->where('saved_topics.userid' ,Auth::user()->id)
+				->select("topics.*")
+				//->get();
+				->paginate($this->topics_per_page);
+		}
 		else if($filter_untranslated) {
 			$topics = Topic::where('topics.user_id', null)
 				->paginate($this->topics_per_page);
@@ -330,6 +342,7 @@ class TranslatorController extends Controller
 			'topics' => $topics,
 			'filter_all' => $filter_all,
 			'filter_my' => $filter_my,
+			'filter_saved' => $filter_saved,
 			'filter_untranslated' => $filter_untranslated,
 			'filter_changed' => $filter_changed,
 			'filter_untranslated_changed' => $filter_untranslated_changed,
@@ -374,6 +387,11 @@ class TranslatorController extends Controller
 				$topic->user_id = $user->id;
 				$topic->edited_at = time();
 				$topic->save();
+					
+				DB::table('saved_topics')
+					->where('topicid', $topic_id)
+					->where('userid', $user->id)
+					->delete();
 			}
 		}
 		else if($request->has('unreserve') && $topic->user_id == $user->id) {

@@ -68,6 +68,10 @@ Route::any('admin/inspection/{user_id?}', [
 	'as' => 'admin.inspection',
 	'uses' => 'AdminController@inspection',
 ]);
+Route::any('admin/directcategory/{user_id?}', [
+	'as' => 'admin.directcategory',
+	'uses' => 'AdminController@directCategory',
+]);
 Route::any('admin/delete-recommendation/{rec_id?}', [
 	'as' => 'admin.delete_recommendation',
 	'uses' => 'AdminController@deleteRecommendations',

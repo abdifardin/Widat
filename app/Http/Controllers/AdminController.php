@@ -15,6 +15,9 @@ use App\Topic;
 use App\User;
 use App\DeleteRecommendation;
 use App\Securitycheck;
+use App\Category;
+use App\Categorylinks;
+use App\SavedTopics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -451,5 +454,52 @@ class AdminController extends Controller
 			'direct' => $direct,
 			'inserted' => $inserted,
 		]);
+	}
+	
+	public function directCategory(Request $request, $user_id)
+	{
+		$data['category_list'] = array();
+		$data['topics_list'] = array();
+		$data['cat_keyword'] = '';
+		
+		$user = User::where('id', $user_id)->first();
+		if(!$user OR $user->user_type != 'translator'){
+			abort(404, "Not found!");
+		}
+		
+		if($request->has('search') and strlen(trim($request->input('cat_keyword'))) > 1) {
+			$k = $request->input('cat_keyword');
+			$lc_k = strtolower($k);
+			$ucf_k = ucfirst($k);
+			$data['cat_keyword'] = $k;
+			
+			if($request->has('firstchar')){
+				$first_char = strtolower($request->input('firstchar'));
+				$ucf_first_char = ucfirst(strtolower($request->input('firstchar')));
+				$data['category_list'] = Categorylinks::whereRaw("(cl_to LIKE ? OR cl_to LIKE ? OR cl_to LIKE ?) AND (cl_to LIKE ? OR cl_to LIKE ?)", ["%$k%", "%$ucf_k%", "%$lc_k%", "$first_char%", "$ucf_first_char%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+			}else{
+				$data['category_list'] = Categorylinks::whereRaw("(cl_to LIKE ? OR cl_to LIKE ? OR cl_to LIKE ?)", ["%$k%", "%$ucf_k%", "%$lc_k%"])->where('cl_type', '<>', 'file')->groupBy('cl_to')->get();
+			}
+		}
+		elseif($request->has('search_selected')) {
+			$data['topics_list'] = Topic::whereNull('user_id')
+				->groupBy('topics.id')
+				->Join('categorylinks', 'topics.id', '=', 'categorylinks.cl_from')
+				->whereIn('categorylinks.cl_to', $request->input('cats_selected'))
+				->select("*")
+				->get();
+			
+			foreach($data['topics_list'] as $ti){
+				$saved_num = SavedTopics::where('topicid', $ti['id'])->where('userid', $user->id)->count();
+				if($saved_num < 1){
+					$SavedTopics = new SavedTopics();
+					$SavedTopics->topicid = $ti['id'];
+					$SavedTopics->userid = $user->id;
+					$SavedTopics->save();
+				}
+			}
+		}
+		
+		return view('admin.directcategory', $data);
 	}
 }
