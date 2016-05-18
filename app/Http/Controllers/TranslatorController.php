@@ -219,7 +219,6 @@ class TranslatorController extends Controller
 
 	public function topics(Request $request, $filter = null, $type='incomplete')
 	{
-		
 		$activetab_completed = '';
 		$activetab_rejected = '';
 		$activetab_incomplete = '';
@@ -390,7 +389,6 @@ class TranslatorController extends Controller
 					
 				DB::table('saved_topics')
 					->where('topicid', $topic_id)
-					->where('userid', $user->id)
 					->delete();
 			}
 		}
