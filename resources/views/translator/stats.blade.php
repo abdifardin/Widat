@@ -99,9 +99,9 @@
 								<br /><br />
 							</div>
 							<ul class="nav nav-tabs">
-								<li role="presentation" class="{{ $activetab_incomplete }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id]) }}">Incomplete</a></li>
-								<li role="presentation" class="{{ $activetab_completed }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id, 'type' =>'completed']) }}">Completed</a></li>
-								<li role="presentation" class="{{ $activetab_rejected }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id, 'type' =>'rejected']) }}">Rejected</a></li>
+								<li role="presentation" class="{{ $activetab_incomplete }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id]) }}">Incomplete ({{ $incomplete_num }} - {{ $incomplete_num+$rejected_num }}/{{ $max_incomplete_topics }})</a></li>
+								<li role="presentation" class="{{ $activetab_completed }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id, 'type' =>'completed']) }}">Completed ({{ $completed_num }})</a></li>
+								<li role="presentation" class="{{ $activetab_rejected }}"><a href="{{ route('translator.stats', ['user_id' =>$translator->id, 'type' =>'rejected']) }}">Rejected ({{ $rejected_num }} - {{ $incomplete_num+$rejected_num }}/{{ $max_incomplete_topics }})</a></li>
 							</ul>
 							<br /><br />
 							@foreach($translated as $t)
