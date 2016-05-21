@@ -258,6 +258,27 @@ class TranslatorController extends Controller
 		
 		$topic_keyword = '';
 		
+		$completed_num = Topic::where('user_id', Auth::user()->id)
+			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+			->whereRaw("(ku_translations.finished = ? AND ku_translations.inspection_result <> ? AND topics.edited_at IS NOT NULL)", ["1", "-1"])
+			->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+			->orderBy('edited_at', 'desc')
+			->count();
+		
+		$rejected_num = Topic::where('user_id', Auth::user()->id)
+			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+			->where('ku_translations.inspection_result' ,-1)
+			->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+			->orderBy('edited_at', 'desc')
+			->count();
+			
+		$incomplete_num = Topic::where('user_id', Auth::user()->id)
+			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
+			->whereRaw("(ku_translations.finished <> ? OR ku_translations.finished IS NULL)", ["1"])
+			->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
+			->orderBy('edited_at', 'desc')
+			->count();
+				
 		switch($filter) {
 			case 'all':
 				$filter_all = true;
@@ -283,27 +304,6 @@ class TranslatorController extends Controller
 			$topics = Topic::paginate($this->topics_per_page);
 		}
 		else if($filter_my) {
-			$completed_num = Topic::where('user_id', Auth::user()->id)
-				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
-				->whereRaw("(ku_translations.finished = ? AND ku_translations.inspection_result <> ? AND topics.edited_at IS NOT NULL)", ["1", "-1"])
-				->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
-				->orderBy('edited_at', 'desc')
-				->count();
-			
-			$rejected_num = Topic::where('user_id', Auth::user()->id)
-				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
-				->where('ku_translations.inspection_result' ,-1)
-				->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
-				->orderBy('edited_at', 'desc')
-				->count();
-			
-			$incomplete_num = Topic::where('user_id', Auth::user()->id)
-				->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
-				->whereRaw("(ku_translations.finished <> ? OR ku_translations.finished IS NULL)", ["1"])
-				->select("topics.*", "topics.topic", "ku_translations.finished", "ku_translations.inspection_result","ku_translations.inspector_id")
-				->orderBy('edited_at', 'desc')
-				->count();
-			
 			if($request->has('search') and strlen(trim($request->input('topic_keyword'))) > 1) {
 				$k = trim($request->input('topic_keyword'));
 				$topic_keyword = $k;
