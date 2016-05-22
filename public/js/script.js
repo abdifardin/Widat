@@ -422,11 +422,11 @@ $(document).ready(function(){
 		$(".inspection_viewtranslate").hide();
 		$(".inspection_edittranslate").show();
 	});
-	$('#bulk_restore_all').change(function(){
+	$('#bulk_select_all').change(function(){
 		if (this.checked) {
-			$('.bulk_restore').prop('checked', true);
+			$('.bulk_select').prop('checked', true);
 		}else{
-			$('.bulk_restore').prop('checked', false);
+			$('.bulk_select').prop('checked', false);
 		}
 	});
 	

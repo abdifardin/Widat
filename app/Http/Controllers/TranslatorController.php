@@ -726,12 +726,14 @@ class TranslatorController extends Controller
 				->whereIn('categorylinks.cl_to', $request->input('cats_selected'))
 				->select("*")
 				->get();
-			
-			foreach($data['topics_list'] as $ti){
-				$saved_num = SavedTopics::where('topicid', $ti['id'])->where('userid', $user->id)->count();
+		}
+		
+		if($request->has('save_result')) {
+			foreach($request->input('bulk_save') as $ti){
+				$saved_num = SavedTopics::where('topicid', $ti)->where('userid', $user->id)->count();
 				if($saved_num < 1){
 					$SavedTopics = new SavedTopics();
-					$SavedTopics->topicid = $ti['id'];
+					$SavedTopics->topicid = $ti;
 					$SavedTopics->userid = $user->id;
 					$SavedTopics->save();
 				}

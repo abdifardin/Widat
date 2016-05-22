@@ -105,19 +105,29 @@ function numCounter(&$chars_arr, $char='') {
 				
 				@elseif(count($topics_list) > 0)
 					<br><br>
-					@foreach($topics_list as $t)
-						
-						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-							<a style="background-color:#FAFAFA;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
-							   class="btn btn-block btn-default">
-								{{ urldecode(str_replace("_", " ", $t->topic)) }}
-								@if($t->edited_at)
-								<br />{{ date('n/j/Y - H:i', $t->edited_at) }}
-								@endif
-							</a>
-							<br />
+					<form action="" method="post">
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<th width="4%"><input type="checkbox" name="bulk_select_all" id="bulk_select_all" value=""></th>
+									<th>{{ trans('common.title') }}</th>
+								</thead>
+								<tbody>
+									@foreach($topics_list as $t)
+									<tr>
+										<td><input type="checkbox" name="bulk_save[]" class="bulk_select" value="{{ $t->id }}"></td>
+										<td>
+											{{ urldecode(str_replace("_", " ", $t->topic)) }}
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+							<button type="submit" name="save_result" value="1" class="btn btn-info">
+								Save Selected
+							</button>
 						</div>
-					@endforeach
+					</form>
 				@else
 					<h4 class="text-center text-danger text-capitalize">
 						No Items Found..!
