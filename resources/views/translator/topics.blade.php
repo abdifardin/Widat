@@ -110,8 +110,11 @@
 							@else
 							<a style="background-color:#FAFAFA;" href="{{ route('translator.translate', ['topic_id' => $t->id]) }}"
 							@endif
-							   class="btn btn-block btn-default">
+							   class="btn btn-block btn-default" style="position:relative;">
 								{{ urldecode(str_replace("_", " ", $t->topic)) }}
+								@if(isset($filter_saved) && $filter_saved)
+									<i class="fa fa-trash remove-saved-topic" rdurl="{{ route('translator.topics', ['filter' => 'saved', 'ft' => '', 'del' => $t->id ]) }}"></i>
+								@endif
 								@if($t->edited_at)
 								<br />{{ date('n/j/Y - H:i', $t->edited_at) }}
 								@endif

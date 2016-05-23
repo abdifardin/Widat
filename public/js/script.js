@@ -531,4 +531,9 @@ $(document).ready(function(){
 		$('#ku-title').css('height',($("#en-title").height()+22)+"px");
 		$('#edit-ku-title').css('height',($("#en-title").height()+13)+"px");
 	}
+	
+	$('.remove-saved-topic').click(function(event){
+		event.preventDefault();
+		window.location.href = $(this).attr('rdurl');
+	});
 });

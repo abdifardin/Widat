@@ -258,6 +258,13 @@ class TranslatorController extends Controller
 		
 		$topic_keyword = '';
 		
+		if($request->has('del')){
+			DB::table('saved_topics')
+				->where('topicid', $request->input('del'))
+				->where('userid', Auth::user()->id)
+				->delete();
+		}
+		
 		$completed_num = Topic::where('user_id', Auth::user()->id)
 			->leftJoin('ku_translations', 'topics.id', '=', 'ku_translations.topic_id')
 			->whereRaw("(ku_translations.finished = ? AND ku_translations.inspection_result <> ? AND topics.edited_at IS NOT NULL)", ["1", "-1"])

@@ -171,3 +171,30 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.remove-saved-topic {
+	color: #C00;
+	position: absolute;
+	top: 6px;
+	cursor: cursor;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	padding-top: 6px;
+	padding-right: 4px;
+	padding-bottom: 6px;
+	padding-left: 4px;
+	right: -4px;
+	background-color: #FAFAFA;
+}
+.remove-saved-topic:hover {
+	border-top-color: #999;
+	border-right-color: #999;
+	border-bottom-color: #999;
+	border-left-color: #999;	
+}
