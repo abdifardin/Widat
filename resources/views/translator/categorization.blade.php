@@ -59,6 +59,17 @@ function numCounter(&$chars_arr, $char='') {
 @extends('master')
 
 @section('content')
+	@if(isset($action_result) && $action_result)
+		@if($action_error)
+			<div class="content-wrapper ambient-key-shadows action-result action-error">
+		@else
+			<div class="content-wrapper ambient-key-shadows action-result action-success">
+		@endif
+			<span class="fa fa-times-circle fa-2x"></span>
+			{{ $action_result }}
+		</div>
+	@endif
+	
 	<div class="content-wrapper ambient-key-shadows">
 		<div class="row">
 			<div class="col-sm-12">

@@ -458,6 +458,9 @@ class AdminController extends Controller
 	
 	public function directCategory(Request $request, $user_id)
 	{
+		$data['action_error'] = false;
+		$data['action_result'] = null;
+		
 		$data['category_list'] = array();
 		$data['topics_list'] = array();
 		$data['cat_keyword'] = '';
@@ -488,16 +491,19 @@ class AdminController extends Controller
 				->whereIn('categorylinks.cl_to', $request->input('cats_selected'))
 				->select("*")
 				->get();
-			
-			foreach($data['topics_list'] as $ti){
-				$saved_num = SavedTopics::where('topicid', $ti['id'])->where('userid', $user->id)->count();
+		}
+		
+		if($request->has('save_result') AND count($request->input('bulk_save'))>0) {
+			foreach($request->input('bulk_save') as $ti){
+				$saved_num = SavedTopics::where('topicid', $ti)->where('userid', $user->id)->count();
 				if($saved_num < 1){
 					$SavedTopics = new SavedTopics();
-					$SavedTopics->topicid = $ti['id'];
+					$SavedTopics->topicid = $ti;
 					$SavedTopics->userid = $user->id;
 					$SavedTopics->save();
 				}
 			}
+			$data['action_result'] = 'Topics saved successfully';
 		}
 		
 		return view('admin.directcategory', $data);

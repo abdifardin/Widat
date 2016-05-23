@@ -700,6 +700,9 @@ class TranslatorController extends Controller
 	
 	public function categorization(Request $request)
 	{
+		$data['action_error'] = false;
+		$data['action_result'] = null;
+		
 		$data['category_list'] = array();
 		$data['topics_list'] = array();
 		$data['cat_keyword'] = '';
@@ -728,7 +731,7 @@ class TranslatorController extends Controller
 				->get();
 		}
 		
-		if($request->has('save_result')) {
+		if($request->has('save_result') AND count($request->input('bulk_save'))>0) {
 			foreach($request->input('bulk_save') as $ti){
 				$saved_num = SavedTopics::where('topicid', $ti)->where('userid', $user->id)->count();
 				if($saved_num < 1){
@@ -738,6 +741,7 @@ class TranslatorController extends Controller
 					$SavedTopics->save();
 				}
 			}
+			$data['action_result'] = 'Topics saved successfully';
 		}
 		
 		return view('translator.categorization', $data);
